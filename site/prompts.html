@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>คลัง Prompt · AI เพื่อการเรียนการสอน</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Mali:wght@500;600;700&family=IBM+Plex+Sans+Thai+Looped:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="assets/css/styles.css?v=20260820_mali" />
+</head>
+<body class="antialiased" data-page="prompts">
+
+  <header class="masthead sticky top-0 z-40">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="flex items-center justify-between h-16">
+        <a href="index.html" class="flex items-center gap-2">
+          <span class="font-display font-bold text-lg tracking-tight" style="color:var(--accent)">AI–ครู</span>
+          <span class="hidden sm:inline font-display text-sm tracking-wide" style="color:var(--ink)">อบรมการเรียนการสอน</span>
+        </a>
+        <nav class="flex items-center gap-4 sm:gap-6" aria-label="หลัก">
+          <a href="index.html" class="nav-link" data-page="home">หน้าแรก</a>
+          <a href="prompts.html" class="nav-link" data-page="prompts">คลัง Prompt</a>
+          <a href="tutorials.html" class="nav-link" data-page="tutorials">วิธีใช้</a>
+          <a href="showcase.html" class="nav-link" data-page="showcase">ผลงาน</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
+    <p class="eyebrow mb-2">คลัง Prompt ภาษาไทยมาตรฐาน & Interactive Tools</p>
+    <h1 class="font-display font-bold text-3xl sm:text-5xl tracking-tight">Prompt ภาระงานครูไทย & นวัตกรรมสื่อ</h1>
+    <p class="lead mt-3 max-w-3xl">
+      คัดลอก-วาง-ปรับใช้ได้ทันที ครอบคลุมงานสอน วัดผล ซ่อมเสริม ว.PA ระบบดูแลช่วยเหลือ SDQ โฮมรูม และสื่อการสอน 
+      จำสูตรแกน <span class="font-semibold" style="color:var(--ink)">บทบาท–บริบท–เงื่อนไข</span>
+    </p>
+
+    <!-- ===== Pinned Section: Top 10 Teacher Survival Kit ===== -->
+    <div class="mt-8 p-5 sm:p-6 rounded-xl border shadow-sm" style="background:var(--paper-2); border-color:var(--accent); border-width:2px;">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+        <div>
+          <span class="px-2.5 py-1 rounded text-xs font-bold font-display uppercase tracking-wider text-white" style="background:var(--accent);">⭐ แนะนำสำหรับวันอบรม</span>
+          <h2 class="font-display font-bold text-xl sm:text-2xl mt-1" style="color:var(--ink);">10 Prompt กู้ชีพครูไทย (Teacher Survival Kit)</h2>
+        </div>
+        <p class="text-sm" style="color:var(--ink-soft);">คลิกเพื่อกรองเฉพาะ 10 Prompt ยอดนิยมที่ครูได้ใช้จริงทุกสัปดาห์</p>
+      </div>
+      <div id="top10-quick-chips" class="flex flex-wrap gap-2">
+        <button type="button" id="btn-show-top10" class="chip active font-semibold" style="border-color:var(--accent); color:var(--accent);">
+          ⭐ ดู 10 Prompt กู้ชีพครู
+        </button>
+        <button type="button" id="btn-show-all" class="chip">
+          แสดงทั้งหมด (200+ รายการ)
+        </button>
+      </div>
+    </div>
+
+    <!-- ===== Search ===== -->
+    <div class="mt-8">
+      <div class="relative max-w-2xl">
+        <svg class="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="var(--line)" stroke-width="2"/><path d="m20 20-3.5-3.5" stroke="var(--line)" stroke-width="2" stroke-linecap="round"/></svg>
+        <input
+          id="prompt-search"
+          type="search"
+          placeholder="ค้นหา: แผน, ข้อสอบ, ซ่อมเสริม, SDQ, เยี่ยมบ้าน, โฮมรูม, PLC, ว.PA, ปพ.6, LaTeX, Math…"
+          class="w-full pl-12 pr-4 py-3.5 border rounded-md focus:outline-none focus:ring-2 text-base"
+          style="border-color:var(--line); background:#fff; color:var(--ink);"
+          aria-label="ค้นหา prompt"
+        />
+      </div>
+    </div>
+
+    <!-- ===== Filters ===== -->
+    <div class="mt-6 space-y-4">
+      <!-- 1. Task Type Filter -->
+      <div>
+        <p class="eyebrow !text-[0.75rem] mb-2">ภาระงานครู (Task Type)</p>
+        <div class="chip-group" data-filter="task">
+          <button type="button" class="chip active" data-task="all">ทุกภาระงาน</button>
+          <button type="button" class="chip" data-task="ออกแบบการสอน">ออกแบบการสอน / แผน</button>
+          <button type="button" class="chip" data-task="ข้อสอบ & การวัดผล">ข้อสอบ / วัดผล / ซ่อมเสริม</button>
+          <button type="button" class="chip" data-task="สร้างสื่อ & ภาพประกอบ">สร้างสื่อ / ภาพ / Canva</button>
+          <button type="button" class="chip" data-task="เอกสาร & สรุปรายงาน">เอกสาร / SDQ / PLC / ว.PA / ปพ.</button>
+          <button type="button" class="chip" data-task="นวัตกรรม & กิจกรรม">นวัตกรรม / เกม / กิจกรรม</button>
+        </div>
+      </div>
+
+      <!-- 2. Subject Filter (8 Learning Areas) -->
+      <div>
+        <p class="eyebrow !text-[0.75rem] mb-2">กลุ่มสาระการเรียนรู้ (8 กลุ่มสาระ สพฐ.)</p>
+        <div class="chip-group" data-filter="subject">
+          <button type="button" class="chip active" data-subject="all">ทุกกลุ่มสาระ</button>
+          <button type="button" class="chip" data-subject="ภาษาไทย">ภาษาไทย</button>
+          <button type="button" class="chip" data-subject="คณิตศาสตร์">คณิตศาสตร์</button>
+          <button type="button" class="chip" data-subject="วิทยาศาสตร์และเทคโนโลยี">วิทยาศาสตร์และเทคโนโลยี</button>
+          <button type="button" class="chip" data-subject="สังคมศึกษา ศาสนา และวัฒนธรรม">สังคมศึกษาฯ / ประวัติศาสตร์</button>
+          <button type="button" class="chip" data-subject="สุขศึกษาและพลศึกษา">สุขศึกษา / พลศึกษา / ลูกเสือ</button>
+          <button type="button" class="chip" data-subject="ศิลปะ">ศิลปะ / ดนตรี / นาฏศิลป์</button>
+          <button type="button" class="chip" data-subject="การงานอาชีพ">การงานอาชีพ / ธุรกิจ</button>
+          <button type="button" class="chip" data-subject="ภาษาต่างประเทศ">ภาษาต่างประเทศ / ภาษาอังกฤษ</button>
+          <button type="button" class="chip" data-subject="ทุกวิชา/ทั่วไป">ทั่วไป / งานดูแล / งานโรงเรียน</button>
+        </div>
+      </div>
+
+      <!-- 3. Tool Filter -->
+      <div>
+        <p class="eyebrow !text-[0.75rem] mb-2">เครื่องมือ AI ที่แนะนำ</p>
+        <div class="chip-group" data-filter="tool">
+          <button type="button" class="chip active" data-tool="all">ทุกเครื่องมือ</button>
+          <button type="button" class="chip" data-tool="Gemini">Gemini</button>
+          <button type="button" class="chip" data-tool="Canva">Canva</button>
+          <button type="button" class="chip" data-tool="NotebookLM">NotebookLM</button>
+          <button type="button" class="chip" data-tool="ChatGPT">ChatGPT</button>
+          <button type="button" class="chip" data-tool="Claude">Claude</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== Result count ===== -->
+    <div class="mt-8 flex items-center justify-between">
+      <h2 class="font-display font-semibold text-xl">รายการ Prompt</h2>
+      <span id="prompt-count" class="font-display text-base font-semibold" style="color:var(--accent)">—</span>
+    </div>
+    <hr class="rule mt-2 mb-6" />
+
+    <!-- ===== Cards grid ===== -->
+    <div id="prompt-grid" class="grid sm:grid-cols-2 gap-6"></div>
+
+    <div class="mt-12 callout max-w-2xl">
+      <p class="font-display font-semibold text-base mb-1">📌 กติกาการใช้และจริยธรรม AI สำหรับครู</p>
+      <ul class="text-base space-y-1.5" style="color:var(--ink-soft)">
+        <li>· <strong>ตรวจทานก่อนใช้เสมอ:</strong> AI อาจแต่งระเบียบปลอมหรือคำนวณเลขผิด ครูเป็นผู้รับผิดชอบผลลัพธ์</li>
+        <li>· <strong>คุ้มครองข้อมูลส่วนบุคคล (PDPA):</strong> ห้ามใส่ชื่อ-สกุลจริง รูปถ่าย หรือเลขประจำตัวนักเรียนลงใน AI ให้ใช้นามสมมติเสมอ</li>
+        <li>· <strong>สูตรคณิตศาสตร์:</strong> คัดลอกโค้ด LaTeX ไปกด <code>Alt + =</code> ใน Word/PowerPoint หรือใส่ใน Canva Math App</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer class="border-t" style="border-color:var(--line); background:var(--paper-2)">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-10 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p class="font-display text-base" style="color:var(--ink-soft)">© 2569 · การประยุกต์ใช้ AI เพื่อการจัดการเรียนการสอน</p>
+      <nav class="flex gap-5" aria-label="ท้ายหน้า">
+        <a href="index.html" class="nav-link">หน้าแรก</a>
+        <a href="tutorials.html" class="nav-link">วิธีใช้</a>
+        <a href="showcase.html" class="nav-link">ผลงาน</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="assets/js/app.js?v=20260820_fast"></script>
+</body>
+</html>

@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Progress Dashboard & Presentation Draft — โครงการอบรม AI สำหรับครู (29 ส.ค. 2569)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Sans+Thai+Looped:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-page: #FAF8F5;
+      --bg-card: #FFFFFF;
+      --bg-card-subtle: #F4EFEA;
+      --text-main: #1C1917;
+      --text-muted: #57534E;
+      --text-subtle: #78716C;
+      --primary: #A63D1C;      /* Rust */
+      --primary-light: #FBF0EC;
+      --accent: #2B5C8F;       /* Academic Slate Blue */
+      --accent-light: #EEF4FA;
+      --success: #2A7A4C;      /* Green */
+      --success-light: #EBF7F0;
+      --warning: #B45309;      /* Amber */
+      --warning-light: #FEF3C7;
+      --draft-color: #D97706;  /* Draft Amber */
+      --draft-light: #FFFBEB;
+      --border-color: #E7DFD5;
+      --border-strong: #D6CABA;
+      --font-heading: 'Chakra Petch', sans-serif;
+      --font-body: 'IBM Plex Sans Thai Looped', -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      line-height: 1.65;
+      padding: 2.5rem 1.5rem;
+      font-size: 16px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    header {
+      border-bottom: 2px solid var(--primary);
+      padding-bottom: 1.5rem;
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .header-title h1 {
+      font-family: var(--font-heading);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text-main);
+      letter-spacing: -0.5px;
+      margin-bottom: 0.25rem;
+    }
+
+    .header-title p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+    }
+
+    .header-badges {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .badge-date {
+      background-color: var(--primary-light);
+      color: var(--primary);
+      border: 1px solid var(--primary);
+      padding: 0.4rem 0.85rem;
+      border-radius: 6px;
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .badge-draft {
+      background-color: var(--draft-light);
+      color: var(--draft-color);
+      border: 1px solid var(--draft-color);
+      padding: 0.4rem 0.85rem;
+      border-radius: 6px;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    /* Overall Progress Bar */
+    .overall-progress-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    }
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+      font-family: var(--font-heading);
+    }
+
+    .progress-title {
+      font-weight: 700;
+      font-size: 1.15rem;
+    }
+
+    .progress-percent {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .progress-bar-bg {
+      background: var(--bg-card-subtle);
+      height: 12px;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+    }
+
+    .progress-bar-fill {
+      background: linear-gradient(90deg, var(--primary) 0%, #D9532F 100%);
+      height: 100%;
+      width: 68%;
+      border-radius: 6px;
+      transition: width 0.5s ease;
+    }
+
+    /* Highlights Box */
+    .highlight-box {
+      background: var(--bg-card);
+      border: 2px solid var(--primary);
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      position: relative;
+    }
+
+    .highlight-badge {
+      position: absolute;
+      top: -12px;
+      left: 1.5rem;
+      background: var(--primary);
+      color: #fff;
+      font-family: var(--font-heading);
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 0.15rem 0.75rem;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    .insights-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      margin-top: 0.5rem;
+    }
+
+    .insight-card {
+      background: var(--primary-light);
+      border: 1px solid rgba(166, 61, 28, 0.2);
+      border-radius: 8px;
+      padding: 1rem;
+    }
+
+    .insight-card h4 {
+      font-family: var(--font-heading);
+      font-size: 1.05rem;
+      color: var(--primary);
+      margin-bottom: 0.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .insight-card p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Grid Layout */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    @media (max-width: 840px) {
+      .grid-2 { grid-template-columns: 1fr; }
+    }
+
+    /* Card Component */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+    }
+
+    .card-title {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.6rem;
+    }
+
+    .card-title.rust { color: var(--primary); }
+    .card-title.blue { color: var(--accent); }
+    .card-title.green { color: var(--success); }
+
+    /* Deliverables Status List */
+    .status-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .status-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.65rem 0.85rem;
+      background: var(--bg-page);
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      font-size: 0.95rem;
+    }
+
+    .status-name {
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .tag {
+      font-family: var(--font-heading);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.2rem 0.55rem;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+
+    .tag.done { background: var(--success-light); color: var(--success); border: 1px solid var(--success); }
+    .tag.pending { background: var(--warning-light); color: var(--warning); border: 1px solid var(--warning); }
+    .tag.hold { background: var(--bg-card-subtle); color: var(--text-subtle); border: 1px solid var(--border-strong); }
+
+    /* Timeline Roadmap */
+    .timeline {
+      position: relative;
+      padding-left: 1.75rem;
+      margin-top: 1rem;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 6px;
+      top: 5px;
+      bottom: 5px;
+      width: 2px;
+      background: var(--border-strong);
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
+
+    .timeline-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: -1.75rem;
+      top: 4px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #fff;
+      border: 2px solid var(--border-strong);
+    }
+
+    .timeline-item.active .timeline-dot {
+      background: var(--primary);
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-light);
+    }
+
+    .timeline-item.completed .timeline-dot {
+      background: var(--success);
+      border-color: var(--success);
+    }
+
+    .timeline-date {
+      font-family: var(--font-heading);
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.15rem;
+    }
+
+    .timeline-title {
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--text-main);
+      margin-bottom: 0.25rem;
+    }
+
+    .timeline-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    /* =========================================================
+       NEW SECTION: PRESENTATION FLOW (DRAFT)
+       ========================================================= */
+    .section-presentation {
+      background: var(--bg-card);
+      border: 2px solid var(--border-strong);
+      border-radius: 12px;
+      padding: 2rem 1.75rem;
+      margin-bottom: 2.5rem;
+      position: relative;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.03);
+    }
+
+    .section-header-wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid var(--primary);
+      padding-bottom: 0.85rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .section-title {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .draft-ribbon {
+      background: var(--draft-color);
+      color: #FFFFFF;
+      font-family: var(--font-heading);
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 0.25rem 0.85rem;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+    }
+
+    .plan-lead-note {
+      background: var(--bg-card-subtle);
+      border-left: 4px solid var(--accent);
+      padding: 1rem 1.25rem;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 2rem;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+
+    /* Session Breakdown Cards */
+    .session-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .session-card {
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      background: var(--bg-card);
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .session-card:hover {
+      border-color: var(--border-strong);
+      box-shadow: 0 3px 10px rgba(0,0,0,0.04);
+    }
+
+    .session-card.break {
+      background: var(--bg-page);
+      border-style: dashed;
+    }
+
+    .session-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 1.25rem;
+      background: var(--bg-card-subtle);
+      border-bottom: 1px solid var(--border-color);
+      font-family: var(--font-heading);
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .session-num {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .session-time {
+      background: var(--bg-card);
+      border: 1px solid var(--border-strong);
+      padding: 0.2rem 0.65rem;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .session-card-body {
+      padding: 1.25rem;
+    }
+
+    .session-official-topic {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 0.75rem;
+    }
+
+    .session-flow-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      margin-top: 0.5rem;
+    }
+
+    .session-flow-item {
+      position: relative;
+      padding-left: 1.5rem;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+
+    .session-flow-item::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: var(--primary);
+      font-weight: bold;
+    }
+
+    .session-flow-item strong {
+      color: var(--text-main);
+    }
+
+    .flow-time-pill {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      background: var(--accent-light);
+      color: var(--accent);
+      padding: 0.1rem 0.4rem;
+      border-radius: 4px;
+      margin-right: 0.4rem;
+      font-weight: 600;
+    }
+
+    .highlight-pill {
+      background: #FEF3C7;
+      color: #92400E;
+      border: 1px solid #FCD34D;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: inline-block;
+      margin-top: 0.35rem;
+    }
+
+    /* Code block */
+    pre, code {
+      font-family: var(--font-mono);
+      white-space: pre !important;
+    }
+
+    .code-pill {
+      background: var(--bg-card-subtle);
+      border: 1px solid var(--border-color);
+      padding: 0.1rem 0.35rem;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      color: var(--primary);
+    }
+
+    footer {
+      margin-top: 2.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border-color);
+      font-size: 0.85rem;
+      color: var(--text-subtle);
+      text-align: center;
+      font-family: var(--font-heading);
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Header -->
+  <header>
+    <div class="header-title">
+      <h1>📊 แดชบอร์ดความคืบหน้า & ร่างแผนการนำเสนอ (AI Training 2569)</h1>
+      <p>การจัดทำหลักสูตร, เว็บไซต์สื่อการสอน, คลัง Prompt และโครงร่างลำดับการบรรยาย</p>
+    </div>
+    <div class="header-badges">
+      <span class="badge-draft">📝 DRAFT (ร่างแผน)</span>
+      <span class="badge-date">📅 กำหนดการอบรม: 29 สิงหาคม 2569</span>
+    </div>
+  </header>
+
+  <!-- Overall Progress -->
+  <div class="overall-progress-card">
+    <div class="progress-header">
+      <span class="progress-title">ภาพรวมความพร้อมโครงการ (Overall Readiness)</span>
+      <span class="progress-percent">68%</span>
+    </div>
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill"></div>
+    </div>
+    <p style="font-size: 0.85rem; color: var(--text-subtle); margin-top: 0.6rem;">
+      *เอกสารราชการ, โครงสร้าง 3 เครื่องมือ, เว็บไซต์ 166 Prompts, 3 เสาหลักฐานคิด และร่างแผนจัดสรรเวลานิ่งแล้ว — สไลด์บรรยาย (Marp) และบทพูดจริงรอทำขั้นสุดท้าย
+    </p>
+  </div>
+
+  <!-- =========================================================
+       SECTION: PRESENTATION TIME ARCHITECTURE (DRAFT)
+       ========================================================= -->
+  <section class="section-presentation">
+    <div class="section-header-wrap">
+      <div class="section-title">
+        ⏱️ ร่างแผนการนำเสนอ & การจัดสรรเวลา 10 ช่วง (Presentation Flow — DRAFT)
+      </div>
+      <span class="draft-ribbon">DRAFT กันลืม • อิงตามตาราง docx</span>
+    </div>
+
+    <div class="plan-lead-note">
+      <strong>📌 หลักการออกแบบการนำเสนอ:</strong> ผสาน <strong>3 เสาหลักฐานคิด</strong> (คุยถูกทาง-วางงานถูกตัว-ตรวจชัวร์) และ <strong>ทางลัดสมการคณิต (LaTeX)</strong> เข้ากับตารางทางการ 10 ช่วง โดยเน้นสาธิตสดจากเว็บคลัง Prompt และให้ครูลงมือปฏิบัติจริง
+    </div>
+
+    <div class="session-list">
+
+      <!-- Slot 1: Registration -->
+      <div class="session-card break">
+        <div class="session-card-header">
+          <span class="session-num">📋 ช่วงที่ 1: การลงทะเบียน</span>
+          <span class="session-time">08:00 – 08:30 น. (30 นาที)</span>
+        </div>
+        <div class="session-card-body">
+          <div class="session-official-topic">การลงทะเบียนเข้าร่วมการอบรม</div>
+          <p style="font-size: 0.9rem; color: var(--text-muted);">
+            ครูลงทะเบียนรับเอกสาร แผ่นพับ Cheat-sheet และรับสติกเกอร์ QR Code สำหรับเปิดเว็บไซต์คลัง Prompt บนสมาร์ตโฟนหรือแท็บเล็ต
+          </p>
+        </div>
+      </div>
+
+      <!-- Slot 2: Orientation -->
+      <div class="session-card">
+        <div class="session-card-header">
+          <span class="session-num">🎤 ช่วงที่ 2: พิธีเปิด & ปฐมนิเทศ</span>
+          <span class="session-time">08:30 – 09:00 น. (30 นาที)</span>
+        </div>
+        <div class="session-card-body">
+          <div class="session-official-topic">พิธีเปิดการอบรม และการปฐมนิเทศ (แนะนำวิทยากร กติกาการอบรม และการเตรียมบัญชีผู้ใช้งาน)</div>
+          <ul class="session-flow-list">
+            <li class="session-flow-item">
+              <span class="flow-time-pill">08:30 - 08:40 (10m)</span>
+              <strong>พิธีเปิด & Ice Breaking:</strong> ผอ.กล่าวเปิด + วิทยากรชวนคุยหยั่งเชิง <em>"ใครเคยใช้ AI แล้วมันตอบมั่วบ้าง?"</em> สร้างความผ่อนคลาย
+            </li>
+            <li class="session-flow-item">
+              <span class="flow-time-pill">08:40 - 08:55 (15m)</span>
+              <strong>เสาที่ 1 — ปรับ Mindset ให้เข้าใจธรรมชาติของ AI:</strong>
+              • <strong>Text vs Scan:</strong> AI กินข้อความดิบเป็นอาหาร ทำไมรูปสแกนเบลอๆ ถึงหลอน<br>
+              • <strong>1 งาน = 1 แชทใหม่:</strong> กฎล้างกระดาน ไม่คุยทุกวิชาในห้องเดียว<br>
+              • <strong>เปิดตัวเว็บคลัง Prompt (<span class="code-pill">site/prompts.html</span>):</strong> ให้ครูสแกน QR Code เข้าเว็บเพื่อเตรียมกดคัดลอก
+            </li>
+            <li class="session-flow-item">
+              <span class="flow-time-pill">08:55 - 09:00 (5m)</span>
+              <strong>เช็คความพร้อมเครื่อง & บัญชี:</strong> ทุกคนเปิด <span class="code-pill">gemini.google.com</span> ด้วย Gmail พร้อมใช้งาน
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Slot 3: Gemini -->
+      <div class="session-card">
+        <div class="session-card-header">
+          <span class="session-num">💡 ช่วงที่ 3: Gemini & การจัดทำแผน/ข้อสอบ</span>
+          <span class="session-time">09:00 – 10:15 น. (75 นาที)</span>
+        </div>
+        <div class="session-card-body">
+          <div class="session-official-topic">การใช้เครื่องมือ Gemini ในการเขียนคำสั่ง (Prompt) ภาษาไทย และการประยุกต์ใช้ AI ในการจัดทำแผนการสอน ข้อสอบ และใบงาน</div>
+          <ul class="session-flow-list">
+            <li class="session-flow-item">
+              <span class="flow-time-pill">09:00 - 09:20 (20m)</span>
+              <strong>สูตร Prompt & ลองของจริง:</strong> โครงสร้าง บทบาท-บริบท-ภารกิจ-รูปแบบ + วิทยากรพาเปิดเว็บคลัง Prompt กด <em>[คัดลอก]</em> วางใน Gemini และสั่งคุยต่อ (Iterative Refinement)
+            </li>
+            <li class="session-flow-item">
+              <span class="flow-time-pill">09:20 - 09:45 (25m)</span>
+              <strong>Workshop จับคู่ทำแผน & ข้อสอบ:</strong> ครูทุกคนทำ 1) แผนสอน Active Learning 1 คาบ 2) ข้อสอบ 5 ข้อพร้อมเฉลยละเอียดและเหตุผลตัวลวง
+            </li>
+            <li class="session-flow-item">
+              <span class="flow-time-pill">09:45 - 10:05 (20m)</span>
+              <strong>💥 ไฮไลต์เด็ด: การแปลงสมการคณิตศาสตร์และตารางลง Word:</strong><br>
+              • <strong>Word ในคอม:</strong> กด <span class="code-pill">Alt + =</span> ➔ วางโค้ด LaTeX ➔ Enter ได้สมการแท้ทันที<br>
+              • <strong>Word Online:</strong> วางโค้ด ➔ คลุมดำข้อความ ➔ กดเมนู <span class="code-pill">แทรก ➔ สมการ</span><br>
+              • เทคนิค Copy ตารางจาก Gemini วางลง Word / Google Docs ไม่พัง
+              <div class="highlight-pill">📐 ปลดล็อกจุดตายครูคณิต-วิทย์</div>
+            </li>
+            <li class="session-flow-item">
+              <span class="flow-time-pill">10:05 - 10:15 (10m)</span>
+              <strong>สรุปบทเรียนช่วงเช้า & Q&A สั้นๆ ก่อนเบรก</strong>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Slot 4: Break Morning -->
+      <div class="session-card break">
+        <div class="session-card-header">
+          <span class="session-num">☕ ช่วงที่ 4: พักรับประทานอาหารว่าง</span>
+          <span class="session-time">10:15 – 10:30 น. (15 นาที)</span>
+        </div>
+        <div class="session-card-body">
+          <div class="session-official-topic">พักรับประทานอาหารว่าง (Morning Break)</div>
+        </div>
+      </div>
+
+      <!-- Slot 5: Canva -->
+      <div class="session-card">
+        <div class="session-card-header">
+          <span class="session-num">🎨 ช่วงที่ 5: Canva & การสร้างสื่อประกอบการสอน</span>
+          <span class="session-time">10:30 – 12:00 น. (90 นาที)</span>
+        </div>
+        <div class="session-card-body">
+          <div class="session-official-topic">การใช้เครื่องมือ Canva ในการสร้างสื่อและเอกสารประกอบการสอน (การใช้แม่แบบ การสร้างภาพ และการตัดพื้นหลัง)</div>
+          <ul class="session-flow-list">
+            <li class="session-flow-item">
+              <span class="flow-time-pill">10:30 - 10:45 (15m)</span>
+              <strong>เสาที่ 2 — กฎเหล็กของภาพ AI:</strong> เผยหลุมพราง <em>"อย่าสั่ง AI วาดตัวหนังสือไทยในภาพ"</em> ให้สั่งเจนเฉพาะภาพพื้นหลัง/การ์ตูนเปล่า แล้วนำข้อความจาก Gemini มาใส่ใน Canva
+            </li>
+            <li class="session-flow-item">
+              <span class="flow-time-pill">10:45 - 11:15 (30m)</span>
+              <strong>Magic Studio & ตกแต่งสื่อ:</strong> การเลือก Template ใบงาน/สไลด์, Magic Media (Text to Image), ลบพื้นหลัง (BG Remover) และลบส่วนเกิน (Magic Eraser)
+            </li>
+            <li class="session-flow-item">
+              <span class="flow-time-pill">11:15 - 11:35 (20m)</span>
+              <strong>💥 ไฮไลต์ Canva: ใส่สมการคณิตด้วยแอป "Math (สมการ)":</strong><br>
+              พาเปิดเมนู <em>แอป ➔ Math</em> วางโค้ด LaTeX ได้สมการเวกเตอร์คมกริบ ขยายไม่แตก พื้นหลังใส
+              <div class="highlight-pill">🎨 เวกเตอร์สมการในสไลด์/ใบงาน</div>
+            </li>
+            <li class="session-flow-item">
+              <span class="flow-time-pill">11:35 - 12:00 (25m)</span>
+              <strong>ลองทำจริง:</strong> นำข้อสอบ/แผนจากช่วงเช้า มาจัดหน้าใบงานหรือสไลด์สอน 1 แผ่น
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Slot 6: Lunch -->
+      <div class="session-card break">
+        <div class="session-card-header">
+          <span class="session-num">🍱 ช่วงที่ 6: พักรับประทานอาหารกลางวัน</span>
+          <span class="session-time">12:00 – 13:00 น. (60 นาที)</span>
+        </div>
+        <div class="session-card-body">
+          <div class="session-official-topic">รับประทานอาหารกลางวัน (Lunch Break)</div>
+        </div>
+      </div>
+
+      <!-- Slot 7: NotebookLM -->
+      <div class="session-card">
+        <div class="session-card-header">
+          <span class="session-num">📚 ช่วงที่ 7: NotebookLM & สรุปรายงาน/เสียง</span>
+          <span class="session-time">13:00 – 14:15 น. (75 นาที)</span>
+        </div>
+        <div class="session-card-body">
+          <div class="session-official-topic">การใช้เครื่องมือ Gemini Notebook (NotebookLM) ในการสรุปเอกสารและรายงาน และการสร้างเสียงสรุปเอกสาร (Audio Overview)</div>
+          <ul class="session-flow-list">
+            <li class="session-flow-item">
+              <span class="flow-time-pill">13:00 - 13:15 (15m)</span>
+              <strong>เสาที่ 3 — ทำไมต้อง NotebookLM? (สมองอิงตำราห้ามมั่ว):</strong> จุดเด่น Zero Hallucination อิงเนื้อหาจากเอกสารที่เราอัปโหลด 100% (หลักสูตรแกนกลาง / ว.PA / ตำรา)
+            </li>
+            <li class="session-flow-item">
+              <span class="flow-time-pill">13:15 - 13:45 (30m)</span>
+              <strong>สาธิต 3 ท่าเด็ด:</strong><br>
+              1. สกัดข้อสอบจากตำราเรียน พร้อมระบุเลขหน้าอ้างอิง<br>
+              2. สรุปเกณฑ์ ว.PA / รายงาน SAR 50 หน้า เหลือสรุป 1 หน้า<br>
+              3. สร้าง <strong>Audio Overview (พอดแคสต์สรุปบทเรียน)</strong> เปิดเสียงคุยสรุปให้ครูฟัง (Wow Factor)
+            </li>
+            <li class="session-flow-item">
+              <span class="flow-time-pill">13:45 - 14:15 (30m)</span>
+              <strong>ครูทดลองเล่นกับเอกสารของตัวเอง:</strong> อัปโหลด PDF แผนการสอน/ชีทเรียน 1 ไฟล์ แล้วสั่งทำ Study Guide หรือ FAQ
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Slot 8: Break Afternoon -->
+      <div class="session-card break">
+        <div class="session-card-header">
+          <span class="session-num">☕ ช่วงที่ 8: พักรับประทานอาหารว่าง</span>
+          <span class="session-time">14:15 – 14:30 น. (15 นาที)</span>
+        </div>
+        <div class="session-card-body">
+          <div class="session-official-topic">พักรับประทานอาหารว่าง (Afternoon Break)</div>
+        </div>
+      </div>
+
+      <!-- Slot 9: AI Speedrun -->
+      <div class="session-card" style="border: 2px solid var(--primary);">
+        <div class="session-card-header" style="background: var(--primary-light);">
+          <span class="session-num" style="color: var(--primary);">🚀 ช่วงที่ 9: ปฏิบัติการ AI Speedrun (80 นาที)</span>
+          <span class="session-time" style="border-color: var(--primary);">14:30 – 15:50 น. (80 นาที)</span>
+        </div>
+        <div class="session-card-body">
+          <div class="session-official-topic">การฝึกปฏิบัติการสร้างสื่อการเรียนการสอนอย่างครบวงจรด้วยเครื่องมือ AI และการนำเสนอผลงาน</div>
+          <ul class="session-flow-list">
+            <li class="session-flow-item">
+              <span class="flow-time-pill">14:30 - 14:40 (10m)</span>
+              <strong>ปล่อยโจทย์ Speedrun Challenge:</strong> สร้างชุดสื่อการสอน 1 เรื่อง โดยผสาน 3 เครื่องมือ (Prompt ➔ Gemini/NotebookLM ➔ Canva ➔ แปะส่ง Padlet)
+            </li>
+            <li class="session-flow-item">
+              <span class="flow-time-pill">14:40 - 15:25 (45m)</span>
+              <strong>ลงมือทำจริง (Hackathon Mode):</strong> ครูนั่งทำสื่อจริง วิทยากรและผู้ช่วยเดินประกบช่วยแก้ปัญหาหน้างาน
+            </li>
+            <li class="session-flow-item">
+              <span class="flow-time-pill">15:25 - 15:50 (25m)</span>
+              <strong>Showcase & Feedback:</strong> เปิด Padlet ขึ้นจอใหญ่ สุ่ม/เชิญตัวแทนกลุ่มสาระฯ เล่าไอเดีย 2 นาที วิทยากรเติมเต็มข้อเสนอแนะ
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Slot 10: Ethics & Closing -->
+      <div class="session-card">
+        <div class="session-card-header">
+          <span class="session-num">🛡️ ช่วงที่ 10: จริยธรรม, PDPA & ปิดการอบรม</span>
+          <span class="session-time">15:50 – 16:00 น. (10 นาที)</span>
+        </div>
+        <div class="session-card-body">
+          <div class="session-official-topic">การสรุปแนวปฏิบัติการใช้ AI อย่างรู้เท่าทันและเหมาะสม และพิธีปิดการอบรม</div>
+          <ul class="session-flow-list">
+            <li class="session-flow-item">
+              <span class="flow-time-pill">15:50 - 15:55 (5m)</span>
+              <strong>เสาที่ 3 (ต่อ) — จริยธรรม & PDPA:</strong> กฎตัดชื่อจริง/คะแนนเด็กก่อนส่ง AI + ครูคือผู้รับผิดชอบผลผลิตคนสุดท้าย + มอบหมาย <strong>ใบงาน Take-home (W4 นวัตกรรม)</strong> สำหรับครูที่ต้องการทำ ว.PA
+            </li>
+            <li class="session-flow-item">
+              <span class="flow-time-pill">15:55 - 16:00 (5m)</span>
+              <strong>ประเมินผลการอบรม, ถ่ายภาพร่วมกัน และพิธีปิด</strong>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Highlights / Newly Added Insights -->
+  <div class="highlight-box">
+    <div class="highlight-badge">💡 สรุปความเชื่อมโยงของฐานคิด (Core Insights)</div>
+    
+    <div class="insights-grid">
+      
+      <!-- Card 1 -->
+      <div class="insight-card">
+        <h4>🏛️ 3 เสาหลักฐานคิด (Golden Rules)</h4>
+        <p>
+          ยุบรวมเรื่องเทคนิคให้เหลือ 3 เสาจำง่าย: 
+          <strong>1) คุยให้ถูกทาง</strong> (Text vs Scan, 1 งาน 1 แชท, Copy จากเว็บ Prompt) 
+          <strong>2) วางงานให้ถูกตัว</strong> (Gemini/NotebookLM ➔ Canva) 
+          <strong>3) ตรวจให้ชัวร์</strong> (Verification 3 ด้าน + PDPA)
+        </p>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="insight-card">
+        <h4>📐 ทางลัดสมการคณิต & วิทย์ (LaTeX)</h4>
+        <p>
+          แก้จุดตายของครูสายคำนวณ: 
+          • <strong>Word ในคอม:</strong> <span class="code-pill">Alt + =</span> ➔ วางโค้ด ➔ Enter<br>
+          • <strong>Word Online:</strong> วางโค้ด ➔ คลุมดำ ➔ กดปุ่ม Equation<br>
+          • <strong>Canva:</strong> ใช้แอป <em>Math (สมการ)</em> ในตัว ได้สมการเวกเตอร์คมกริบ<br>
+          • <strong>Google Docs:</strong> แนะนำเสริม <em>Auto-LaTeX</em>
+        </p>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="insight-card">
+        <h4>⚡ ลำดับงาน: สไลด์ไว้ท้ายสุด</h4>
+        <p>
+          ชะลอการทำสไลด์ (<span class="code-pill">slides.md</span>) และบทพูด (<span class="code-pill">facilitator-script.md</span>) ไว้เป็นขั้นตอนสุดท้าย เพื่อให้โครงสร้างเนื้อหาและตัวอย่างคำสั่งนิ่ง 100% ก่อนเรนเดอร์จริง
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 2 Columns: Status Matrix & Timeline Roadmap -->
+  <div class="grid-2">
+
+    <!-- Column 1: Deliverables Status Matrix -->
+    <div class="card">
+      <h3 class="card-title rust">📁 สถานะชิ้นงานและเอกสาร (Deliverables)</h3>
+      <ul class="status-list">
+        
+        <li class="status-item">
+          <span class="status-name">📄 กำหนดการทางการ (.docx / .pdf)</span>
+          <span class="tag done">100% สมบูรณ์</span>
+        </li>
+
+        <li class="status-item">
+          <span class="status-name">🧭 โครงสร้าง 3 เครื่องมือ (Tool-based Outline)</span>
+          <span class="tag done">100% สมบูรณ์</span>
+        </li>
+
+        <li class="status-item">
+          <span class="status-name">🌐 เว็บไซต์ & คลัง 166 Prompts (HTML Site)</span>
+          <span class="tag done">100% สมบูรณ์</span>
+        </li>
+
+        <li class="status-item">
+          <span class="status-name">🎞️ สื่อภาพ GIF สาธิตการกดคำสั่ง Canva</span>
+          <span class="tag done">100% สมบูรณ์</span>
+        </li>
+
+        <li class="status-item">
+          <span class="status-name">📝 ร่างแผนการนำเสนอ 10 ช่วง & ทางลัดสมการ LaTeX</span>
+          <span class="tag done">100% ร่างแล้ว</span>
+        </li>
+
+        <li class="status-item">
+          <span class="status-name">🚀 Deploy เว็บไซต์ขึ้น GitHub Pages + QR Code</span>
+          <span class="tag pending">รอ Upload</span>
+        </li>
+
+        <li class="status-item">
+          <span class="status-name">🖥️ สไลด์นำเสนอ Marp (slides.md / .pdf)</span>
+          <span class="tag hold">Hold ไว้ทำท้ายสุด</span>
+        </li>
+
+        <li class="status-item">
+          <span class="status-name">🎙️ สคริปต์วิทยากรคุม Speedrun 80 นาที</span>
+          <span class="tag hold">Hold ไว้ทำท้ายสุด</span>
+        </li>
+
+      </ul>
+    </div>
+
+    <!-- Column 2: Timeline Roadmap -->
+    <div class="card">
+      <h3 class="card-title blue">🗺️ ไทม์ไลน์โครงการ (Timeline Roadmap)</h3>
+      
+      <div class="timeline">
+        
+        <!-- Phase 1 -->
+        <div class="timeline-item completed">
+          <div class="timeline-dot"></div>
+          <div class="timeline-date">11 – 13 สิงหาคม 2569 (เสร็จสิ้น)</div>
+          <div class="timeline-title">วางรากฐานหลักสูตร & พัฒนาเว็บคลัง Prompt</div>
+          <div class="timeline-desc">
+            โต๊ะกลมเลือก 3 เครื่องมือ (Gemini, Canva, NotebookLM), ปรับกำหนดการทางการ 10 ช่วง, พัฒนาเว็บไซต์ HTML 4 หน้า พร้อมคลัง Prompt 166 รายการ และสร้าง GIF สาธิต
+          </div>
+        </div>
+
+        <!-- Phase 2 -->
+        <div class="timeline-item active">
+          <div class="timeline-dot"></div>
+          <div class="timeline-date">15 สิงหาคม 2569 (วันนี้ — อยู่ระหว่างดำเนินการ)</div>
+          <div class="timeline-title">ตกผลึกฐานคิด & จัดทำร่างแผนการนำเสนอ 10 ช่วง</div>
+          <div class="timeline-desc">
+            สรุป 3 เสาหลักฐานคิด, ทางลัดสมการ LaTeX (Word/Canva/Docs) และลงรายละเอียดการจัดสรรเวลา 10 ช่วงอิงตามเอกสารทางการ
+          </div>
+        </div>
+
+        <!-- Phase 3 -->
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-date">16 – 20 สิงหาคม 2569 (เป้าหมายถัดไป)</div>
+          <div class="timeline-title">Deploy เว็บไซต์ & เตรียมสรุปสไลด์เนื้อหา</div>
+          <div class="timeline-desc">
+            นำเว็บไซต์ขึ้น GitHub Pages, สร้าง QR Code แจกในห้อง, อัปเดต Cheat-sheet ฉบับ 1 หน้าสำหรับพิมพ์แจก
+          </div>
+        </div>
+
+        <!-- Phase 4 -->
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-date">21 – 25 สิงหาคม 2569</div>
+          <div class="timeline-title">สไลด์จริง (Marp) & สคริปต์วิทยากร 80 นาที</div>
+          <div class="timeline-desc">
+            ร่างสไลด์ฉบับสมบูรณ์ (Marp ➔ HTML/PDF), เขียนสคริปต์และวิธีคุมเวลาช่วง AI Speedrun 80 นาที และซักซ้อมจุด Wow Moment
+          </div>
+        </div>
+
+        <!-- Phase 5 -->
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-date">29 สิงหาคม 2569</div>
+          <div class="timeline-title">🎉 วันจัดอบรมจริง (Workshop Day)</div>
+          <div class="timeline-desc">
+            ดำเนินการอบรมตามกำหนดการ 8:30 - 16:00 น.
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>AI Training School Project • Generated by Hermes (teaching-orchestrated) • SubwatG Vault</p>
+  </footer>
+
+</div>
+
+</body>
+</html>

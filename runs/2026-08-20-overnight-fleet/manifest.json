@@ -1,0 +1,27 @@
+{
+  "started_at": "2026-08-20T20:54:30.755634",
+  "tasks": [
+    {
+      "id": "task-01-obe-clo-rubrics",
+      "profile": "stepfun-free",
+      "status": "COMPLETED",
+      "output_file": "/home/kitti/Projects/Activities-me/ai-training-school/runs/2026-08-20-overnight-fleet/staging/task-01-obe-clo-rubrics.raw.md",
+      "log_file": "/home/kitti/Projects/Activities-me/ai-training-school/runs/2026-08-20-overnight-fleet/logs/task-01-obe-clo-rubrics.log"
+    },
+    {
+      "id": "task-02-image-prompts-matrix",
+      "profile": "openrouter",
+      "status": "COMPLETED",
+      "output_file": "/home/kitti/Projects/Activities-me/ai-training-school/runs/2026-08-20-overnight-fleet/staging/task-02-image-prompts-matrix.raw.md",
+      "log_file": "/home/kitti/Projects/Activities-me/ai-training-school/runs/2026-08-20-overnight-fleet/logs/task-02-image-prompts-matrix.log"
+    },
+    {
+      "id": "task-03-math-science-bridge",
+      "profile": "stepfun-free",
+      "status": "COMPLETED",
+      "output_file": "/home/kitti/Projects/Activities-me/ai-training-school/runs/2026-08-20-overnight-fleet/staging/task-03-math-science-bridge.raw.md",
+      "log_file": "/home/kitti/Projects/Activities-me/ai-training-school/runs/2026-08-20-overnight-fleet/logs/task-03-math-science-bridge.log"
+    }
+  ],
+  "finished_at": "2026-08-20T21:03:25.859981"
+}

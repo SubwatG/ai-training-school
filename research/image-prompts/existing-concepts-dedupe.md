@@ -1,0 +1,126 @@
+# Existing Image-Related Concepts in prompts-data.json (DO NOT duplicate)
+
+- `thai-ai-prompt-03` | แปลงบทเรียนวิทยาศาสตร์เป็นนิทาน | tools: Gemini
+- `thai-ai-prompt-04` | สร้างใบงานวิทยาศาสตร์แบบ 3 ส่วน | tools: Canva,Gemini
+- `thai-ai-prompt-05` | สร้างโจทย์ปัญหาคณิตศาสตร์แบบ 3 ระดับ | tools: Gemini
+- `thai-ai-prompt-06` | สร้างใบงานภาษาอังกฤษคำศัพท์ (Vocabulary) | tools: Gemini
+- `thai-ai-prompt-08` | สร้างเกม Quiz ทบทวนบทเรียน | tools: Gemini
+- `th-teacher-differentiated-3tiers` | เครื่องมือสร้างกิจกรรมแยกตามระดับความสามารถ 3 ระดับ (Differentiated Activity Generator) | tools: Gemini
+- `th-teacher-reading-differentiation` | เครื่องมือแยกบทอ่านเป็น 3 ระดับ (Differentiation Engine - Text Rewriting) | tools: Gemini
+- `th-teacher-vocab-explainer` | สร้างคู่มือศัพท์และแนวคิดสำคัญสำหรับนักเรียน (Vocabulary & Concept Explainer) | tools: Gemini
+- `th-teacher-reportcard-comment` | เขียนคำแนะนำในใบรายงานผล (Report Card Comment Writer) | tools: Gemini
+- `th-teacher-canva-image` | สร้างภาพสื่อการสอนสำหรับ Canva/Gemini (Infographic/Poster Image Prompt) | tools: Canva,Gemini
+- `interactive-html-sim-006` | เกมจับคู่คำศัพท์ภาษาอังกฤษ–ภาษาไทยแบบลากวาง | tools: ChatGPT
+- `interactive-worksheet-01` | แบบฝึกหัด HTML เช็คคำตอบอัตโนมัติพร้อมสะสมคะแนน | tools: Gemini
+- `rubric-interactive-02` | รูบริกแบบโต้ตอบสำหรับประเมินผลงานด้วยตัวเอง (Self-Assessment Rubric) | tools: Gemini
+- `svg-process-diagram-03` | แผนภาพกระบวนการ SVG แบบเคลื่อนไหว (Animated Process/Flow Diagram) | tools: Gemini
+- `svg-timeline-history-04` | เส้นเวลาแบบโต้ตอบ (Interactive Timeline) สำหรับประวัติศาสตร์/วิวัฒนาการ | tools: Gemini
+- `interactive-quiz-mcq-05` | แบบทดสอบ MCQ ทัสน์เดียวให้ผลป้อนกลับรายข้อ (Self-Checking Quiz) | tools: Gemini
+- `fill-blank-dragdrop-06` | แบบฝึกเติมคำและลากวาง (Fill-in-the-blank & Drag-and-drop) เช็คเองได้ | tools: Gemini
+- `svg-concept-illustration-07` | ภาพประกอบแนวคิด SVG แบบชั้นเชิงและโต้ตอบ (Clickable Concept Diagram for STEM) | tools: Gemini
+- `math-steps-checker-08` | เครื่องตรวจวิธีทำคณิตศาสตร์ทีละขั้น (Step-by-Step Math Checker) | tools: Gemini
+- `svg-animation-physics-09` | ซิมูเลชันฟิสิกส์พื้นฐาน + แผนภาพเคลื่อนไหว (Basic Physics Motion Animation) | tools: Gemini
+- `interactive-rubric-peer-feedback-10` | แบบฟอร์มประเมินเพื่อน (Peer-Feedback) แบบโต้ตอบ + สรุปอัตโนมัติ | tools: Gemini
+- `canva-worksheet-11` | ใบงานแบบพิมพ์ได้ (printable) ด้วย Canva Prompt ที่ปรับแต่งง่าย | tools: Canva
+- `notebooklm-source-exam-12` | สร้างข้อสอบ/แบบฝึกหัดแบบโต้ตอบจาก source ใน NotebookLM | tools: NotebookLM
+- `lang-02` | ปรับระดับข้อความอ่านตามกรอบ CEFR | tools: Claude,Gemini,ChatGPT
+- `lang-08` | ใบงานภาษาไทยแบบ Active Learning (ป.1-3) | tools: Gemini,ChatGPT
+- `lang-09` | นิทานภาพและแฟลชการ์ดเพื่อการเรียนรู้สำหรับปฐมวัย | tools: Gemini,Claude
+- `lang-14` | แปลงเสียงอ่านและสร้างสื่อการออกเสียงภาษาอังกฤษ (Phonics Reader) | tools: Claude,ChatGPT
+- `arts-music-01` | Arts Creative Project Builder (project-based) | tools: Gemini
+- `parent-newsletter` | จัดทำจดหมายข่าวประจำเดือนถึงผู้ปกครอง | tools: Canva,Gemini,ChatGPT
+- `positive-student-report` | เขียนรายงานผลเชิงบวกของนักเรียนรายบุคคลถึงผู้ปกครอง | tools: Gemini,ChatGPT
+- `parent-conversation-bridge` | เตรียมบทสนทนาคุยกับผู้ปกครองเรื่องพัฒนาการของนักเรียน | tools: Gemini,ChatGPT
+- `P10` | Clean Educational Illustration Optimizer | tools: Gemini
+- `P11` | Transparent-Background Asset Creator | tools: Gemini
+- `P12` | Scientific-Diagram Accuracy Guard | tools: Gemini
+- `P13` | Canva Infographic Layout Concept Builder | tools: Gemini
+- `P17` | STEM / Coding / Robotics UDL-Adapted Prompt (any of the above) | tools: Gemini
+- `canva-magic-slides-01` | สร้างสไลด์สรุปบทเรียนด้วย Magic Design | tools: Canva
+- `canva-magic-slides-03` | สร้างสไลด์แบบมีปฏิสัมพันธ์ (Interactive Quiz) สำหรับทบทวนก่อนสอบ | tools: Canva
+- `canva-magic-infographic-01` | อินโฟกราฟิกสรุปบทเรียนหนึ่งหน้า | tools: Canva
+- `canva-magic-infographic-02` | อินโฟกราฟิกเปรียบเทียบข้อมูล (ก่อน-หลัง / ข้อดี-ข้อเสีย) | tools: Canva
+- `canva-magic-flashcards-01` | สร้างชุดแฟลชการ์ดคำศัพท์โดยอัตโนมัติ | tools: Canva
+- `canva-magic-media-01` | สร้างภาพประกอบโปสเตอร์ห้องเรียนด้วย Magic Media (Text-to-Image) | tools: Canva
+- `canva-magic-media-02` | สร้างภาพ Illustrator-style สำหรับการ์ตูนอธิบายบทเรียน | tools: Canva
+- `canva-magic-switch-01` | แปลงสไลด์บทเรียนเป็นโปสเตอร์ (Slides to Poster) ด้วย Magic Switch | tools: Canva
+- `canva-magic-switch-02` | แปลสไลด์/เอกสารเป็นภาษาไทยหรือภาษาอังกฤษด้วย Magic Switch | tools: Canva
+- `canva-magic-switch-03` | ดัดแปลงสื่อเดียวเป็นหลายรูปแบบ (สไลด์/โปสเตอร์/อินโฟกราฟิก/หน้าจอโซเชียล) | tools: Canva
+- `canva-brand-kit-01` | กำหนดจานสีและฟอนต์ประจำชั้นเรียน/วิชาให้สม่ำเสมอ | tools: Canva
+- `canva-brand-kit-02` | เวิร์กช็อปออกแบบโปสเตอร์/โลโก้ประจำวิชารวมทั้งชั้น | tools: Canva
+- `canva-class-website-home` | สร้างเว็บวิชาหลัก (Class Website) แบบหน้าเดียวจบสำหรับรายวิชา | tools: Canva
+- `canva-event-workshop-landing` | Landing Page ประกาศงานอบรม/เวิร์กช็อปที่เน้นยอดลงทะเบียน | tools: Canva
+- `canva-course-intro-video` | วิดีโอสั้นเกริ่นนำบทเรียน (Lesson Intro) แบบ Reels/Shorts ดึงความสนใจ | tools: Canva
+- `canva-recruit-explainable-short` | วิดีโอสั้นอธิบายคอนเซปต์ยาก (Explainer) แบบอนิเมชันสำหรับหลักสถิติ/คณิต | tools: Canva
+- `canva-animated-banner-header` | แบนเนอร์อนิเมต/Header GIF สำหรับหน้าเว็บ ห้องเรียน หรืออีเมลกลาง | tools: Canva
+- `canva-classroom-rules-page` | หน้าเว็บแนะนำห้องเรียนและกติกา (Classroom Orientation & Rules) ที่รับชมได้จริง | tools: Canva
+- `canva-selection-week-carousel` | สอนสร้างเว็บ 'Carousel/ไทม์ไลน์' แสดงสิ่งสำคัญของห้องทั้งเทอมเป็นภาพ | tools: Canva
+- `design-system-layout-palette-01` | ระบบชุดสี + โครงสร้าง Layout สำหรับสื่อการสอน (Design System) | tools: Gemini,Canva
+- `editorial-paper-ink-generator-02` | กราฟิกสไตล์บรรณาธิการแบบกระดาษ/หมึกพิมพ์ ถนอมสายตา | tools: Gemini,Canva
+- `minimalist-vector-icon-diagram-03` | ไอคอนและองค์ประกอบไดอะแกรมแบบเวกเตอร์ Minimal | tools: Gemini,Canva
+- `flat-vector-science-math-diagram-04` | ไดอะแกรม Flat Vector สำหรับกระบวนการวิทยาศาสตร์/คณิตศาสตร์ | tools: Gemini,Canva
+- `isometric-3d-educational-scene-05` | ภาพอธิบายแนวคิดแบบ 3D Isometric สเปกชัดเจน (Educational Concept Illustration) | tools: Gemini,Canva
+- `classroom-mascot-multi-pose-06` | มาสคอตประจำห้องเรียน หลายอิริยาบถ (Character Design) | tools: Gemini,Canva
+- `hero-title-banner-generator-07` | แบนเนอร์หัวเรื่อง (Hero Banner) สำหรับเปิดบทเรียน | tools: Gemini,Canva
+- `color-palette-extractor-scheme-08` | สร้างชุดสี (Color Palette) ตามอารมณ์/หัวข้อด้วย hex | tools: Gemini,Canva
+- `flat-avatar-student-icons-09` | ไอคอนผู้เรียน/อวตาร flat สำหรับเมนูและปุ่มในแอปเรียน | tools: Gemini,Canva
+- `grayscale-worksheet-clipart-10` | ภาพประกอบขาว-ดำสำหรับใบงานที่พิมพ์ถนอมหมึก | tools: Gemini,Canva
+- `storyboard-sequence-steps-11` | สตอรีบอร์ด/ลำดับขั้นตอนแบบ 4 ช่องสำหรับการอธิบายวิธีทำ | tools: Gemini,Canva
+- `flat-icon-math-symbols-set-12` | ชุดสัญลักษณ์ทางคณิตศาสตร์/เครื่องมือ flat สำหรับสื่อ | tools: Gemini,Canva
+- `isometric-flat-campus-room-13` | ฉาก isometric ห้องเรียน/ห้องปฏิบัติการเพื่อใช้ในแผนผังและเกมเสมือน | tools: Gemini,Canva
+- `minimal-logo-caption-emblem-14` | ตราสื่อ/โลโก้เรียน เรียบง่ายพร้อมพื้นที่วางข้อความ | tools: Gemini,Canva
+- `math-latex-word-bridge` | สร้างสมการคณิตศาสตร์และวิทยาศาสตร์รูปแบบ LaTeX พร้อมวางลง Word / PPT (Alt + =) | tools: Gemini,ChatGPT
+- `math-canva-math-vector` | สร้างสูตรและโจทย์คณิตศาสตร์สำหรับ Canva Math App (Vector Display) | tools: Gemini,Canva
+- `notebooklm-audio-podcast-briefing` | เตรียมเอกสารและ Prompt สำหรับสร้าง Audio Overview (Podcast สองผู้ดำเนินรายการ) จากบทเรียน | tools: NotebookLM
+- `notebooklm-curriculum-crosscheck` | ให้ NotebookLM ตรวจสอบความสอดคล้องของข้อสอบกับตัวชี้วัดหลักสูตรแกนกลาง | tools: NotebookLM
+- `speedrun-infographic-storyboard` | สปีดรัน 15 นาที: ย่อยเนื้อหาบทเรียนเป็นโครงสร้าง 4 ช่อง สำหรับทำ Infographic ใน Canva | tools: Gemini,Canva
+- `speedrun-gemini-image-prompt-en` | เปลี่ยนไอเดียสื่อภาษาไทย เป็น Prompt ภาษาอังกฤษสำหรับสั่งสร้างภาพ AI (No Glitch / Clean Vector) | tools: Gemini,ChatGPT
+- `th-subject-social-local-history-inquiry` | ออกแบบกิจกรรมสืบเสาะประวัติศาสตร์ท้องถิ่น / ชุมชนรอบโรงเรียน (วิชาสังคมศึกษา) | tools: Gemini,ChatGPT
+- `th-subject-science-claim-evidence-reasoning` | สร้างใบกิจกรรมวิทยาศาสตร์แบบ CER (Claim - Evidence - Reasoning) พัฒนาการโต้แย้งทางวิชาการ | tools: Gemini,ChatGPT
+- `th-subject-foreign-lang-cefr-dialogue` | สร้างบทสนทนาภาษาอังกฤษจำลองสถานการณ์จริง อิงกรอบ CEFR พร้อมแบบฝึกทบทวน | tools: Gemini,ChatGPT
+- `th-subject-health-pe-first-aid-scenario` | สร้างสถานการณ์จำลองการปฐมพยาบาลและสุขบัญญัติแห่งชาติ (วิชาสุขศึกษาและพลศึกษา) | tools: Gemini,ChatGPT
+- `eng-media-flashcard-canva-story` | สร้างชุดการ์ดคำศัพท์บทสนทนา (Flashcards) สำหรับใส่ใน Canva พร้อมตัวอย่างประโยค | tools: Gemini,Canva
+- `career-media-safety-workshop-poster` | สร้างโปสเตอร์สรุป 'ความปลอดภัยในงานช่างและห้องคหกรรม' สำหรับ Canva (วิชาการงานอาชีพ) | tools: Gemini,Canva
+- `soc-media-historical-timeline-canva` | ย่อยไทม์ไลน์ประวัติศาสตร์/เหตุการณ์สำคัญโลก เป็น Infographic ลำดับเวลา (วิชาประวัติศาสตร์) | tools: Gemini,Canva
+- `art-lesson-color-theory-emotions` | ออกแบบแผนการสอน 'ทฤษฎีสีและจิตวิทยาของอารมณ์' (Color Psychology & Visual Arts) | tools: Gemini,ChatGPT
+- `art-media-color-palette-card-canva` | สร้างชุดการ์ดคู่สีและพาเลตต์อารมณ์ (Color Palette Cards) สำหรับสื่อศิลปะใน Canva | tools: Gemini,Canva
+- `art-exam-music-theory-art-history-test` | สร้างข้อสอบวัดความรู้ทฤษฎีดนตรีสากล/ดนตรีไทย และประวัติศาสตร์ศิลปะ (วิชาศิลปะ-ดนตรี) | tools: Gemini,ChatGPT
+- `eng-exam-cefr-reading-listening-comprehension` | สร้างข้อสอบภาษาอังกฤษวัดทักษะการอ่านและการฟัง (CEFR-aligned Reading & Listening Test) | tools: Gemini,ChatGPT
+- `game-prompt-memory-consonant` | สร้างเว็บเกมการเรียนรู้: จับคู่พยัญชนะ (ภาษาไทย ป.1) | tools: Gemini,Claude Code,Canva
+- `game-prompt-doodle-subtract` | สร้างเว็บเกมการเรียนรู้: กระโดดลบเลข (คณิตศาสตร์ ป.2) | tools: Gemini,Claude Code,Canva
+- `game-prompt-balloon-spell-cvc` | สร้างเว็บเกมการเรียนรู้: บอลลูนสะกดคำ (ภาษาอังกฤษ ป.2) | tools: Gemini,Claude Code,Canva
+- `game-prompt-mahjong-hanzi` | สร้างเว็บเกมการเรียนรู้: จับคู่ภาพอักษรจีน (ภาษาจีน ป.1) | tools: Gemini,Claude Code,Canva
+- `media-prompt-canva-infographic-spec` | ร่างโครงสร้างและข้อความสำหรับอินโฟกราฟิกสรุปบทเรียนใน Canva | tools: Canva,Gemini
+- `media-prompt-marp-reveal-slides` | สร้างโครงร่างสไลด์นำเสนอ Markdown สำหรับ Marp / PowerPoint | tools: Gemini,Claude Code
+- `media-prompt-math-latex-worksheet` | สร้างสูตรคณิตศาสตร์และสมการจัดรูปในรูปแบบ LaTeX สำหรับใบงาน | tools: Gemini,ChatGPT
+- `media-prompt-bilingual-flashcards` | สร้างชุดการ์ดคำศัพท์สองภาษา (Bilingual Flashcards) พร้อมคำอ่านและตัวอย่าง | tools: Gemini,Canva
+- `media-prompt-art-history-timeline-poster` | ออกแบบไทม์ไลน์วิวัฒนาการศิลปะและวัฒนธรรมไทย (Poster Timeline) | tools: Gemini,Canva
+- `career-prompt-kitchen-safety-guide` | สร้างคู่มือความปลอดภัยและสุขอนามัยในห้องปฏิบัติการอาหาร | tools: Gemini,Canva
+- `art-prompt-color-theory-activity` | ออกแบบใบกิจกรรมวงจรสีและอารมณ์ความรู้สึกของวรรณะสี | tools: Gemini,Canva
+- `pipe-gemini-canva-bulk-table` | สร้างตารางข้อมูล CSV/Markdown สำหรับฟังก์ชัน Bulk Create (สร้างจำนวนมาก) ใน Canva | tools: Gemini,Canva
+- `pipe-canva-script-to-voice` | สกัดข้อความจากสไลด์ Canva เป็นสคริปต์บรรยาย 60 วินาที (Micro-teaching Video Script) | tools: Gemini,Canva
+- `speedrun-infographic-onepage-spec` | ร่างแบบจำลองข้อความและเลย์เอาต์ Infographic 1 หน้าจบ (One-Page Cheat Sheet Spec) | tools: Gemini,Canva
+- `sped-dyslexia-visual-worksheet` | ออกแบบใบงานปรับสรีระข้อความและสัญลักษณ์นำสายตาสำหรับเด็กที่มีปัญหาการอ่าน (LD / Dyslexia) | tools: Gemini,Canva
+- `diff-bilingual-science-glossary` | สร้างพจนานุกรมคำศัพท์สองภาษา (Thai-English Science/Math Glossary) พร้อมภาพบริบท | tools: Gemini,Canva
+- `eval-concept-cartoon-discussion` | สร้างการ์ตูนความคิดถกประเด็นวิทย์-คณิต (Concept Cartoon Dilemma) | tools: Gemini,Canva
+- `thai-prompt-verse-rhyme-creator` | สร้างแบบฝึกหัดแต่งคำประพันธ์และฉันทลักษณ์ (กลอนสุภาพ/กาพย์ยานี ๑๑) | tools: Gemini
+- `art-prompt-traditional-music-instruments` | สร้างชุดการ์ดเปรียบเทียบเครื่องดนตรีไทย 4 ภาค (ดีด สี ตี เป่า) | tools: Gemini,Canva
+- `lang-prompt-email-writing-etiquette` | สร้างแม่แบบและแบบฝึกหัดการเขียนอีเมลภาษาอังกฤษเพื่อการติดต่อสื่อสาร (Formal Email Writing) | tools: Gemini
+- `nlm-prompt-audio-focus-customizer` | NotebookLM: เขียนคำสั่งกำหนดทิศทางและบทสนทนาของ Audio Overview (Custom Audio Prompt) | tools: NotebookLM
+- `nlm-prompt-cross-source-chronology` | NotebookLM: สร้างตารางไทม์ไลน์และลำดับเหตุการณ์เปรียบเทียบจากเอกสารประวัติศาสตร์หลายฉบับ | tools: NotebookLM
+- `style-neubrutalism-playful-pop` | ดีไซน์สไตล์ Neubrutalism (พาสเทลป๊อป ขอบดำหนา เงาแข็ง สดใส ทันสมัย) | tools: Gemini,Canva,Claude Code
+- `style-bento-grid-dashboard` | ดีไซน์สไตล์ Bento Grid UI (จัดบล็อกสัดส่วนกล่องข้าวญี่ปุ่น สวยงาม เป็นระเบียบ) | tools: Gemini,Canva,Claude Code
+- `style-paper-ink-rust-academic` | ดีไซน์สไตล์ Paper, Ink & Rust (คลาสสิก อบอุ่น ฟีลกระดาษถนอมสายตาและหมึกพิมพ์) | tools: Gemini,Canva,Claude Code
+- `style-dark-obsidian-cybertech` | ดีไซน์สไตล์ Dark Obsidian & Cyber Tech (ธีมมืด ไซเบอร์ ล้ำสมัย แสงนีออน) | tools: Gemini,Canva,Claude Code
+- `style-editorial-monograph-jungle-gold` | ดีไซน์สไตล์ Editorial Monograph (สไตล์นิตยสารสารคดีหรู เขียวมรกตทองคำ งดงามประณีต) | tools: Gemini,Canva,Claude Code
+- `style-cute-doodle-kawaii` | ดีไซน์สไตล์ Cute Doodle & Kawaii (ลายเส้นการ์ตูนวาดมือ อบอุ่น เป็นมิตร สดใส) | tools: Gemini,Canva
+- `style-industrial-blueprint-schematic` | ดีไซน์สไตล์ Blueprint & Industrial (พิมพ์เขียวเชิงเทคนิค แม่นยำ ดิบ เท่ สไตล์วิศวกรรม) | tools: Gemini,Canva,Claude Code
+- `style-swiss-minimalist-clean` | ดีไซน์สไตล์ Swiss Minimalist (มินิมอลแบบสวิส คมชัด สเปซโล่ง อ่านง่ายสูงสุด) | tools: Gemini,Canva,Claude Code
+- `nlm-media-mindmap-mermaid` | NotebookLM: สกัดโครงสร้างแผนผังความคิด (Mindmap) เป็นโค้ด Mermaid / Markdown จากเอกสาร PDF | tools: NotebookLM
+- `nlm-media-infographic-data-brief` | NotebookLM: สกัดชุดข้อมูล 5 ประเด็นสำคัญ + สถิติตัวเลข สำหรับทำ Infographic ใน Canva | tools: NotebookLM,Canva
+- `nlm-media-comparative-matrix-table` | NotebookLM: สร้างตารางเปรียบเทียบเชิงลึก (Multi-dimensional Comparison Matrix) จากเอกสาร | tools: NotebookLM
+- `nlm-media-flashcard-qa-pairs` | NotebookLM: สร้างชุดการ์ดคำถาม-คำตอบ (Flashcard Deck 20 ใบ) พร้อมเฉลยและระดับความยาก | tools: NotebookLM,Canva
+- `nlm-media-video-lesson-script` | NotebookLM: แปลงเอกสารวิชาการเป็นสคริปต์วิดีโอบทเรียน 3 นาที (3-Minute Micro-lesson Script) | tools: NotebookLM,Canva
+- `nlm-media-interactive-slide-content` | NotebookLM: สกัดหัวข้อย่อยและเนื้อหากระชับ 10 สไลด์ สำหรับนำไปจัดทำสไลด์การสอน | tools: NotebookLM,Canva
+- `nlm-media-glossary-cheat-sheet` | NotebookLM: สร้างแผ่นพับพจนานุกรมคำศัพท์และนิยามทางการพร้อมหน้าอ้างอิง (Glossary Cheat Sheet) | tools: NotebookLM,Canva
+- `nlm-media-canva-visual-prompt-ideas` | NotebookLM: สกัดไอเดียภาพประกอบและคีย์เวิร์ดค้นหาใน Canva จากคำอธิบายในเอกสาร | tools: NotebookLM,Canva

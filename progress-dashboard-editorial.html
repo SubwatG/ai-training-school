@@ -1,0 +1,1388 @@
+<!DOCTYPE html>
+<html lang="th" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI Training Workshop 2569 — Progress Dashboard & Complete Session Architecture</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400&family=IBM+Plex+Sans+Thai+Looped:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+/* =========================================================
+   1. DESIGN TOKENS (Scoped by data-theme)
+   Exact match to best-personal-blog archetype
+   ========================================================= */
+:root[data-theme="dark"] {
+  --bg: #0c0b09;
+  --bg-elev: #14120e;
+  --bg-elev-2: #1c1a14;
+  --fg: #f0ead6;
+  --fg-dim: #c9c1ad;
+  --muted: #8a8275;
+  --accent: #f59e0b;
+  --accent-rgb: 245, 158, 11;
+  --accent-2: #06b6d4;
+  --accent-2-rgb: 6, 182, 212;
+  --border: rgba(240, 234, 214, 0.08);
+  --border-strong: rgba(240, 234, 214, 0.18);
+  --card: #15130e;
+  --code-bg: #060503;
+  --code-fg: #f0ead6;
+  --glow: rgba(245, 158, 11, 0.15);
+  --success: #10b981;
+  --success-rgb: 16, 185, 129;
+}
+:root[data-theme="light"] {
+  --bg: #f3ecdc;
+  --bg-elev: #faf3e1;
+  --bg-elev-2: #fffaee;
+  --fg: #1a1610;
+  --fg-dim: #3d362b;
+  --muted: #6b6358;
+  --accent: #c2410c;
+  --accent-rgb: 194, 65, 12;
+  --accent-2: #0e7490;
+  --accent-2-rgb: 14, 116, 144;
+  --border: rgba(26, 22, 16, 0.12);
+  --border-strong: rgba(26, 22, 16, 0.24);
+  --card: #fffaee;
+  --code-bg: #1a1610;
+  --code-fg: #f3ecdc;
+  --glow: rgba(194, 65, 12, 0.12);
+  --success: #059669;
+  --success-rgb: 5, 150, 105;
+}
+:root[data-theme="cyber"] {
+  --bg: #02060a;
+  --bg-elev: #050d10;
+  --bg-elev-2: #071318;
+  --fg: #4eff96;
+  --fg-dim: #8affb8;
+  --muted: #2a8a5e;
+  --accent: #ffea00;
+  --accent-rgb: 255, 234, 0;
+  --accent-2: #ff10f0;
+  --accent-2-rgb: 255, 16, 240;
+  --border: rgba(78, 255, 150, 0.18);
+  --border-strong: rgba(78, 255, 150, 0.4);
+  --card: #050d10;
+  --code-bg: #000000;
+  --code-fg: #4eff96;
+  --glow: rgba(78, 255, 150, 0.2);
+  --success: #00ff88;
+  --success-rgb: 0, 255, 136;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: 'IBM Plex Sans Thai Looped', 'Space Grotesk', sans-serif;
+  margin: 0;
+  overflow-x: hidden;
+  position: relative;
+  line-height: 1.65;
+}
+
+/* CRT scanlines for cyber theme */
+[data-theme="cyber"] body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(78, 255, 150, 0.025) 2px, rgba(78, 255, 150, 0.025) 3px);
+  z-index: 200;
+  mix-blend-mode: overlay;
+}
+
+/* Theme transition animation */
+body.theme-anim,
+body.theme-anim *,
+body.theme-anim *::before,
+body.theme-anim *::after {
+  transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              fill 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.font-display { font-family: 'Fraunces', serif; }
+.font-heading { font-family: 'Chakra Petch', sans-serif; }
+.font-mono { font-family: 'JetBrains Mono', monospace; }
+
+/* === PROGRESS BAR === */
+.progress-bar {
+  position: fixed;
+  top: 0; left: 0;
+  height: 3px;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  z-index: 100;
+  box-shadow: 0 0 12px var(--accent), 0 0 4px var(--accent);
+}
+
+/* === BACKGROUND GRID === */
+.bg-grid {
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 56px 56px;
+  background-position: center center;
+}
+
+/* === FLOATING DOTS === */
+.float-dot {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.25;
+  animation: drift 16s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes drift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(60px, -40px) scale(1.1); }
+  66% { transform: translate(-30px, 50px) scale(0.95); }
+}
+
+/* === MOUSE GLOW === */
+.mouse-glow {
+  position: absolute;
+  width: 700px; height: 700px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(var(--accent-rgb), 0.12) 0%, transparent 60%);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  filter: blur(30px);
+  z-index: 1;
+}
+
+/* === TYPEWRITER CURSOR === */
+.cursor::after {
+  content: '▌';
+  color: var(--accent);
+  animation: blink 1s steps(1) infinite;
+  margin-left: 4px;
+  font-weight: 400;
+}
+@keyframes blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0; } }
+
+.logo-cursor {
+  display: inline-block;
+  width: 0.5em;
+  height: 1em;
+  background: var(--accent);
+  margin-left: 3px;
+  animation: blink 1.1s steps(1) infinite;
+  vertical-align: text-bottom;
+}
+
+/* === LINKS === */
+.hover-link {
+  position: relative;
+  color: var(--fg-dim);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+.hover-link:hover { color: var(--fg); }
+.hover-link::after {
+  content: '';
+  position: absolute;
+  left: 0; bottom: -5px;
+  width: 0; height: 1px;
+  background: var(--accent);
+  transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.hover-link:hover::after { width: 100%; }
+
+/* === THEME TOGGLE === */
+.theme-toggle {
+  display: inline-flex;
+  background: var(--bg-elev);
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  padding: 3px;
+}
+.theme-btn {
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.theme-btn.active {
+  background: var(--accent);
+  color: var(--bg);
+  box-shadow: 0 0 14px rgba(var(--accent-rgb), 0.5);
+}
+.theme-btn:hover:not(.active) { color: var(--fg); transform: scale(1.08); }
+
+/* === STAT PILL & DOT === */
+.stat-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--bg-elev);
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--fg);
+}
+.stat-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--accent-2);
+  box-shadow: 0 0 8px var(--accent-2);
+  animation: pulse-dot 2s infinite;
+}
+@keyframes pulse-dot { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.85); } }
+
+/* === TAGS === */
+.tag {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding: 4px 9px;
+  border: 1px solid rgba(var(--accent-rgb), 0.5);
+  border-radius: 2px;
+  background: rgba(var(--accent-rgb), 0.08);
+  font-weight: 600;
+}
+.tag.success {
+  color: var(--success);
+  border-color: rgba(var(--success-rgb), 0.5);
+  background: rgba(var(--success-rgb), 0.08);
+}
+.tag.cyan {
+  color: var(--accent-2);
+  border-color: rgba(var(--accent-2-rgb), 0.5);
+  background: rgba(var(--accent-2-rgb), 0.08);
+}
+.tag.muted {
+  color: var(--muted);
+  border-color: var(--border-strong);
+  background: var(--bg-elev);
+}
+
+/* === BUTTONS === */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background: var(--accent);
+  color: var(--bg);
+  padding: 13px 26px;
+  border-radius: 3px;
+  text-decoration: none;
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 4px 20px -4px rgba(var(--accent-rgb), 0.5);
+  border: none;
+  cursor: pointer;
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px -8px rgba(var(--accent-rgb), 0.6);
+}
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  font-weight: 500;
+  background: transparent;
+  color: var(--fg);
+  border: 1px solid var(--border-strong);
+  padding: 13px 24px;
+  border-radius: 3px;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btn-secondary:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(var(--accent-rgb), 0.04);
+}
+
+/* === ARTICLE & BENTO CARDS === */
+.article-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 28px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.4s ease;
+}
+.article-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.article-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at bottom right, var(--glow), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+.article-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--border-strong);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+}
+.article-card:hover::before { transform: scaleX(1); }
+.article-card:hover::after { opacity: 1; }
+
+.card-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 56px;
+  font-weight: 700;
+  line-height: 0.9;
+  color: var(--muted);
+  opacity: 0.18;
+  letter-spacing: -0.04em;
+  transition: all 0.35s ease;
+}
+.article-card:hover .card-num {
+  opacity: 0.45;
+  color: var(--accent);
+  transform: scale(1.05);
+}
+
+/* === CODE WINDOW === */
+.code-window {
+  background: var(--code-bg);
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.6);
+}
+.code-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.02);
+}
+.copy-btn {
+  background: transparent;
+  border: 1px solid var(--border-strong);
+  color: var(--muted);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+.copy-btn:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+.copy-btn.copied {
+  color: var(--bg) !important;
+  background: var(--accent) !important;
+  border-color: var(--accent) !important;
+}
+
+/* === DETAILED SESSION CARDS (Architecture for 10 slots) === */
+.session-card-detailed {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+              border-color 0.3s ease,
+              box-shadow 0.4s ease;
+}
+.session-card-detailed::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.session-card-detailed:hover {
+  transform: translateY(-4px);
+  border-color: var(--border-strong);
+  box-shadow: 0 16px 36px -10px rgba(0,0,0,0.5);
+}
+.session-card-detailed:hover::before {
+  transform: scaleX(1);
+}
+
+.session-card-detailed.speedrun-card {
+  border: 2px solid var(--accent);
+  box-shadow: 0 0 24px -6px rgba(var(--accent-rgb), 0.35);
+}
+.session-card-detailed.break-card {
+  background: var(--bg-elev);
+  border-style: dashed;
+  opacity: 0.85;
+}
+.session-card-detailed.break-card:hover {
+  opacity: 1;
+}
+
+.session-header-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  background: var(--bg-elev);
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.session-body-content {
+  padding: 24px;
+}
+
+.flow-time-pill {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  background: rgba(var(--accent-2-rgb), 0.12);
+  color: var(--accent-2);
+  border: 1px solid rgba(var(--accent-2-rgb), 0.35);
+  padding: 3px 8px;
+  border-radius: 3px;
+  display: inline-block;
+  margin-right: 8px;
+  white-space: nowrap;
+}
+
+.highlight-pill-academic {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(var(--accent-rgb), 0.12);
+  color: var(--accent);
+  border: 1px solid rgba(var(--accent-rgb), 0.45);
+  padding: 4px 12px;
+  border-radius: 3px;
+  font-size: 12px;
+  font-family: 'Chakra Petch', sans-serif;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+.code-pill {
+  background: var(--code-bg);
+  color: var(--accent);
+  border: 1px solid var(--border-strong);
+  padding: 2px 7px;
+  border-radius: 3px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+}
+
+/* === MARQUEE === */
+.marquee-wrap {
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+}
+.marquee-wrap::before, .marquee-wrap::after {
+  content: ''; position: absolute; top: 0; bottom: 0; width: 80px; z-index: 2; pointer-events: none;
+}
+.marquee-wrap::before { left: 0; background: linear-gradient(to right, var(--bg-elev), transparent); }
+.marquee-wrap::after { right: 0; background: linear-gradient(to left, var(--bg-elev), transparent); }
+
+.marquee {
+  display: inline-block;
+  animation: marquee 30s linear infinite;
+}
+@keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+/* === SCROLLBAR & SELECTION === */
+::-webkit-scrollbar { width: 7px; height: 7px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+::selection { background: var(--accent); color: var(--bg); }
+
+.sticky-sidebar {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 110px;
+}
+</style>
+</head>
+<body>
+
+<!-- Reading Progress Bar -->
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- Top Fixed Header -->
+<header class="fixed top-0 left-0 right-0 z-50" style="backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); background: rgba(var(--accent-rgb), 0.02); border-bottom: 1px solid var(--border);">
+  <nav class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <a href="#overview" class="font-mono font-bold text-lg flex items-center" style="color: var(--fg); text-decoration: none;">
+      <span style="color: var(--accent);">/</span>ai<span style="color: var(--muted);">/</span>training<span class="logo-cursor"></span>
+    </a>
+
+    <div class="hidden md:flex items-center gap-8 font-mono text-xs uppercase tracking-wider">
+      <a href="#overview" class="hover-link">overview</a>
+      <a href="#pillars" class="hover-link">3 pillars</a>
+      <a href="#latex-bridge" class="hover-link">latex bridge</a>
+      <a href="#schedule-detailed" class="hover-link">10 sessions</a>
+      <a href="#deliverables" class="hover-link">status & roadmap</a>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <div class="stat-pill hidden sm:inline-flex" title="ความพร้อมโครงการ">
+        <span class="stat-dot"></span>
+        <span style="color: var(--muted);">Readiness:</span>
+        <span style="color: var(--accent); font-weight: 700;">68%</span>
+      </div>
+
+      <!-- Theme Switcher (Dark / Light / Cyber) -->
+      <div class="theme-toggle" role="group" aria-label="Theme selector">
+        <button class="theme-btn active" data-theme="dark" title="Dark (Warm Obsidian)" aria-label="Dark theme"><i class="fas fa-moon"></i></button>
+        <button class="theme-btn" data-theme="light" title="Light (Academic Paper)" aria-label="Light theme"><i class="fas fa-sun"></i></button>
+        <button class="theme-btn" data-theme="cyber" title="Cyber (Terminal Green)" aria-label="Cyber theme"><i class="fas fa-terminal"></i></button>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<!-- Hero Section -->
+<section class="relative min-h-[80vh] flex items-center overflow-hidden bg-grid pt-28 pb-20" id="overview">
+  <div class="float-dot" style="width: 500px; height: 500px; top: 8%; left: -120px; background: var(--accent);"></div>
+  <div class="float-dot" style="width: 550px; height: 550px; bottom: -180px; right: -180px; background: var(--accent-2); animation-delay: -5s;"></div>
+  <div class="mouse-glow" id="mouseGlow"></div>
+
+  <div class="relative max-w-7xl mx-auto px-6 w-full" style="z-index: 2;">
+    <div class="max-w-5xl">
+      
+      <div class="flex items-center gap-3 mb-6 font-mono text-xs flex-wrap" style="color: var(--muted);">
+        <span class="tag">AI Training 2569</span>
+        <span>•</span>
+        <span class="tag success">DRAFT • แผนการนำเสนอฉบับสมบูรณ์</span>
+        <span>•</span>
+        <span class="flex items-center gap-2">
+          <span class="stat-dot"></span> วันจัดอบรม: 29 สิงหาคม 2569
+        </span>
+      </div>
+
+      <h1 class="font-mono font-bold mb-6" style="font-size: clamp(2.2rem, 5.8vw, 4.6rem); line-height: 1.08; letter-spacing: -0.04em;">
+        <span style="color: var(--muted);">$</span> <span id="typewriter" class="cursor"></span>
+      </h1>
+
+      <p class="font-display text-2xl md:text-3xl mb-4" style="font-style: italic; font-weight: 400; color: var(--fg); line-height: 1.35;">
+        "เปลี่ยนชั่วโมงเตรียมสอนเป็นนาที ด้วย 3 เครื่องมือ: Gemini + NotebookLM ➔ Canva"
+      </p>
+
+      <p class="text-base md:text-lg mb-10 max-w-3xl" style="color: var(--muted); line-height: 1.7;">
+        แดชบอร์ดติดตามความคืบหน้าการจัดทำหลักสูตร สื่อสาธิต เว็บไซต์คลัง 166 Prompts และโครงร่างแผนการนำเสนอ 10 ช่วงตามกำหนดการทางการแบบเต็มรายละเอียด (ไม่ลดทอน) สำหรับการประเมินและทบทวนเตรียมสอน โดยอาจารย์กิตติพงษ์ (SubwatG / KU)
+      </p>
+
+      <div class="flex flex-wrap gap-4 mb-16">
+        <a href="#schedule-detailed" class="btn-primary">
+          <i class="fas fa-list-check text-xs"></i> ดูแผนการสอน 10 ช่วง (เต็ม)
+        </a>
+        <a href="#pillars" class="btn-secondary">
+          <i class="fas fa-layer-group text-xs"></i> 3 เสาหลักฐานคิด
+        </a>
+        <a href="#latex-bridge" class="btn-secondary">
+          <i class="fas fa-square-root-variable text-xs"></i> ทางลัดสมการคณิต (LaTeX)
+        </a>
+      </div>
+
+      <!-- Quick Metrics Matrix -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl">
+        <div class="article-card p-5">
+          <div class="font-mono font-bold text-3xl md:text-4xl" style="color: var(--accent);">10</div>
+          <div class="font-mono text-xs uppercase tracking-wider mt-2" style="color: var(--muted);">ช่วงเวลาบรรยาย (Slots)</div>
+        </div>
+        <div class="article-card p-5">
+          <div class="font-mono font-bold text-3xl md:text-4xl" style="color: var(--accent);">166</div>
+          <div class="font-mono text-xs uppercase tracking-wider mt-2" style="color: var(--muted);">คำสั่งพร้อมใช้ (Prompts)</div>
+        </div>
+        <div class="article-card p-5">
+          <div class="font-mono font-bold text-3xl md:text-4xl" style="color: var(--accent-2);">80m</div>
+          <div class="font-mono text-xs uppercase tracking-wider mt-2" style="color: var(--muted);">ช่วง AI Speedrun ท้ายวัน</div>
+        </div>
+        <div class="article-card p-5">
+          <div class="font-mono font-bold text-3xl md:text-4xl" style="color: var(--success);">68%</div>
+          <div class="font-mono text-xs uppercase tracking-wider mt-2" style="color: var(--muted);">ความพร้อมโครงการ</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Marquee Strip -->
+<div class="py-4 border-y marquee-wrap" style="border-color: var(--border); background: var(--bg-elev);">
+  <div class="marquee font-mono text-xs uppercase tracking-widest" style="color: var(--muted);">
+    <span class="mx-6">★ 3 เสาหลัก: คุยถูกทาง • วางงานถูกตัว • ตรวจให้ชัวร์</span>
+    <span class="mx-6">★ ทางลัดสมการ: Word (Alt+=) • Word Online • Canva Math App</span>
+    <span class="mx-6">★ 3 เครื่องมือ: Gemini (คิดแผน/ข้อสอบ) ➔ NotebookLM (อิงตำรา 100%) ➔ Canva (จัดหน้าเวกเตอร์)</span>
+    <span class="mx-6">★ PDPA & Ethics: ตัดชื่อจริง/คะแนนเด็กก่อนส่ง AI ทุกครั้ง</span>
+    <span class="mx-6">★ 3 เสาหลัก: คุยถูกทาง • วางงานถูกตัว • ตรวจให้ชัวร์</span>
+    <span class="mx-6">★ ทางลัดสมการ: Word (Alt+=) • Word Online • Canva Math App</span>
+    <span class="mx-6">★ 3 เครื่องมือ: Gemini (คิดแผน/ข้อสอบ) ➔ NotebookLM (อิงตำรา 100%) ➔ Canva (จัดหน้าเวกเตอร์)</span>
+    <span class="mx-6">★ PDPA & Ethics: ตัดชื่อจริง/คะแนนเด็กก่อนส่ง AI ทุกครั้ง</span>
+  </div>
+</div>
+
+<!-- SECTION 1: 3 Core Pillars (Article Bento Cards) -->
+<section class="py-24 md:py-32 px-6" id="pillars">
+  <div class="max-w-7xl mx-auto">
+    <div class="flex items-end justify-between mb-16 flex-wrap gap-6">
+      <div>
+        <div class="font-mono text-xs uppercase tracking-widest mb-4" style="color: var(--accent);">// Core Architecture</div>
+        <h2 class="font-display font-black text-4xl md:text-6xl" style="letter-spacing: -0.035em; line-height: 1.05;">
+          3 เสาหลักฐานคิด <span style="font-style: italic; font-weight: 400; color: var(--fg-dim);">(Three Pillars)</span>
+        </h2>
+      </div>
+      <p class="text-sm max-w-md" style="color: var(--muted); line-height: 1.6;">
+        ตกผลึกให้ครูสายไม่เชี่ยวชาญเทคโนโลยีเข้าใจง่าย จำได้แม่นยำ ไม่หลงทางกับศัพท์เทคนิค
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6">
+      
+      <!-- Pillar 1 -->
+      <article class="article-card">
+        <div class="flex items-start justify-between mb-6">
+          <div class="card-num">01</div>
+          <span class="tag">Input & Context</span>
+        </div>
+        <div class="font-mono text-xs mb-3" style="color: var(--muted);">เสาที่ 1 — รูปแบบคำสั่ง</div>
+        <h3 class="font-display font-bold text-2xl mb-3 leading-tight" style="color: var(--fg);">
+          คุยให้ถูกทาง <span class="text-base font-normal text-amber-500 font-sans">(1 งาน = 1 แชท)</span>
+        </h3>
+        <p class="text-sm mb-6" style="color: var(--muted); line-height: 1.65;">
+          • <strong>Text vs Scan:</strong> AI กินข้อความดิบเป็นอาหาร ทำไมรูปสแกนเบลอๆ ถึงตอบมั่ว<br>
+          • <strong>กฎล้างกระดาน:</strong> แยกแชทตามเรื่อง ไม่คุยทุกวิชาปนกันในห้องเดียว<br>
+          • <strong>Web Prompt Hub:</strong> คัดลอกโครงสร้าง <code class="font-mono text-xs px-1 py-0.5 rounded" style="background: var(--code-bg); color: var(--accent);">บทบาท-บริบท-ภารกิจ-รูปแบบ</code> ไปต่อยอดได้ทันที
+        </p>
+        <div class="flex items-center gap-2 font-mono text-xs uppercase tracking-widest" style="color: var(--accent);">
+          <span>Grounding Base</span> <span>→</span>
+        </div>
+      </article>
+
+      <!-- Pillar 2 -->
+      <article class="article-card">
+        <div class="flex items-start justify-between mb-6">
+          <div class="card-num">02</div>
+          <span class="tag cyan">Tool Triad</span>
+        </div>
+        <div class="font-mono text-xs mb-3" style="color: var(--muted);">เสาที่ 2 — การแบ่งบทบาท</div>
+        <h3 class="font-display font-bold text-2xl mb-3 leading-tight" style="color: var(--fg);">
+          วางงานให้ถูกตัว <span class="text-base font-normal text-cyan-400 font-sans">(Gemini ➔ Canva)</span>
+        </h3>
+        <p class="text-sm mb-6" style="color: var(--muted); line-height: 1.65;">
+          • <strong>Gemini:</strong> สมองระดมไอเดีย ร่างแผนสอน และออกข้อสอบ 4 ตัวเลือก<br>
+          • <strong>NotebookLM:</strong> สมองอิงตำราเรียน สกัดเนื้อหาจาก PDF แม่นยำ 100% (Zero Hallucination)<br>
+          • <strong>Canva:</strong> มือประกอบร่าง จัดเลย์เอาต์ อย่าสั่ง AI วาดข้อความภาษาไทยในรูป ให้เอาข้อความมาพิมพ์เอง
+        </p>
+        <div class="flex items-center gap-2 font-mono text-xs uppercase tracking-widest" style="color: var(--accent-2);">
+          <span>Workflow Handoff</span> <span>→</span>
+        </div>
+      </article>
+
+      <!-- Pillar 3 -->
+      <article class="article-card">
+        <div class="flex items-start justify-between mb-6">
+          <div class="card-num">03</div>
+          <span class="tag success">Safety & PDPA</span>
+        </div>
+        <div class="font-mono text-xs mb-3" style="color: var(--muted);">เสาที่ 3 — การตรวจทาน & ความปลอดภัย</div>
+        <h3 class="font-display font-bold text-2xl mb-3 leading-tight" style="color: var(--fg);">
+          ตรวจให้ชัวร์ก่อนใช้ <span class="text-base font-normal text-emerald-400 font-sans">(Human in the Loop)</span>
+        </h3>
+        <p class="text-sm mb-6" style="color: var(--muted); line-height: 1.65;">
+          • <strong>Verification 3 ด้าน:</strong> ตรวจความถูกต้องทางวิชาการ ความเหมาะสมวัย และความปลอดภัย<br>
+          • <strong>PDPA Anonymization:</strong> ห้ามใส่ชื่อจริง เลขประจำตัว หรือผลคะแนนเด็กเด็ดขาด<br>
+          • <strong>Ownership:</strong> ครูคือผู้รับผิดชอบผลผลิตและข้อสอบคนสุดท้ายเสมอ
+        </p>
+        <div class="flex items-center gap-2 font-mono text-xs uppercase tracking-widest" style="color: var(--success);">
+          <span>Ethical Standard</span> <span>→</span>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 2: 4/8 Split Layout — LaTeX Equation Bridge -->
+<section class="py-24 md:py-32 px-6" id="latex-bridge" style="background: var(--bg-elev);">
+  <div class="max-w-7xl mx-auto">
+    <div class="grid lg:grid-cols-12 gap-12 items-start">
+      
+      <!-- Left 4 Columns (Sticky) -->
+      <div class="lg:col-span-4 sticky-sidebar">
+        <div class="font-mono text-xs uppercase tracking-widest mb-4" style="color: var(--accent);">// Math & Science Bridge</div>
+        <h2 class="font-display font-black text-3xl md:text-5xl mb-4" style="letter-spacing: -0.03em; line-height: 1.1;">
+          ทางลัดสมการ <br>
+          <span style="font-style: italic; font-weight: 400; color: var(--fg-dim);">LaTeX to Word/Canva</span>
+        </h2>
+        <p class="text-sm mb-8" style="color: var(--muted); line-height: 1.65;">
+          แก้จุดตายของครูสายคำนวณที่พิมพ์สูตรใน Word ช้ามาก แปลงสมการจาก Gemini ลงเอกสารและใบงานได้ใน 2 วินาที คมชัด ไม่แตก
+        </p>
+
+        <div class="article-card p-5 mb-6">
+          <div class="font-mono text-xs font-bold mb-3 text-amber-500">// SHORTCUT CHEAT SHEET</div>
+          <ul class="space-y-2.5 text-xs font-mono" style="color: var(--fg-dim);">
+            <li class="flex items-center gap-2"><span style="color: var(--accent);">➔</span> <strong>Word Desktop:</strong> Alt + = แล้ววางโค้ด</li>
+            <li class="flex items-center gap-2"><span style="color: var(--accent);">➔</span> <strong>Word Online:</strong> วางโค้ด ➔ แทรกสมการ</li>
+            <li class="flex items-center gap-2"><span style="color: var(--accent-2);">➔</span> <strong>Canva:</strong> แอป Math (สมการ)</li>
+            <li class="flex items-center gap-2"><span style="color: var(--success);">➔</span> <strong>Google Docs:</strong> Add-on Auto-LaTeX</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Right 8 Columns (Code Windows) -->
+      <div class="lg:col-span-8 space-y-6">
+        
+        <!-- Code Window 1: Word Shortcut -->
+        <div class="code-window">
+          <div class="code-header">
+            <div class="flex items-center gap-3">
+              <span class="flex gap-1.5">
+                <span style="width:11px;height:11px;border-radius:50%;background:#ff5f57;display:inline-block;"></span>
+                <span style="width:11px;height:11px;border-radius:50%;background:#febc2e;display:inline-block;"></span>
+                <span style="width:11px;height:11px;border-radius:50%;background:#28c840;display:inline-block;"></span>
+              </span>
+              <span class="font-mono text-xs" style="color: var(--muted);">word-equation-shortcut.tex</span>
+            </div>
+            <button class="copy-btn" onclick="copySnippet(this, 'codeWord')">
+              <i class="fas fa-copy"></i> <span>copy LaTeX</span>
+            </button>
+          </div>
+          <pre class="p-6 md:p-7 text-xs md:text-sm overflow-x-auto" style="background: var(--code-bg); margin: 0; line-height: 1.7;"><code id="codeWord"><span style="color: var(--muted);">% ตัวอย่างสมการคำนวณทางฟิสิกส์/คณิตศาสตร์</span>
+x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
+
+<span style="color: var(--muted);">% แรงโน้มถ่วงสากล (ม.3 วิทยาศาสตร์)</span>
+F = G \frac{m_1 m_2}{r^2}</code></pre>
+          <div class="px-6 py-3 border-t text-xs font-mono" style="border-color: var(--border); color: var(--muted); background: var(--bg-elev);">
+            💡 <strong>วิธีใช้ใน Word:</strong> กดแป้นพิมพ์ <kbd class="px-1.5 py-0.5 rounded border border-gray-700 bg-black text-amber-400">Alt</kbd> + <kbd class="px-1.5 py-0.5 rounded border border-gray-700 bg-black text-amber-400">=</kbd> ➔ วางโค้ดด้านบน ➔ กด <kbd class="px-1.5 py-0.5 rounded border border-gray-700 bg-black text-amber-400">Enter</kbd> (จะแปลงเป็นสมการสวยงามทันที)
+          </div>
+        </div>
+
+        <!-- Code Window 2: Canva Math App -->
+        <div class="code-window">
+          <div class="code-header">
+            <div class="flex items-center gap-3">
+              <span class="flex gap-1.5">
+                <span style="width:11px;height:11px;border-radius:50%;background:#ff5f57;display:inline-block;"></span>
+                <span style="width:11px;height:11px;border-radius:50%;background:#febc2e;display:inline-block;"></span>
+                <span style="width:11px;height:11px;border-radius:50%;background:#28c840;display:inline-block;"></span>
+              </span>
+              <span class="font-mono text-xs" style="color: var(--muted);">canva-math-vector.tex</span>
+            </div>
+            <button class="copy-btn" onclick="copySnippet(this, 'codeCanva')">
+              <i class="fas fa-copy"></i> <span>copy LaTeX</span>
+            </button>
+          </div>
+          <pre class="p-6 md:p-7 text-xs md:text-sm overflow-x-auto" style="background: var(--code-bg); margin: 0; line-height: 1.7;"><code id="codeCanva"><span style="color: var(--muted);">% สูตรสถิติการแจกแจงปกติ (Z-score) สำหรับวางใน Canva Math</span>
+Z = \frac{X - \mu}{\sigma}</code></pre>
+          <div class="px-6 py-3 border-t text-xs font-mono" style="border-color: var(--border); color: var(--muted); background: var(--bg-elev);">
+            🎨 <strong>วิธีใช้ใน Canva:</strong> เมนูด้านซ้าย ➔ <span style="color: var(--accent-2);">แอป (Apps)</span> ➔ ค้นหา <em>"Math" (สมการ)</em> ➔ วางโค้ด ➔ ได้สมการเวกเตอร์คมกริบ พื้นหลังโปร่งใส
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================================
+     SECTION 3: COMPLETE PRESENTATION SCHEDULE (10 SLOTS — FULL UNTRUNCATED)
+     ========================================================================= -->
+<section class="py-24 md:py-32 px-6" id="schedule-detailed">
+  <div class="max-w-6xl mx-auto">
+    
+    <div class="flex items-end justify-between mb-12 flex-wrap gap-4 border-b pb-6" style="border-color: var(--border);">
+      <div>
+        <div class="font-mono text-xs uppercase tracking-widest mb-3" style="color: var(--accent);">// Complete Session Breakdown</div>
+        <h2 class="font-display font-black text-4xl md:text-6xl" style="letter-spacing: -0.035em; line-height: 1.05;">
+          แผนการนำเสนอ <span style="font-style: italic; font-weight: 400; color: var(--fg-dim);">10 ช่วง</span>
+        </h2>
+        <p class="text-sm mt-2 text-muted" style="color: var(--muted);">
+          การจัดสรรเวลา 10 ช่วงอิงตามเอกสารทางการ 8:00 - 16:00 น. (ฉบับสมบูรณ์ไม่ลดทอนเนื้อหา)
+        </p>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="tag success">DRAFT กันลืม</span>
+        <span class="tag cyan">อิงตามตาราง docx</span>
+      </div>
+    </div>
+
+    <!-- Lead note -->
+    <div class="article-card mb-10 p-6" style="border-left: 4px solid var(--accent);">
+      <p class="text-sm md:text-base" style="color: var(--fg-dim); line-height: 1.7;">
+        <strong style="color: var(--accent);">📌 หลักการออกแบบการนำเสนอ:</strong> ผสาน <strong>3 เสาหลักฐานคิด</strong> (คุยถูกทาง-วางงานถูกตัว-ตรวจชัวร์) และ <strong>ทางลัดสมการคณิต (LaTeX)</strong> เข้ากับตารางทางการ 10 ช่วง โดยเน้นสาธิตสดจากเว็บคลัง Prompt และให้ครูลงมือปฏิบัติจริง
+      </p>
+    </div>
+
+    <!-- Session Cards List (Slots 1 - 10) -->
+    <div class="space-y-6">
+
+      <!-- Slot 1 -->
+      <div class="session-card-detailed break-card">
+        <div class="session-header-bar">
+          <div class="flex items-center gap-3">
+            <span class="card-num text-2xl md:text-3xl">01</span>
+            <span class="font-heading font-bold text-base md:text-lg" style="color: var(--muted);">
+              📋 ช่วงที่ 1: การลงทะเบียนเข้าร่วมการอบรม
+            </span>
+          </div>
+          <span class="tag muted">08:00 – 08:30 น. (30 นาที)</span>
+        </div>
+        <div class="session-body-content">
+          <div class="font-display font-bold text-lg mb-2" style="color: var(--fg);">
+            การลงทะเบียนเข้าร่วมการอบรม
+          </div>
+          <p class="text-sm" style="color: var(--muted); line-height: 1.65;">
+            ครูลงทะเบียนรับเอกสาร แผ่นพับ Cheat-sheet และรับสติกเกอร์ QR Code สำหรับเปิดเว็บไซต์คลัง Prompt บนสมาร์ตโฟนหรือแท็บเล็ต
+          </p>
+        </div>
+      </div>
+
+      <!-- Slot 2 -->
+      <div class="session-card-detailed">
+        <div class="session-header-bar">
+          <div class="flex items-center gap-3">
+            <span class="card-num text-2xl md:text-3xl">02</span>
+            <span class="font-heading font-bold text-base md:text-lg" style="color: var(--accent);">
+              🎤 ช่วงที่ 2: พิธีเปิด & ปฐมนิเทศ
+            </span>
+          </div>
+          <span class="tag">08:30 – 09:00 น. (30 นาที)</span>
+        </div>
+        <div class="session-body-content">
+          <div class="font-display font-bold text-lg mb-4" style="color: var(--fg);">
+            พิธีเปิดการอบรม และการปฐมนิเทศ (แนะนำวิทยากร กติกาการอบรม และการเตรียมบัญชีผู้ใช้งาน)
+          </div>
+          
+          <ul class="space-y-3.5 text-sm" style="color: var(--muted);">
+            <li class="pl-3 border-l-2" style="border-color: var(--accent-2);">
+              <span class="flow-time-pill">08:30 - 08:40 (10m)</span>
+              <strong style="color: var(--fg);">พิธีเปิด & Ice Breaking:</strong> ผอ.กล่าวเปิด + วิทยากรชวนคุยหยั่งเชิง <em>"ใครเคยใช้ AI แล้วมันตอบมั่วบ้าง?"</em> สร้างความผ่อนคลาย
+            </li>
+            <li class="pl-3 border-l-2" style="border-color: var(--accent);">
+              <span class="flow-time-pill">08:40 - 08:55 (15m)</span>
+              <strong style="color: var(--fg);">เสาที่ 1 — ปรับ Mindset ให้เข้าใจธรรมชาติของ AI:</strong><br>
+              • <strong>Text vs Scan:</strong> AI กินข้อความดิบเป็นอาหาร ทำไมรูปสแกนเบลอๆ ถึงหลอน<br>
+              • <strong>1 งาน = 1 แชทใหม่:</strong> กฎล้างกระดาน ไม่คุยทุกวิชาในห้องเดียว<br>
+              • <strong>เปิดตัวเว็บคลัง Prompt (<span class="code-pill">site/prompts.html</span>):</strong> ให้ครูสแกน QR Code เข้าเว็บเพื่อเตรียมกดคัดลอก
+            </li>
+            <li class="pl-3 border-l-2" style="border-color: var(--success);">
+              <span class="flow-time-pill">08:55 - 09:00 (5m)</span>
+              <strong style="color: var(--fg);">เช็คความพร้อมเครื่อง & บัญชี:</strong> ทุกคนเปิด <span class="code-pill">gemini.google.com</span> ด้วย Gmail พร้อมใช้งาน
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Slot 3 -->
+      <div class="session-card-detailed">
+        <div class="session-header-bar">
+          <div class="flex items-center gap-3">
+            <span class="card-num text-2xl md:text-3xl">03</span>
+            <span class="font-heading font-bold text-base md:text-lg" style="color: var(--accent);">
+              💡 ช่วงที่ 3: Gemini & การจัดทำแผน/ข้อสอบ
+            </span>
+          </div>
+          <span class="tag">09:00 – 10:15 น. (75 นาที)</span>
+        </div>
+        <div class="session-body-content">
+          <div class="font-display font-bold text-lg mb-4" style="color: var(--fg);">
+            การใช้เครื่องมือ Gemini ในการเขียนคำสั่ง (Prompt) ภาษาไทย และการประยุกต์ใช้ AI ในการจัดทำแผนการสอน ข้อสอบ และใบงาน
+          </div>
+          
+          <ul class="space-y-3.5 text-sm" style="color: var(--muted);">
+            <li class="pl-3 border-l-2" style="border-color: var(--accent-2);">
+              <span class="flow-time-pill">09:00 - 09:20 (20m)</span>
+              <strong style="color: var(--fg);">สูตร Prompt & ลองของจริง:</strong> โครงสร้าง บทบาท-บริบท-ภารกิจ-รูปแบบ + วิทยากรพาเปิดเว็บคลัง Prompt กด <em>[คัดลอก]</em> วางใน Gemini และสั่งคุยต่อ (Iterative Refinement)
+            </li>
+            <li class="pl-3 border-l-2" style="border-color: var(--accent);">
+              <span class="flow-time-pill">09:20 - 09:45 (25m)</span>
+              <strong style="color: var(--fg);">Workshop จับคู่ทำแผน & ข้อสอบ:</strong> ครูทุกคนทำ 1) แผนสอน Active Learning 1 คาบ 2) ข้อสอบ 5 ข้อพร้อมเฉลยละเอียดและเหตุผลตัวลวง
+            </li>
+            <li class="pl-3 border-l-2" style="border-color: var(--accent);">
+              <span class="flow-time-pill">09:45 - 10:05 (20m)</span>
+              <strong style="color: var(--fg);">💥 ไฮไลต์เด็ด: การแปลงสมการคณิตศาสตร์และตารางลง Word:</strong><br>
+              • <strong>Word ในคอม:</strong> กด <span class="code-pill">Alt + =</span> ➔ วางโค้ด LaTeX ➔ Enter ได้สมการแท้ทันที<br>
+              • <strong>Word Online:</strong> วางโค้ด ➔ คลุมดำข้อความ ➔ กดเมนู <span class="code-pill">แทรก ➔ สมการ</span><br>
+              • เทคนิค Copy ตารางจาก Gemini วางลง Word / Google Docs ไม่พัง
+              <div>
+                <span class="highlight-pill-academic">📐 ปลดล็อกจุดตายครูคณิต-วิทย์</span>
+              </div>
+            </li>
+            <li class="pl-3 border-l-2" style="border-color: var(--muted);">
+              <span class="flow-time-pill">10:05 - 10:15 (10m)</span>
+              <strong style="color: var(--fg);">สรุปบทเรียนช่วงเช้า & Q&A สั้นๆ ก่อนเบรก</strong>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Slot 4 -->
+      <div class="session-card-detailed break-card">
+        <div class="session-header-bar">
+          <div class="flex items-center gap-3">
+            <span class="card-num text-2xl md:text-3xl">04</span>
+            <span class="font-heading font-bold text-base md:text-lg" style="color: var(--muted);">
+              ☕ ช่วงที่ 4: พักรับประทานอาหารว่าง
+            </span>
+          </div>
+          <span class="tag muted">10:15 – 10:30 น. (15 นาที)</span>
+        </div>
+        <div class="session-body-content">
+          <div class="font-display font-bold text-base" style="color: var(--fg);">
+            พักรับประทานอาหารว่างช่วงเช้า (Morning Break)
+          </div>
+        </div>
+      </div>
+
+      <!-- Slot 5 -->
+      <div class="session-card-detailed">
+        <div class="session-header-bar">
+          <div class="flex items-center gap-3">
+            <span class="card-num text-2xl md:text-3xl">05</span>
+            <span class="font-heading font-bold text-base md:text-lg" style="color: var(--accent);">
+              🎨 ช่วงที่ 5: Canva & การสร้างสื่อประกอบการสอน
+            </span>
+          </div>
+          <span class="tag">10:30 – 12:00 น. (90 นาที)</span>
+        </div>
+        <div class="session-body-content">
+          <div class="font-display font-bold text-lg mb-4" style="color: var(--fg);">
+            การใช้เครื่องมือ Canva ในการสร้างสื่อและเอกสารประกอบการสอน (การใช้แม่แบบ การสร้างภาพ และการตัดพื้นหลัง)
+          </div>
+          
+          <ul class="space-y-3.5 text-sm" style="color: var(--muted);">
+            <li class="pl-3 border-l-2" style="border-color: var(--accent-2);">
+              <span class="flow-time-pill">10:30 - 10:45 (15m)</span>
+              <strong style="color: var(--fg);">เสาที่ 2 — กฎเหล็กของภาพ AI:</strong> เผยหลุมพราง <em>"อย่าสั่ง AI วาดตัวหนังสือไทยในภาพ"</em> ให้สั่งเจนเฉพาะภาพพื้นหลัง/การ์ตูนเปล่า แล้วนำข้อความจาก Gemini มาใส่ใน Canva
+            </li>
+            <li class="pl-3 border-l-2" style="border-color: var(--accent);">
+              <span class="flow-time-pill">10:45 - 11:15 (30m)</span>
+              <strong style="color: var(--fg);">Magic Studio & ตกแต่งสื่อ:</strong> การเลือก Template ใบงาน/สไลด์, Magic Media (Text to Image), ลบพื้นหลัง (BG Remover) และลบส่วนเกิน (Magic Eraser)
+            </li>
+            <li class="pl-3 border-l-2" style="border-color: var(--accent);">
+              <span class="flow-time-pill">11:15 - 11:35 (20m)</span>
+              <strong style="color: var(--fg);">💥 ไฮไลต์ Canva: ใส่สมการคณิตด้วยแอป "Math (สมการ)":</strong><br>
+              พาเปิดเมนู <em>แอป ➔ Math</em> วางโค้ด LaTeX ได้สมการเวกเตอร์คมกริบ ขยายไม่แตก พื้นหลังใส
+              <div>
+                <span class="highlight-pill-academic">🎨 เวกเตอร์สมการในสไลด์/ใบงาน</span>
+              </div>
+            </li>
+            <li class="pl-3 border-l-2" style="border-color: var(--success);">
+              <span class="flow-time-pill">11:35 - 12:00 (25m)</span>
+              <strong style="color: var(--fg);">ลองทำจริง:</strong> นำข้อสอบ/แผนจากช่วงเช้า มาจัดหน้าใบงานหรือสไลด์สอน 1 แผ่น
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Slot 6 -->
+      <div class="session-card-detailed break-card">
+        <div class="session-header-bar">
+          <div class="flex items-center gap-3">
+            <span class="card-num text-2xl md:text-3xl">06</span>
+            <span class="font-heading font-bold text-base md:text-lg" style="color: var(--muted);">
+              🍱 ช่วงที่ 6: พักรับประทานอาหารกลางวัน
+            </span>
+          </div>
+          <span class="tag muted">12:00 – 13:00 น. (60 นาที)</span>
+        </div>
+        <div class="session-body-content">
+          <div class="font-display font-bold text-base" style="color: var(--fg);">
+            รับประทานอาหารกลางวัน (Lunch Break)
+          </div>
+        </div>
+      </div>
+
+      <!-- Slot 7 -->
+      <div class="session-card-detailed">
+        <div class="session-header-bar">
+          <div class="flex items-center gap-3">
+            <span class="card-num text-2xl md:text-3xl">07</span>
+            <span class="font-heading font-bold text-base md:text-lg" style="color: var(--accent-2);">
+              📚 ช่วงที่ 7: NotebookLM & สรุปรายงาน/เสียง
+            </span>
+          </div>
+          <span class="tag cyan">13:00 – 14:15 น. (75 นาที)</span>
+        </div>
+        <div class="session-body-content">
+          <div class="font-display font-bold text-lg mb-4" style="color: var(--fg);">
+            การใช้เครื่องมือ Gemini Notebook (NotebookLM) ในการสรุปเอกสารและรายงาน และการสร้างเสียงสรุปเอกสาร (Audio Overview)
+          </div>
+          
+          <ul class="space-y-3.5 text-sm" style="color: var(--muted);">
+            <li class="pl-3 border-l-2" style="border-color: var(--accent-2);">
+              <span class="flow-time-pill">13:00 - 13:15 (15m)</span>
+              <strong style="color: var(--fg);">เสาที่ 3 — ทำไมต้อง NotebookLM? (สมองอิงตำราห้ามมั่ว):</strong> จุดเด่น Zero Hallucination อิงเนื้อหาจากเอกสารที่เราอัปโหลด 100% (หลักสูตรแกนกลาง / ว.PA / ตำรา)
+            </li>
+            <li class="pl-3 border-l-2" style="border-color: var(--accent);">
+              <span class="flow-time-pill">13:15 - 13:45 (30m)</span>
+              <strong style="color: var(--fg);">สาธิต 3 ท่าเด็ด:</strong><br>
+              1. สกัดข้อสอบจากตำราเรียน พร้อมระบุเลขหน้าอ้างอิง<br>
+              2. สรุปเกณฑ์ ว.PA / รายงาน SAR 50 หน้า เหลือสรุป 1 หน้า<br>
+              3. สร้าง <strong>Audio Overview (พอดแคสต์สรุปบทเรียน)</strong> เปิดเสียงคุยสรุปให้ครูฟัง (Wow Factor)
+            </li>
+            <li class="pl-3 border-l-2" style="border-color: var(--success);">
+              <span class="flow-time-pill">13:45 - 14:15 (30m)</span>
+              <strong style="color: var(--fg);">ครูทดลองเล่นกับเอกสารของตัวเอง:</strong> อัปโหลด PDF แผนการสอน/ชีทเรียน 1 ไฟล์ แล้วสั่งทำ Study Guide หรือ FAQ
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Slot 8 -->
+      <div class="session-card-detailed break-card">
+        <div class="session-header-bar">
+          <div class="flex items-center gap-3">
+            <span class="card-num text-2xl md:text-3xl">08</span>
+            <span class="font-heading font-bold text-base md:text-lg" style="color: var(--muted);">
+              ☕ ช่วงที่ 8: พักรับประทานอาหารว่าง
+            </span>
+          </div>
+          <span class="tag muted">14:15 – 14:30 น. (15 นาที)</span>
+        </div>
+        <div class="session-body-content">
+          <div class="font-display font-bold text-base" style="color: var(--fg);">
+            พักรับประทานอาหารว่างช่วงบ่าย (Afternoon Break)
+          </div>
+        </div>
+      </div>
+
+      <!-- Slot 9 -->
+      <div class="session-card-detailed speedrun-card">
+        <div class="session-header-bar" style="background: rgba(var(--accent-rgb), 0.12);">
+          <div class="flex items-center gap-3">
+            <span class="card-num text-2xl md:text-3xl" style="color: var(--accent); opacity: 0.6;">09</span>
+            <span class="font-heading font-bold text-base md:text-lg" style="color: var(--accent);">
+              🚀 ช่วงที่ 9: ปฏิบัติการ AI Speedrun (80 นาที)
+            </span>
+          </div>
+          <span class="tag" style="background: var(--accent); color: var(--bg); border: none;">14:30 – 15:50 น. (80 นาที)</span>
+        </div>
+        <div class="session-body-content">
+          <div class="font-display font-bold text-lg mb-4" style="color: var(--accent);">
+            การฝึกปฏิบัติการสร้างสื่อการเรียนการสอนอย่างครบวงจรด้วยเครื่องมือ AI และการนำเสนอผลงาน
+          </div>
+          
+          <ul class="space-y-3.5 text-sm" style="color: var(--fg-dim);">
+            <li class="pl-3 border-l-2" style="border-color: var(--accent);">
+              <span class="flow-time-pill">14:30 - 14:40 (10m)</span>
+              <strong style="color: var(--fg);">ปล่อยโจทย์ Speedrun Challenge:</strong> สร้างชุดสื่อการสอน 1 เรื่อง โดยผสาน 3 เครื่องมือ (Prompt ➔ Gemini/NotebookLM ➔ Canva ➔ แปะส่ง Padlet)
+            </li>
+            <li class="pl-3 border-l-2" style="border-color: var(--accent);">
+              <span class="flow-time-pill">14:40 - 15:25 (45m)</span>
+              <strong style="color: var(--fg);">ลงมือทำจริง (Hackathon Mode):</strong> ครูนั่งทำสื่อจริง วิทยากรและผู้ช่วยเดินประกบช่วยแก้ปัญหาหน้างาน
+            </li>
+            <li class="pl-3 border-l-2" style="border-color: var(--accent);">
+              <span class="flow-time-pill">15:25 - 15:50 (25m)</span>
+              <strong style="color: var(--fg);">Showcase & Feedback:</strong> เปิด Padlet ขึ้นจอใหญ่ สุ่ม/เชิญตัวแทนกลุ่มสาระฯ เล่าไอเดีย 2 นาที วิทยากรเติมเต็มข้อเสนอแนะ
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Slot 10 -->
+      <div class="session-card-detailed">
+        <div class="session-header-bar">
+          <div class="flex items-center gap-3">
+            <span class="card-num text-2xl md:text-3xl">10</span>
+            <span class="font-heading font-bold text-base md:text-lg" style="color: var(--success);">
+              🛡️ ช่วงที่ 10: จริยธรรม, PDPA & ปิดการอบรม
+            </span>
+          </div>
+          <span class="tag success">15:50 – 16:00 น. (10 นาที)</span>
+        </div>
+        <div class="session-body-content">
+          <div class="font-display font-bold text-lg mb-4" style="color: var(--fg);">
+            การสรุปแนวปฏิบัติการใช้ AI อย่างรู้เท่าทันและเหมาะสม และพิธีปิดการอบรม
+          </div>
+          
+          <ul class="space-y-3.5 text-sm" style="color: var(--muted);">
+            <li class="pl-3 border-l-2" style="border-color: var(--success);">
+              <span class="flow-time-pill">15:50 - 15:55 (5m)</span>
+              <strong style="color: var(--fg);">เสาที่ 3 (ต่อ) — จริยธรรม & PDPA:</strong> กฎตัดชื่อจริง/คะแนนเด็กก่อนส่ง AI + ครูคือผู้รับผิดชอบผลผลิตคนสุดท้าย + มอบหมาย <strong>ใบงาน Take-home (W4 นวัตกรรม)</strong> สำหรับครูที่ต้องการทำ ว.PA
+            </li>
+            <li class="pl-3 border-l-2" style="border-color: var(--muted);">
+              <span class="flow-time-pill">15:55 - 16:00 (5m)</span>
+              <strong style="color: var(--fg);">ประเมินผลการอบรม, ถ่ายภาพร่วมกัน และพิธีปิด</strong>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 4: Deliverables Status Matrix & Roadmap -->
+<section class="py-24 md:py-32 px-6" id="deliverables" style="background: var(--bg-elev);">
+  <div class="max-w-7xl mx-auto">
+    <div class="grid md:grid-cols-2 gap-8">
+      
+      <!-- Deliverables List -->
+      <div class="article-card">
+        <div class="flex items-center justify-between mb-6 pb-4 border-b" style="border-color: var(--border);">
+          <h3 class="font-display font-bold text-2xl" style="color: var(--fg);">
+            <i class="fas fa-folder-open text-amber-500 mr-2 text-xl"></i> สถานะชิ้นงาน (Deliverables)
+          </h3>
+          <span class="tag success">Ready 68%</span>
+        </div>
+
+        <ul class="space-y-3 font-mono text-xs">
+          <li class="flex items-center justify-between p-3 rounded" style="background: var(--bg);">
+            <span>📄 กำหนดการทางการ (.docx / .pdf)</span>
+            <span class="tag success">100% สมบูรณ์</span>
+          </li>
+          <li class="flex items-center justify-between p-3 rounded" style="background: var(--bg);">
+            <span>🧭 โครงสร้าง 3 เครื่องมือ (Outline)</span>
+            <span class="tag success">100% สมบูรณ์</span>
+          </li>
+          <li class="flex items-center justify-between p-3 rounded" style="background: var(--bg);">
+            <span>🌐 เว็บไซต์ & คลัง 166 Prompts (HTML)</span>
+            <span class="tag success">100% สมบูรณ์</span>
+          </li>
+          <li class="flex items-center justify-between p-3 rounded" style="background: var(--bg);">
+            <span>🎞️ สื่อภาพ GIF สาธิตการคลิก Canva</span>
+            <span class="tag success">100% สมบูรณ์</span>
+          </li>
+          <li class="flex items-center justify-between p-3 rounded" style="background: var(--bg);">
+            <span>📝 ร่างแผนบรรยาย 10 ช่วง & ทางลัด LaTeX</span>
+            <span class="tag success">100% ร่างแล้ว</span>
+          </li>
+          <li class="flex items-center justify-between p-3 rounded" style="background: var(--bg);">
+            <span>🚀 Deploy ขึ้น GitHub Pages + QR Code</span>
+            <span class="tag cyan">รอ Upload</span>
+          </li>
+          <li class="flex items-center justify-between p-3 rounded" style="background: var(--bg);">
+            <span>🖥️ สไลด์นำเสนอ Marp (slides.md)</span>
+            <span class="tag muted">Hold ไว้ทำท้ายสุด</span>
+          </li>
+          <li class="flex items-center justify-between p-3 rounded" style="background: var(--bg);">
+            <span>🎙️ สคริปต์วิทยากรคุม Speedrun 80m</span>
+            <span class="tag muted">Hold ไว้ทำท้ายสุด</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Roadmap Timeline -->
+      <div class="article-card">
+        <div class="flex items-center justify-between mb-6 pb-4 border-b" style="border-color: var(--border);">
+          <h3 class="font-display font-bold text-2xl" style="color: var(--fg);">
+            <i class="fas fa-map-signs text-cyan-400 mr-2 text-xl"></i> ไทม์ไลน์โครงการ (Roadmap)
+          </h3>
+          <span class="tag">Aug 2026</span>
+        </div>
+
+        <div class="space-y-6 font-mono text-xs">
+          <div class="border-l-2 pl-4 pb-2" style="border-color: var(--success);">
+            <div style="color: var(--success); font-weight: 700;">11 – 13 ส.ค. 2569 (เสร็จสิ้น)</div>
+            <div class="font-bold text-sm text-gray-200 mt-1">วางรากฐานหลักสูตร & พัฒนาเว็บคลัง Prompt</div>
+            <p class="font-sans text-xs text-gray-400 mt-1">โต๊ะกลมเลือก 3 เครื่องมือ, เว็บไซต์ HTML 4 หน้า, คลัง Prompt 166 รายการ และทำ GIF สาธิต</p>
+          </div>
+
+          <div class="border-l-2 pl-4 pb-2" style="border-color: var(--accent);">
+            <div style="color: var(--accent); font-weight: 700;">15 ส.ค. 2569 (วันนี้ — อยู่ระหว่างดำเนินการ)</div>
+            <div class="font-bold text-sm text-gray-200 mt-1">ตกผลึกฐานคิด & จัดทำร่างแผนการนำเสนอ 10 ช่วง</div>
+            <p class="font-sans text-xs text-gray-400 mt-1">สรุป 3 เสาหลักฐานคิด, ทางลัดสมการ LaTeX (Word/Canva/Docs) และลงรายละเอียดการจัดสรรเวลา 10 ช่วงอิงตามเอกสารทางการ</p>
+          </div>
+
+          <div class="border-l-2 pl-4 pb-2" style="border-color: var(--border-strong);">
+            <div style="color: var(--muted); font-weight: 700;">16 – 20 ส.ค. 2569 (เป้าหมายถัดไป)</div>
+            <div class="font-bold text-sm text-gray-300 mt-1">Deploy เว็บไซต์ & เตรียมสรุปสไลด์เนื้อหา</div>
+            <p class="font-sans text-xs text-gray-400 mt-1">นำเว็บไซต์ขึ้น GitHub Pages, สร้าง QR Code แจกในห้อง, อัปเดต Cheat-sheet ฉบับ 1 หน้าสำหรับพิมพ์แจก</p>
+          </div>
+
+          <div class="border-l-2 pl-4 pb-2" style="border-color: var(--border-strong);">
+            <div style="color: var(--muted); font-weight: 700;">21 – 25 ส.ค. 2569</div>
+            <div class="font-bold text-sm text-gray-300 mt-1">สไลด์จริง (Marp) & สคริปต์วิทยากร 80 นาที</div>
+            <p class="font-sans text-xs text-gray-400 mt-1">ร่างสไลด์ฉบับสมบูรณ์ (Marp ➔ HTML/PDF), เขียนสคริปต์และวิธีคุมเวลาช่วง AI Speedrun 80 นาที และซักซ้อมจุด Wow Moment</p>
+          </div>
+
+          <div class="border-l-2 pl-4" style="border-color: var(--border-strong);">
+            <div style="color: var(--muted); font-weight: 700;">29 ส.ค. 2569</div>
+            <div class="font-bold text-sm text-gray-300 mt-1">🎉 วันจัดอบรมจริง (Workshop Day)</div>
+            <p class="font-sans text-xs text-gray-400 mt-1">ดำเนินการอบรมตามกำหนดการ 8:30 - 16:00 น.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="py-16 px-6 border-t font-mono text-xs text-center" style="border-color: var(--border); color: var(--muted); background: var(--bg);">
+  <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+    <div>
+      © 2026 AI Training School Project • Designed with Technical Editorial Archetype
+    </div>
+    <div class="text-gray-500">
+      SubwatG Vault • Hermes Orchestrated
+    </div>
+  </div>
+</footer>
+
+<!-- Interactive JavaScript (Theme, Typewriter, Glow, Copy) -->
+<script>
+// === TYPEWRITER EFFECT ===
+const greetings = [
+  "โครงการอบรมเชิงปฏิบัติการ AI สำหรับครู",
+  "Gemini + NotebookLM ➔ Canva Workflow",
+  "10 ช่วงเวลาบรรยาย • 166 Prompts พร้อมใช้",
+  "ทางลัดสมการคณิตศาสตร์และวิทยาศาสตร์ (LaTeX)"
+];
+let gIdx = 0, cIdx = 0, deleting = false;
+const twEl = document.getElementById('typewriter');
+
+function type() {
+  const cur = greetings[gIdx];
+  if (!deleting) {
+    twEl.textContent = cur.slice(0, cIdx + 1);
+    cIdx++;
+    if (cIdx === cur.length) {
+      deleting = true;
+      setTimeout(type, 2200);
+      return;
+    }
+    setTimeout(type, 65 + Math.random() * 40);
+  } else {
+    twEl.textContent = cur.slice(0, cIdx);
+    cIdx--;
+    if (cIdx === 0) {
+      deleting = false;
+      gIdx = (gIdx + 1) % greetings.length;
+      setTimeout(type, 400);
+      return;
+    }
+    setTimeout(type, 30);
+  }
+}
+type();
+
+// === THEME TOGGLE WITH LOCALSTORAGE & KEYBOARD SHORTCUT ===
+const themeBtns = document.querySelectorAll('.theme-btn');
+const root = document.documentElement;
+
+function setTheme(theme) {
+  document.body.classList.add('theme-anim');
+  root.setAttribute('data-theme', theme);
+  localStorage.setItem('subwatg-theme', theme);
+  
+  themeBtns.forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('data-theme') === theme);
+  });
+  
+  setTimeout(() => document.body.classList.remove('theme-anim'), 600);
+}
+
+themeBtns.forEach(btn => {
+  btn.addEventListener('click', () => setTheme(btn.getAttribute('data-theme')));
+});
+
+const savedTheme = localStorage.getItem('subwatg-theme') || 'dark';
+setTheme(savedTheme);
+
+// Press 'T' to cycle themes
+document.addEventListener('keydown', (e) => {
+  if (e.key.toLowerCase() === 't' && !['input', 'textarea'].includes(e.target.tagName.toLowerCase())) {
+    const themes = ['dark', 'light', 'cyber'];
+    const current = root.getAttribute('data-theme') || 'dark';
+    const next = themes[(themes.indexOf(current) + 1) % themes.length];
+    setTheme(next);
+  }
+});
+
+// === READING PROGRESS BAR ===
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = (scrollTop / docHeight) * 100;
+  document.getElementById('progressBar').style.width = progress + '%';
+});
+
+// === MOUSE GLOW IN HERO ===
+const hero = document.getElementById('overview');
+const mouseGlow = document.getElementById('mouseGlow');
+if (hero && mouseGlow) {
+  hero.addEventListener('mousemove', (e) => {
+    const rect = hero.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    mouseGlow.style.left = x + 'px';
+    mouseGlow.style.top = y + 'px';
+    mouseGlow.style.opacity = '1';
+  });
+  hero.addEventListener('mouseleave', () => {
+    mouseGlow.style.opacity = '0';
+  });
+}
+
+// === CODE SNIPPET COPY HELPER ===
+function copySnippet(btn, codeId) {
+  const codeEl = document.getElementById(codeId);
+  if (!codeEl) return;
+  const text = codeEl.innerText;
+  
+  navigator.clipboard.writeText(text).then(() => {
+    btn.classList.add('copied');
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '<i class="fas fa-check"></i> <span>Copied!</span>';
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.innerHTML = originalText;
+    }, 2000);
+  });
+}
+</script>
+
+</body>
+</html>
