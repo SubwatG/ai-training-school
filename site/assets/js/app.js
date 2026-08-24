@@ -451,7 +451,62 @@ const PromptsLibrary = (() => {
   return { init, update };
 })();
 
+/* ------------------------------------------------------------------------
+   4. PRESET SCENARIO STARTER KITS LOADER
+   ------------------------------------------------------------------------ */
+
+const StarterKitsModule = (() => {
+  async function init() {
+    const container = document.getElementById("starter-kits-container");
+    if (!container) return;
+
+    try {
+      const res = await fetch("assets/data/scenario-kits.json", { cache: "no-store" });
+      if (!res.ok) return;
+      const kits = await res.json();
+
+      container.innerHTML = kits.map((k) => {
+        return `
+          <div class="card p-4 flex flex-col justify-between rounded-xl bg-white border border-stone-200 shadow-sm hover:shadow-md transition">
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-2">
+                <span class="px-2 py-0.5 rounded text-[0.72rem] font-bold uppercase tracking-wider" style="background:rgba(95,169,158,0.15); color:#2E7D73;">${k.subject}</span>
+                <span class="text-xs text-stone-500 font-medium">${k.grade}</span>
+              </div>
+              <h3 class="font-display font-bold text-base mb-1.5 leading-snug" style="color:var(--ink);">${k.topic}</h3>
+              <p class="text-xs text-stone-600 mb-3 line-clamp-2">${k.scenario_title}</p>
+            </div>
+            <div class="space-y-1.5 pt-2 border-t border-stone-100">
+              <button type="button" class="btn-copy-starter w-full py-1.5 px-2.5 rounded text-xs font-semibold flex items-center justify-center gap-1.5 text-white transition hover:opacity-95" style="background:#5FA99E;" data-text="${encodeURIComponent(k.prompt_gemini)}">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                คัดลอก Prompt ครู (Gemini)
+              </button>
+              <button type="button" class="btn-copy-starter w-full py-1.5 px-2.5 rounded text-xs font-medium flex items-center justify-center gap-1.5 text-stone-700 bg-stone-100 hover:bg-stone-200 transition" data-text="${encodeURIComponent(k.notebooklm_study_guide_text)}">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                คัดลอกข้อความบทเรียน (NotebookLM)
+              </button>
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      container.addEventListener("click", (e) => {
+        const btn = e.target.closest(".btn-copy-starter");
+        if (btn && btn.dataset.text) {
+          const raw = decodeURIComponent(btn.dataset.text);
+          copyText(raw, "คัดลอกชุดข้อมูลสำหรับใช้งานแล้ว!");
+        }
+      });
+    } catch (err) {
+      console.warn("Could not load scenario-kits.json", err);
+    }
+  }
+
+  return { init };
+})();
+
 document.addEventListener("DOMContentLoaded", () => {
   initActiveNav();
   PromptsLibrary.init();
+  StarterKitsModule.init();
 });
