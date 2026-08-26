@@ -3,207 +3,225 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI เพื่อการเรียนการสอน · อบรมครู</title>
+  <title>การประยุกต์ใช้ AI เพื่อการจัดการเรียนการสอน 2569 · พอร์ทัลอบรมครู</title>
 
-  <!-- Fonts -->
+  <!-- Google Fonts: Mali & Noto Sans Thai Looped -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=IBM+Plex+Sans+Thai+Looped:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Mali:wght@500;600;700&family=Noto+Sans+Thai+Looped:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
     rel="stylesheet"
   />
 
-  <!-- Tailwind + theme layer -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="assets/css/styles.css" />
 </head>
 <body class="antialiased" data-page="home">
 
-  <!-- ======= Masthead / sticky nav ======= -->
-  <header class="masthead sticky top-0 z-40">
+  <!-- ======= Masthead / Sticky Nav ======= -->
+  <header class="masthead sticky top-0 z-50">
     <div class="max-w-6xl mx-auto px-4 sm:px-6">
       <div class="flex items-center justify-between h-16">
-        <a href="index.html" class="flex items-center gap-2 group">
-          <span class="font-display font-bold text-lg tracking-tight group-hover:text-accent" style="color:var(--accent)">AI–ครู</span>
-          <span class="hidden sm:inline font-display text-sm tracking-wide" style="color:var(--ink)">อบรมการเรียนการสอน</span>
+        <a href="index.html" class="flex items-center gap-3">
+          <span class="bg-[#26394A] text-white font-bold text-sm px-3 py-1.5 rounded-lg font-display tracking-wider shadow-sm">AI–ครู 2569</span>
+          <span class="hidden md:inline font-display text-sm font-bold text-[#26394A]">โรงเรียนเทศบาล ๔ (เชาวนปรีชาอุทิศ)</span>
         </a>
-        <nav class="flex items-center gap-4 sm:gap-6" aria-label="หลัก">
-          <a href="index.html" class="nav-link" data-page="home">หน้าแรก</a>
-          <a href="prompts.html" class="nav-link" data-page="prompts">คลัง Prompt</a>
-          <a href="tutorials.html" class="nav-link" data-page="tutorials">วิธีใช้</a>
-          <a href="showcase.html" class="nav-link" data-page="showcase">ผลงาน</a>
+        <nav class="flex items-center gap-2 sm:gap-4" aria-label="หลัก">
+          <a href="index.html" class="nav-link active">🏠 แผนการอบรม</a>
+          <a href="mockups.html" class="nav-link">📂 ศูนย์กิจกรรม & สไลด์</a>
+          <a href="prompts.html" class="nav-link">🔍 คลัง Prompt (370+)</a>
+          <a href="tutorials.html" class="nav-link">📖 วิธีใช้</a>
+          <a href="showcase.html" class="nav-link">🌟 ส่งผลงาน</a>
         </nav>
       </div>
     </div>
   </header>
 
-  <!-- ======= Hero ======= -->
-  <section class="relative border-b" style="border-color:var(--line); background:
-      linear-gradient(rgba(250,246,239,0.92), rgba(241,234,221,0.7)),
-      repeating-linear-gradient(45deg, transparent 0 14px, rgba(166,61,28,0.05) 14px 15px);">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-24 grid lg:grid-cols-[1.2fr_0.8fr] gap-10 items-center">
-      <div>
-        <p class="eyebrow mb-4">Workshop · 29 ส.ค. 2569</p>
-        <h1 class="font-display font-bold text-4xl sm:text-5xl lg:text-6xl leading-[1.05] tracking-tight">
-          ประยุกต์ใช้ AI
-          <br />เพื่อการ<span style="color:var(--accent)">เรียน การสอน</span>
+  <main class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
+
+    <!-- ======= HERO SECTION ======= -->
+    <section class="card p-8 sm:p-12 mb-10 bg-white/95 backdrop-blur-sm border border-slate-200/80 shadow-md">
+      <div class="max-w-3xl">
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#E8877A]/15 text-[#D97365] border border-[#E8877A]/30 text-xs font-bold font-display mb-4">
+          ✨ 29 สิงหาคม 2569 · 08:30 – 16:00 น.
+        </div>
+        <h1 class="font-display font-bold text-3xl sm:text-5xl text-[#26394A] leading-tight tracking-tight mb-4">
+          การประยุกต์ใช้ AI เพื่อการจัดการเรียนการสอน
         </h1>
-        <p class="lead mt-6 max-w-xl">
-          อบรมเชิงปฏิบัติการสำหรับครูและบุคลากรทางการศึกษา — เจาะตามเครื่องมือ 3 ตัว (ฟรีทั้งหมด)
-          สอนโดยให้ทุกคน<span class="font-semibold" style="color:var(--ink)">ลงมือทำชิ้นงานจริง</span>
-          กลับไปใช้ในห้องเรียนได้ทันที พร้อมทักษะ
-          <span class="font-semibold" style="color:var(--ink)">ตรวจทานก่อนใช้</span> เป็นแกนตลอดทั้งวัน
+        <p class="text-slate-600 text-base sm:text-lg leading-relaxed mb-6">
+          โครงการอบรมเชิงปฏิบัติการพัฒนาครูและบุคลากรทางการศึกษา — เน้น <b>"ลงมือทำจริง ไม่นั่งดู AI โชว์"</b> ทุกคนออกจากห้องพร้อมชิ้นงานสื่อการสอน/ใบงาน 1 ชิ้น ด้วยเครื่องมือฟรี 100%
         </p>
-        <div class="mt-8 flex flex-wrap gap-3">
-          <a href="prompts.html" class="btn-accent">เปิดคลัง 200+ Prompt
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+
+        <!-- Quick Access CTA -->
+        <div class="flex flex-wrap items-center gap-3 pt-2">
+          <a href="assets/slides.pdf" target="_blank" class="btn-accent">
+            📄 สไลด์บรรยายทางการ (PDF)
           </a>
-          <a href="tutorials.html" class="btn-ghost">ดูคู่มือ Step-by-Step</a>
-          <a href="showcase.html" class="btn-ghost">ชมผลงานตัวอย่าง</a>
+          <a href="mockups.html" class="btn-mint">
+            🚀 เข้าสู่ศูนย์กิจกรรม & คู่มือ
+          </a>
+          <a href="prompts.html" class="btn-ghost">
+            🔍 เปิดคลังคำสั่ง 370+ Prompt
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======= SECTION 1: 3-PILLAR MENTAL MODEL ======= -->
+    <section class="mb-12">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-2">
+          <span class="badge-pill bg-[#7A6FB1]/20 text-[#5C528E] border border-[#7A6FB1]/40">Core Framework</span>
+          <h2 class="font-display font-bold text-2xl text-[#26394A]">3 เสาหลัก AI สำหรับครูไทย</h2>
         </div>
       </div>
 
-      <div class="grid gap-4">
-        <div class="card p-5">
-          <div class="flex items-center gap-3">
-            <span class="font-display font-bold text-3xl" style="color:var(--accent)">3</span>
-            <p class="text-sm font-semibold">เสาหลักสำคัญ<br /><span style="color:var(--ink-soft)" class="font-normal">คุยถูกทาง · วางถูกตัว · ตรวจชัวร์ก่อนใช้</span></p>
-          </div>
-        </div>
-        <div class="card p-5">
-          <div class="flex items-center gap-3">
-            <span class="font-display font-bold text-3xl" style="color:var(--accent)">80</span>
-            <p class="text-sm font-semibold">นาที AI สปีดรัน<br /><span style="color:var(--ink-soft)" class="font-normal">จาก 0 สู่ สื่อสอนครบวงจร 1 ชิ้น</span></p>
-          </div>
-        </div>
-        <div class="card p-5">
-          <div class="flex items-center gap-3">
-            <span class="stamp">200+</span>
-            <p class="text-sm font-semibold">คลัง Prompt ครบ 8 กลุ่มสาระ<br /><span style="color:var(--ink-soft)" class="font-normal">พร้อมสูตร 3 ส่วน คัดลอกใช้ได้ทันที</span></p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ======= 3 Golden Rules ======= -->
-  <section class="max-w-6xl mx-auto px-4 sm:px-6 py-14 border-b" style="border-color:var(--line);">
-    <div class="eyebrow mb-2">กรอบแนวคิดหลัก (Mental Model)</div>
-    <h2 class="font-display font-bold text-2xl sm:text-3xl tracking-tight mb-8">3 เสาหลัก AI สำหรับครูไทย</h2>
-
-    <div class="grid md:grid-cols-3 gap-6">
-      <div class="card p-6 border-l-4" style="border-left-color:var(--accent);">
-        <span class="font-display font-bold text-lg text-accent mb-1 block">เสาที่ 1: คุยให้ถูกทาง</span>
-        <h3 class="font-display font-bold text-xl mb-2">Input & Prompting</h3>
-        <p class="text-sm leading-relaxed" style="color:var(--ink-soft)">
-          จำสูตร 3 ส่วน <strong>บทบาท–บริบท–เงื่อนไข</strong> สั่งงาน AI เสมือนสั่งผู้ช่วยสอนจบใหม่ ยิ่งให้ข้อมูลบริบทชัด ผลลัพธ์ยิ่งตรงใจ
-        </p>
-      </div>
-
-      <div class="card p-6 border-l-4" style="border-left-color:var(--accent);">
-        <span class="font-display font-bold text-lg text-accent mb-1 block">เสาที่ 2: วางงานให้ถูกตัว</span>
-        <h3 class="font-display font-bold text-xl mb-2">Tool Triad Workflow</h3>
-        <p class="text-sm leading-relaxed" style="color:var(--ink-soft)">
-          <strong>Gemini</strong> (ไอเดีย/เนื้อหา/ภาพ) + <strong>NotebookLM</strong> (อิงเอกสารจริง/เสียงสนทนา) $\rightarrow$ ประกอบร่างใน <strong>Canva</strong>
-        </p>
-      </div>
-
-      <div class="card p-6 border-l-4" style="border-left-color:var(--accent);">
-        <span class="font-display font-bold text-lg text-accent mb-1 block">เสาที่ 3: ตรวจให้ชัวร์ก่อนใช้</span>
-        <h3 class="font-display font-bold text-xl mb-2">Verification & Ethics</h3>
-        <p class="text-sm leading-relaxed" style="color:var(--ink-soft)">
-          ยึด Protocol 3 ขั้น (ตรวจระเบียบ/ตรวจคำนวณ/ตรวจ PDPA) ครูเป็นผู้ลงนามและรับผิดชอบความถูกต้อง 100% เสมอ
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ======= 3 tools overview ======= -->
-  <section class="max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
-    <div class="eyebrow mb-3">เครื่องมือหลักในการอบรม</div>
-    <h2 class="font-display font-bold text-3xl sm:text-4xl tracking-tight mb-10">3 เครื่องมือฟรีทรงพลัง</h2>
-
-    <div class="grid md:grid-cols-3 gap-6">
-
-      <!-- Gemini -->
-      <article class="card p-6 flex flex-col">
-        <span class="tag tool self-start mb-4">Gemini</span>
-        <h3 class="font-display font-bold text-xl mb-2">เขียน Prompt + งานสอน</h3>
-        <p class="text-sm leading-relaxed mb-4" style="color:var(--ink-soft)">
-          แผนการสอน ข้อสอบ ใบงาน บันทึกข้อความ แปลงสมการ LaTeX และสร้างภาพประกอบภาษาไทย
-        </p>
-        <div class="mt-auto">
-          <a href="tutorials.html#gemini" class="link-accent text-sm">ดูวิธีใช้ →</a>
-        </div>
-      </article>
-
-      <!-- Canva -->
-      <article class="card p-6 flex flex-col">
-        <span class="tag tool self-start mb-4">Canva</span>
-        <h3 class="font-display font-bold text-xl mb-2">สร้างสื่อและเอกสาร</h3>
-        <p class="text-sm leading-relaxed mb-4" style="color:var(--ink-soft)">
-          เทมเพลตโปสเตอร์ Infographic ตัดพื้นหลัง Magic Write และ Canva Math App สำหรับจัดสูตรคณิตศาสตร์ Vector
-        </p>
-        <div class="mt-auto">
-          <a href="tutorials.html#canva" class="link-accent text-sm">ดูวิธีใช้ →</a>
-        </div>
-      </article>
-
-      <!-- NotebookLM -->
-      <article class="card p-6 flex flex-col">
-        <span class="tag tool self-start mb-4">NotebookLM</span>
-        <h3 class="font-display font-bold text-xl mb-2">สรุปเอกสาร + Audio Overview</h3>
-        <p class="text-sm leading-relaxed mb-4" style="color:var(--ink-soft)">
-          โหลดเกณฑ์ ว.PA หรือไฟล์ตำราเรียน $\rightarrow$ สร้าง Podcast เสียงสนทนาสรุปบทเรียน และตรวจสอบข้อสอบตรงตัวชี้วัด
-        </p>
-        <div class="mt-auto">
-          <a href="tutorials.html#notebooklm" class="link-accent text-sm">ดูวิธีใช้ →</a>
-        </div>
-      </article>
-
-    </div>
-  </section>
-
-  <!-- ======= AI Speedrun Feature ======= -->
-  <section class="border-t py-14" style="border-color:var(--line); background:var(--paper-2)">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6">
-      <div class="grid md:grid-cols-[1.2fr_0.8fr] gap-8 items-center">
-        <div>
-          <span class="px-2.5 py-1 rounded text-xs font-bold font-display uppercase tracking-wider text-white" style="background:var(--accent);">⚡ กิจกรรมไฮไลต์</span>
-          <h2 class="font-display font-bold text-2xl sm:text-3xl mt-2 mb-4">AI สปีดรัน (80 นาที): สื่อสอนครบวงจร 1 ชิ้น</h2>
-          <p class="text-sm leading-relaxed mb-4" style="color:var(--ink-soft)">
-            ฝึกปฏิบัติการบูรณาการ 3 เครื่องมือในเวลาจำกัด: นำหัวข้อที่จะสอนสัปดาห์หน้า $\rightarrow$ สรุปเนื้อหาและสร้างภาพใน Gemini $\rightarrow$ สร้างเสียงสรุปใน NotebookLM $\rightarrow$ จัดวางโปสเตอร์สื่อสอนใน Canva
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="card p-6 bg-white border-t-4 border-t-[#E8877A]">
+          <span class="font-display font-bold text-sm text-[#E8877A] block mb-1">เสาที่ 1 · คุยให้ถูกทาง</span>
+          <h3 class="font-display font-bold text-lg text-[#26394A] mb-2">Input & Prompting</h3>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            จำสูตร <b>บทบาท – บริบท – ภารกิจ – รูปแบบ (ร-บ-ภ-ผ)</b> สั่งงาน AI เสมือนสั่งผู้ช่วยสอนจบใหม่ ยิ่งให้ข้อมูลชัด ผลงานยิ่งตรงหลักสูตร
           </p>
-          <a href="tutorials.html#speedrun" class="btn-accent text-sm">ดูขั้นตอนสปีดรัน 5 สเต็ป →</a>
         </div>
-        <div class="card p-5 bg-white">
-          <h3 class="font-display font-bold text-base mb-3">ไทม์ไลน์ 80 นาที</h3>
-          <ul class="text-sm space-y-2" style="color:var(--ink-soft)">
-            <li>⏱️ <strong>0–5 นาที:</strong> เลือกหัวข้อสอน 1 เรื่อง</li>
-            <li>⏱️ <strong>5–15 นาที:</strong> สรุปเนื้อหา + เจนภาพ AI ใน Gemini</li>
-            <li>⏱️ <strong>15–20 นาที:</strong> อัปโหลดเข้า NotebookLM สั่งทำเสียง</li>
-            <li>⏱️ <strong>20–40 นาที:</strong> ประกอบร่างโปสเตอร์ใน Canva</li>
-            <li>⏱️ <strong>40–50 นาที:</strong> ตรวจทานความถูกต้อง (Protocol)</li>
-            <li>⏱️ <strong>50–80 นาที:</strong> โชว์ผลงานบน Padlet</li>
-          </ul>
+
+        <div class="card p-6 bg-white border-t-4 border-t-[#5FA99E]">
+          <span class="font-display font-bold text-sm text-[#46867D] block mb-1">เสาที่ 2 · วางงานให้ถูกตัว</span>
+          <h3 class="font-display font-bold text-lg text-[#26394A] mb-2">Tool Triad (ฟรี 100%)</h3>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            <b>Gemini</b> (OCR/เนื้อหา/ภาพ 2D) + <b>NotebookLM</b> (สรุปเอกสารจริง/พอดแคสต์) → ประกอบร่างใน <b>Canva</b>
+          </p>
+        </div>
+
+        <div class="card p-6 bg-white border-t-4 border-t-[#D2A54B]">
+          <span class="font-display font-bold text-sm text-[#8B671B] block mb-1">เสาที่ 3 · ตรวจให้ชัวร์ก่อนใช้</span>
+          <h3 class="font-display font-bold text-lg text-[#26394A] mb-2">Verification Ladder</h3>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            ตรวจ 3 ขั้น: 1. ตรวจระเบียบกฎหมาย 2. ตรวจสูตรคำนวณ 3. คุ้มครองข้อมูลเด็ก (PDPA) — ครูเป็นผู้ลงนามรับผิดชอบเสมอ
+          </p>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+
+    <!-- ======= SECTION 2: TIMELINE WORKSHOP ROADMAP (เส้นทางกิจกรรมทั้งวัน) ======= -->
+    <section class="mb-12">
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <div class="flex items-center gap-2 mb-1">
+            <span class="badge-pill bg-[#5FA99E]/20 text-[#46867D] border border-[#5FA99E]/40">Roadmap</span>
+            <h2 class="font-display font-bold text-2xl text-[#26394A]">เส้นทางการเรียนรู้ตลอดวัน (4 Sessions)</h2>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-500">คลิกที่ปุ่มกิจกรรมของแต่ละช่วงเวลาเพื่อเปิดคู่มือหรือใบงานฝึกปฏิบัติ</p>
+        </div>
+      </div>
+
+      <div class="space-y-6">
+
+        <!-- Stage 1 -->
+        <div class="card p-6 bg-white border-l-8 border-l-[#E8877A] flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div class="max-w-2xl">
+            <div class="flex items-center gap-3 mb-2">
+              <span class="bg-[#E8877A]/15 text-[#D97365] text-xs font-bold px-2.5 py-1 rounded-md font-display">08:30 – 10:15 น.</span>
+              <span class="badge-pill bg-slate-100 text-slate-700">Session 1</span>
+            </div>
+            <h3 class="font-display font-bold text-xl text-[#26394A] mb-2">
+              💎 Gemini Ecosystem: ปรับ Mindset + Gems OCR + Gemini Canvas
+            </h3>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              เปิดโลก Live Wow Demo 3 นาที · ฝึกถอดความจากใบงานเก่าด้วย <b>Gems OCR</b> แล้วส่งต่อเข้า <b>Gemini Canvas</b> เพื่อปรับระดับภาษาและสร้างโจทย์แบบ Active Learning
+            </p>
+          </div>
+          <div class="flex flex-col sm:flex-row gap-2 shrink-0">
+            <a href="Outputs-from-ai/Gem-ถอดข้อความจากภาพและ PDF.html" target="_blank" class="btn-ghost text-xs">
+              🖼️ Gem ถอดข้อความภาพ & PDF
+            </a>
+            <a href="Outputs-from-ai/Gemini Canvas-ถอดข้อความไปสู่ Gemini Canvas.html" target="_blank" class="btn-accent text-xs">
+              ⚡ คู่มือ Gems → Canvas
+            </a>
+          </div>
+        </div>
+
+        <!-- Stage 2 -->
+        <div class="card p-6 bg-white border-l-8 border-l-[#5FA99E] flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div class="max-w-2xl">
+            <div class="flex items-center gap-3 mb-2">
+              <span class="bg-[#5FA99E]/15 text-[#46867D] text-xs font-bold px-2.5 py-1 rounded-md font-display">10:30 – 12:00 น.</span>
+              <span class="badge-pill bg-slate-100 text-slate-700">Session 2</span>
+            </div>
+            <h3 class="font-display font-bold text-xl text-[#26394A] mb-2">
+              🎨 Banana 2.0 (Imagen 3) & Canva Strategy สำหรับครู
+            </h3>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              สูตรเจนภาพการศึกษา: 2D เวกเตอร์, พื้นหลังขาว <code>#FFFFFF</code> · คู่มือเจาะลึก <b>Canva 49 ขั้นตอน</b> ตั้งแต่เลือกเทมเพลต แก้สมการคณิตศาสตร์ คุมโทนสี จนถึงส่งออก PDF
+            </p>
+          </div>
+          <div class="flex flex-col sm:flex-row gap-2 shrink-0">
+            <a href="Outputs-from-ai/การเริ่มต้นใช้งาน Canva.html" target="_blank" class="btn-mint text-xs">
+              🖌️ คู่มือ Canva ฉบับเต็ม (49 สเต็ป) ↗
+            </a>
+            <a href="prompts.html#imagegen" class="btn-ghost text-xs">
+              🎨 สูตร Prompt ภาพ
+            </a>
+          </div>
+        </div>
+
+        <!-- Stage 3 -->
+        <div class="card p-6 bg-white border-l-8 border-l-[#7A6FB1] flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div class="max-w-2xl">
+            <div class="flex items-center gap-3 mb-2">
+              <span class="bg-[#7A6FB1]/15 text-[#5C528E] text-xs font-bold px-2.5 py-1 rounded-md font-display">13:00 – 14:45 น.</span>
+              <span class="badge-pill bg-slate-100 text-slate-700">Session 3</span>
+            </div>
+            <h3 class="font-display font-bold text-xl text-[#26394A] mb-2">
+              📚 NotebookLM: ปราบความหลอนด้วยเอกสารจริง + สร้าง Audio Podcast
+            </h3>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              อิงเฉพาะเอกสารที่ป้อน 100% · การจัด Tier ไฟล์ (.docx, .pdf, .csv ตารางคะแนน) · กิจกรรมสร้าง Study Guide, แผนสรุป และ <b>Deep Dive Audio Podcast (AI คุย 2 คน)</b>
+            </p>
+          </div>
+          <div class="flex flex-col sm:flex-row gap-2 shrink-0">
+            <a href="Outputs-from-ai/NotebookLM-ปราบความหลอนและสร้างAudioPodcast.html" target="_blank" class="btn-accent text-xs">
+              🎙️ คู่มือ NotebookLM Podcast ↗
+            </a>
+            <a href="mockups.html" class="btn-ghost text-xs">
+              📂 ชุดข้อมูลฝึกปฏิบัติ
+            </a>
+          </div>
+        </div>
+
+        <!-- Stage 4 -->
+        <div class="card p-6 bg-white border-l-8 border-l-[#D2A54B] flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div class="max-w-2xl">
+            <div class="flex items-center gap-3 mb-2">
+              <span class="bg-[#D2A54B]/15 text-[#8B671B] text-xs font-bold px-2.5 py-1 rounded-md font-display">15:00 – 16:00 น.</span>
+              <span class="badge-pill bg-slate-100 text-slate-700">Session 4</span>
+            </div>
+            <h3 class="font-display font-bold text-xl text-[#26394A] mb-2">
+              🚀 Capstone Showcase & AI Speedrun ปล่อยของชิ้นงานจริง
+            </h3>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              สปีดรันผลิตสื่อ 1 ชิ้น (สแกน → ร่าง → ทำภาพ → โพสต์) · ส่งผลงานขึ้น Showcase Gallery ชื่นชมร่วมกัน พร้อมรับวุฒิบัตร
+            </p>
+          </div>
+          <div class="flex flex-col sm:flex-row gap-2 shrink-0">
+            <a href="showcase.html" class="btn-accent text-xs">
+              🌟 ชม & ส่งผลงาน
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
 
   <!-- ======= Footer ======= -->
-  <footer class="border-t" style="border-color:var(--line); background:var(--paper-2)">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-10 flex flex-col sm:flex-row items-center justify-between gap-4">
-      <p class="font-display text-base" style="color:var(--ink-soft)">© 2569 · การประยุกต์ใช้ AI เพื่อการจัดการเรียนการสอน</p>
-      <nav class="flex gap-5" aria-label="ท้ายหน้า">
-        <a href="index.html" class="nav-link">หน้าแรก</a>
-        <a href="prompts.html" class="nav-link">คลัง Prompt</a>
-        <a href="tutorials.html" class="nav-link">วิธีใช้</a>
-        <a href="showcase.html" class="nav-link">ผลงาน</a>
-      </nav>
+  <footer class="bg-white/80 border-t border-slate-200 py-8 text-center text-xs text-slate-500 relative z-10">
+    <div class="max-w-6xl mx-auto px-4 font-display">
+      <p>โครงการอบรมเชิงปฏิบัติการพัฒนาครูและบุคลากรทางการศึกษา · โรงเรียนเทศบาล ๔ (เชาวนปรีชาอุทิศ)</p>
+      <p class="mt-1 text-slate-400">วิทยากร: อ.ดร.กิตติพงศ์ ทรัพย์วัฒนาชัย และ ผศ.ดร.ธนิษฐา โกวรรณ์</p>
     </div>
   </footer>
 
-  <script src="assets/js/app.js"></script>
 </body>
 </html>

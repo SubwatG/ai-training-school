@@ -177,16 +177,16 @@ const PromptsLibrary = (() => {
     if (p.role_context_condition) {
       const rcc = p.role_context_condition;
       rccBlock =
-        '<div class="my-3 p-3.5 rounded text-sm space-y-1.5" style="background:var(--paper-2); border:1px solid var(--line);">' +
-        '<div><strong style="color:var(--accent)">บทบาท:</strong> ' + escapeHtml(rcc.role || "-") + '</div>' +
-        '<div><strong style="color:var(--accent)">บริบท:</strong> ' + escapeHtml(rcc.context || "-") + '</div>' +
-        '<div><strong style="color:var(--accent)">เงื่อนไข:</strong> ' + escapeHtml(rcc.condition || "-") + '</div>' +
+        '<div class="my-3 p-4 rounded-xl text-base space-y-2" style="background:var(--paper-2); border:1px solid var(--line);">' +
+        '<div><strong class="font-bold text-accent" style="color:var(--accent)">บทบาท:</strong> ' + escapeHtml(rcc.role || "-") + '</div>' +
+        '<div><strong class="font-bold text-accent" style="color:var(--accent)">บริบท:</strong> ' + escapeHtml(rcc.context || "-") + '</div>' +
+        '<div><strong class="font-bold text-accent" style="color:var(--accent)">เงื่อนไข:</strong> ' + escapeHtml(rcc.condition || "-") + '</div>' +
         '</div>';
     }
 
     let tipsBlock = "";
     if (p.tips) {
-      tipsBlock = '<div class="text-sm mb-3 italic" style="color:var(--ink-soft)">💡 <strong>คำแนะนำตรวจทาน:</strong> ' + escapeHtml(p.tips) + '</div>';
+      tipsBlock = '<div class="text-base mb-3 italic" style="color:var(--ink-soft)">💡 <strong>คำแนะนำตรวจทาน:</strong> ' + escapeHtml(p.tips) + '</div>';
     }
 
     // Lazy Render Slot Customizer Accordion
@@ -194,24 +194,24 @@ const PromptsLibrary = (() => {
     if (slots.length > 0) {
       const inputsHtml = slots.map((s) => {
         return (
-          '<div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 text-sm">' +
-          '<label class="sm:w-1/3 text-xs font-bold text-ink-soft truncate" title="' + escapeHtml(s) + '">[' + escapeHtml(s) + ']:</label>' +
-          '<input type="text" class="slot-input flex-1 px-2.5 py-1.5 rounded border text-sm font-sans" data-slot="' + escapeHtml(s) + '" placeholder="พิมพ์ข้อมูลของคุณ..." style="border-color:var(--line); background:#ffffff;">' +
+          '<div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 text-base">' +
+          '<label class="sm:w-1/3 text-sm font-bold text-ink-soft truncate" title="' + escapeHtml(s) + '">[' + escapeHtml(s) + ']:</label>' +
+          '<input type="text" class="slot-input flex-1 px-3 py-2 rounded border text-base font-sans" data-slot="' + escapeHtml(s) + '" placeholder="พิมพ์ข้อมูลของคุณ..." style="border-color:var(--line); background:#ffffff;">' +
           '</div>'
         );
       }).join("");
 
       customizerBlock = (
-        '<details class="slot-customizer my-3 p-3 rounded border text-sm" style="background:var(--paper); border-color:var(--line);">' +
-        '<summary class="font-display font-bold text-xs cursor-pointer flex items-center justify-between text-accent hover:opacity-80 select-none">' +
+        '<details class="slot-customizer my-3 p-4 rounded-xl border text-base" style="background:var(--paper); border-color:var(--line);">' +
+        '<summary class="font-display font-bold text-sm cursor-pointer flex items-center justify-between text-accent hover:opacity-80 select-none">' +
         '<span>⚙️ ปรับแต่งตัวแปรก่อนคัดลอก (' + slots.length + ' ช่อง)</span>' +
         '<span class="text-xs font-normal" style="color:var(--ink-soft)">คลิกเพื่อกรอกค่า</span>' +
         '</summary>' +
-        '<div class="mt-3 pt-2 border-t space-y-2" style="border-color:var(--line);">' +
+        '<div class="mt-3 pt-3 border-t space-y-2.5" style="border-color:var(--line);">' +
         inputsHtml +
         '<div class="pt-2 flex justify-end gap-2">' +
-        '<button type="button" class="btn-reset-slots text-xs px-2.5 py-1 rounded border hover:bg-gray-100" style="border-color:var(--line); color:var(--ink-soft)">ล้างค่า</button>' +
-        '<button type="button" class="btn-copy-customized btn-accent text-xs font-bold px-3 py-1 rounded flex items-center gap-1 shadow-sm">✨ คัดลอกแบบปรับแต่งแล้ว</button>' +
+        '<button type="button" class="btn-reset-slots text-sm px-3 py-1.5 rounded-lg border hover:bg-gray-100" style="border-color:var(--line); color:var(--ink-soft)">ล้างค่า</button>' +
+        '<button type="button" class="btn-copy-customized btn-accent text-sm font-bold px-4 py-1.5 rounded-lg flex items-center gap-1.5 shadow-sm">✨ คัดลอกแบบปรับแต่งแล้ว</button>' +
         '</div>' +
         '</div>' +
         '</details>'
@@ -219,16 +219,16 @@ const PromptsLibrary = (() => {
     }
 
     return (
-      '<article class="prompt-card flex flex-col justify-between p-5 rounded-lg border bg-white shadow-sm" data-id="' + escapeHtml(p.id) + '" style="border-color:var(--line); content-visibility:auto; contain-intrinsic-size:350px;">' +
+      '<article class="prompt-card flex flex-col justify-between p-6 rounded-2xl border bg-white shadow-sm hover:shadow-md transition" data-id="' + escapeHtml(p.id) + '" style="border-color:var(--line); content-visibility:auto; contain-intrinsic-size:380px;">' +
       '<div>' +
-      '<div class="flex items-start justify-between gap-3 mb-2">' +
+      '<div class="flex items-start justify-between gap-3 mb-3">' +
       '<div class="min-w-0">' +
-      (top10Badge ? '<div class="mb-1.5">' + top10Badge + '</div>' : '') +
-      '<h3 class="font-display font-bold text-lg sm:text-xl leading-snug mb-2">' + escapeHtml(p.title) + "</h3>" +
-      '<div class="flex flex-wrap gap-1.5 mb-1">' + tools + task + subj + '</div>' +
+      (top10Badge ? '<div class="mb-2">' + top10Badge + '</div>' : '') +
+      '<h3 class="font-display font-bold text-xl sm:text-2xl leading-snug mb-2">' + escapeHtml(p.title) + "</h3>" +
+      '<div class="flex flex-wrap gap-2 mb-1.5">' + tools + task + subj + '</div>' +
       "</div>" +
-      '<button type="button" class="copy-btn btn-accent shrink-0 !py-2 !px-3.5 text-sm font-semibold rounded-md flex items-center gap-1" aria-label="คัดลอก prompt">' +
-      '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">' +
+      '<button type="button" class="copy-btn btn-accent shrink-0 !py-2.5 !px-4 text-base font-bold rounded-xl flex items-center gap-1.5" aria-label="คัดลอก prompt">' +
+      '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">' +
       '<rect x="9" y="9" width="11" height="11" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M5 15H4.5A1.5 1.5 0 0 1 3 13.5v-9A1.5 1.5 0 0 1 4.5 3h9A1.5 1.5 0 0 1 15 4.5V5" stroke="currentColor" stroke-width="1.8"/>' +
       '</svg>' +
       'คัดลอก' +
@@ -236,10 +236,10 @@ const PromptsLibrary = (() => {
       '</div>' +
       rccBlock +
       customizerBlock +
-      '<pre class="prompt-body mb-3 p-3 rounded font-mono text-sm leading-relaxed" style="background:#f8f9fa; border:1px solid #e9ecef; white-space:pre-wrap; word-break:break-word;">' + escapeHtml(promptText) + '</pre>' +
+      '<pre class="prompt-body mb-3 p-4 rounded-xl font-mono text-base leading-relaxed" style="background:#f8f9fa; border:1px solid #e9ecef; white-space:pre-wrap; word-break:break-word; font-size:1.025rem;">' + escapeHtml(promptText) + '</pre>' +
       tipsBlock +
       '</div>' +
-      '<div class="flex flex-wrap gap-1.5 mt-2 pt-2 border-t" style="border-color:var(--line);">' + tags + '</div>' +
+      '<div class="flex flex-wrap gap-2 mt-3 pt-3 border-t" style="border-color:var(--line);">' + tags + '</div>' +
       '</article>'
     );
   }
@@ -467,22 +467,22 @@ const StarterKitsModule = (() => {
 
       container.innerHTML = kits.map((k) => {
         return `
-          <div class="card p-4 flex flex-col justify-between rounded-xl bg-white border border-stone-200 shadow-sm hover:shadow-md transition">
+          <div class="card p-5 flex flex-col justify-between rounded-2xl bg-white border border-stone-200 shadow-sm hover:shadow-md transition">
             <div>
               <div class="flex items-center justify-between gap-2 mb-2">
-                <span class="px-2 py-0.5 rounded text-[0.72rem] font-bold uppercase tracking-wider" style="background:rgba(95,169,158,0.15); color:#2E7D73;">${k.subject}</span>
-                <span class="text-xs text-stone-500 font-medium">${k.grade}</span>
+                <span class="px-2.5 py-1 rounded-md text-xs font-bold uppercase tracking-wider" style="background:rgba(95,169,158,0.15); color:#2E7D73;">${k.subject}</span>
+                <span class="text-xs text-stone-500 font-semibold">${k.grade}</span>
               </div>
-              <h3 class="font-display font-bold text-base mb-1.5 leading-snug" style="color:var(--ink);">${k.topic}</h3>
-              <p class="text-xs text-stone-600 mb-3 line-clamp-2">${k.scenario_title}</p>
+              <h3 class="font-display font-bold text-lg sm:text-xl mb-1.5 leading-snug" style="color:var(--ink);">${k.topic}</h3>
+              <p class="text-sm text-stone-600 mb-4 line-clamp-2">${k.scenario_title}</p>
             </div>
-            <div class="space-y-1.5 pt-2 border-t border-stone-100">
-              <button type="button" class="btn-copy-starter w-full py-1.5 px-2.5 rounded text-xs font-semibold flex items-center justify-center gap-1.5 text-white transition hover:opacity-95" style="background:#5FA99E;" data-text="${encodeURIComponent(k.prompt_gemini)}">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            <div class="space-y-2 pt-3 border-t border-stone-100">
+              <button type="button" class="btn-copy-starter w-full py-2.5 px-3 rounded-xl text-sm font-bold flex items-center justify-center gap-2 text-white transition hover:opacity-95 shadow-sm" style="background:#5FA99E;" data-text="${encodeURIComponent(k.prompt_gemini)}">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
                 คัดลอก Prompt ครู (Gemini)
               </button>
-              <button type="button" class="btn-copy-starter w-full py-1.5 px-2.5 rounded text-xs font-medium flex items-center justify-center gap-1.5 text-stone-700 bg-stone-100 hover:bg-stone-200 transition" data-text="${encodeURIComponent(k.notebooklm_study_guide_text)}">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              <button type="button" class="btn-copy-starter w-full py-2.5 px-3 rounded-xl text-sm font-semibold flex items-center justify-center gap-2 text-stone-700 bg-stone-100 hover:bg-stone-200 transition" data-text="${encodeURIComponent(k.notebooklm_study_guide_text)}">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
                 คัดลอกข้อความบทเรียน (NotebookLM)
               </button>
             </div>

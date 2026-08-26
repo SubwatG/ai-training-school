@@ -13,7 +13,7 @@
   />
 
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="assets/css/styles.css?v=20260820_mali" />
+  <link rel="stylesheet" href="assets/css/styles.css?v=20260826_large" />
 </head>
 <body class="antialiased" data-page="prompts">
 
@@ -27,6 +27,7 @@
         <nav class="flex items-center gap-4 sm:gap-6" aria-label="หลัก">
           <a href="index.html" class="nav-link" data-page="home">หน้าแรก</a>
           <a href="prompts.html" class="nav-link" data-page="prompts">คลัง Prompt</a>
+          <a href="mockups.html" class="nav-link" data-page="mockups">ศูนย์กิจกรรม & คู่มือ</a>
           <a href="tutorials.html" class="nav-link" data-page="tutorials">วิธีใช้</a>
           <a href="showcase.html" class="nav-link" data-page="showcase">ผลงาน</a>
           <a href="slide-deck.html" class="nav-link text-coral font-bold" target="_blank">📺 สไลด์นำเสนอ</a>
@@ -44,13 +45,13 @@
     </p>
 
     <!-- ===== Pinned Section: Preset Scenario Starter Kits (สำหรับครูที่ไม่ได้เตรียมไฟล์มา) ===== -->
-    <div class="mt-8 p-5 sm:p-6 rounded-xl border shadow-sm" style="background:var(--paper-2); border-color:#5FA99E; border-width:2px;">
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+    <div class="mt-8 p-5 sm:p-6 rounded-2xl border shadow-sm bg-white" style="border-color:#5FA99E; border-width:2px;">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
         <div>
-          <span class="px-2.5 py-1 rounded text-xs font-bold font-display uppercase tracking-wider text-white" style="background:#5FA99E;">🎯 Zero-Prep Starter Kit</span>
-          <h2 class="font-display font-bold text-xl sm:text-2xl mt-1" style="color:var(--ink);">ชุดโจทย์จำลอง 8 กลุ่มสาระ (เริ่มทำได้ทันทีไม่ต้องมีไฟล์เดิม)</h2>
+          <span class="px-3 py-1.5 rounded-full text-sm font-bold font-display uppercase tracking-wider text-white" style="background:#5FA99E;">🎯 Zero-Prep Starter Kit</span>
+          <h2 class="font-display font-bold text-2xl sm:text-3xl mt-2 text-slate-800">ชุดโจทย์จำลอง 8 กลุ่มสาระ (เริ่มทำได้ทันทีไม่ต้องมีไฟล์เดิม)</h2>
         </div>
-        <p class="text-sm" style="color:var(--ink-soft);">สำหรับครูที่ไม่ได้เตรียมไฟล์มา กดเลือกวิชาเพื่อคัดลอกโจทย์ + Prompt เข้า AI ได้ใน 1 คลิก</p>
+        <p class="text-base text-slate-600">สำหรับครูที่ไม่ได้เตรียมไฟล์มา กดเลือกวิชาเพื่อคัดลอกโจทย์ + Prompt เข้า AI ได้ใน 1 คลิก</p>
       </div>
       <div id="starter-kits-container" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
         <!-- Injected via JavaScript from scenario-kits.json -->
@@ -58,19 +59,19 @@
     </div>
 
     <!-- ===== Pinned Section: Top 10 Teacher Survival Kit ===== -->
-    <div class="mt-8 p-5 sm:p-6 rounded-xl border shadow-sm" style="background:var(--paper-2); border-color:var(--accent); border-width:2px;">
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+    <div class="mt-8 p-5 sm:p-6 rounded-2xl border shadow-sm bg-white" style="border-color:var(--accent); border-width:2px;">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
         <div>
-          <span class="px-2.5 py-1 rounded text-xs font-bold font-display uppercase tracking-wider text-white" style="background:var(--accent);">⭐ แนะนำสำหรับวันอบรม</span>
-          <h2 class="font-display font-bold text-xl sm:text-2xl mt-1" style="color:var(--ink);">10 Prompt กู้ชีพครูไทย (Teacher Survival Kit)</h2>
+          <span class="px-3 py-1.5 rounded-full text-sm font-bold font-display uppercase tracking-wider text-white" style="background:var(--accent);">⭐ แนะนำสำหรับวันอบรม</span>
+          <h2 class="font-display font-bold text-2xl sm:text-3xl mt-2 text-slate-800">10 Prompt กู้ชีพครูไทย (Teacher Survival Kit)</h2>
         </div>
-        <p class="text-sm" style="color:var(--ink-soft);">คลิกเพื่อกรองเฉพาะ 10 Prompt ยอดนิยมที่ครูได้ใช้จริงทุกสัปดาห์</p>
+        <p class="text-base text-slate-600">คลิกเพื่อกรองเฉพาะ 10 Prompt ยอดนิยมที่ครูได้ใช้จริงทุกสัปดาห์</p>
       </div>
-      <div id="top10-quick-chips" class="flex flex-wrap gap-2">
-        <button type="button" id="btn-show-top10" class="chip active font-semibold" style="border-color:var(--accent); color:var(--accent);">
+      <div id="top10-quick-chips" class="flex flex-wrap gap-3">
+        <button type="button" id="btn-show-top10" class="chip active font-bold !text-base !py-2.5 !px-5" style="border-color:var(--accent); color:var(--accent);">
           ⭐ ดู 10 Prompt กู้ชีพครู
         </button>
-        <button type="button" id="btn-show-all" class="chip">
+        <button type="button" id="btn-show-all" class="chip !text-base !py-2.5 !px-5">
           แสดงทั้งหมด (200+ รายการ)
         </button>
       </div>
@@ -95,44 +96,44 @@
     <div class="mt-6 space-y-4">
       <!-- 1. Task Type Filter -->
       <div>
-        <p class="eyebrow !text-[0.75rem] mb-2">ภาระงานครู (Task Type)</p>
-        <div class="chip-group" data-filter="task">
-          <button type="button" class="chip active" data-task="all">ทุกภาระงาน</button>
-          <button type="button" class="chip" data-task="ออกแบบการสอน">ออกแบบการสอน / แผน</button>
-          <button type="button" class="chip" data-task="ข้อสอบ & การวัดผล">ข้อสอบ / วัดผล / ซ่อมเสริม</button>
-          <button type="button" class="chip" data-task="สร้างสื่อ & ภาพประกอบ">สร้างสื่อ / ภาพ / Canva</button>
-          <button type="button" class="chip" data-task="เอกสาร & สรุปรายงาน">เอกสาร / SDQ / PLC / ว.PA / ปพ.</button>
-          <button type="button" class="chip" data-task="นวัตกรรม & กิจกรรม">นวัตกรรม / เกม / กิจกรรม</button>
+        <p class="eyebrow !text-sm mb-2">ภาระงานครู (Task Type)</p>
+        <div class="chip-group flex flex-wrap gap-2" data-filter="task">
+          <button type="button" class="chip active !text-sm !py-2 !px-4" data-task="all">ทุกภาระงาน</button>
+          <button type="button" class="chip !text-sm !py-2 !px-4" data-task="ออกแบบการสอน">ออกแบบการสอน / แผน</button>
+          <button type="button" class="chip !text-sm !py-2 !px-4" data-task="ข้อสอบ & การวัดผล">ข้อสอบ / วัดผล / ซ่อมเสริม</button>
+          <button type="button" class="chip !text-sm !py-2 !px-4" data-task="สร้างสื่อ & ภาพประกอบ">สร้างสื่อ / ภาพ / Canva</button>
+          <button type="button" class="chip !text-sm !py-2 !px-4" data-task="เอกสาร & สรุปรายงาน">เอกสาร / SDQ / PLC / ว.PA / ปพ.</button>
+          <button type="button" class="chip !text-sm !py-2 !px-4" data-task="นวัตกรรม & กิจกรรม">นวัตกรรม / เกม / กิจกรรม</button>
         </div>
       </div>
 
       <!-- 2. Subject Filter (8 Learning Areas) -->
       <div>
-        <p class="eyebrow !text-[0.75rem] mb-2">กลุ่มสาระการเรียนรู้ (8 กลุ่มสาระ สพฐ.)</p>
-        <div class="chip-group" data-filter="subject">
-          <button type="button" class="chip active" data-subject="all">ทุกกลุ่มสาระ</button>
-          <button type="button" class="chip" data-subject="ภาษาไทย">ภาษาไทย</button>
-          <button type="button" class="chip" data-subject="คณิตศาสตร์">คณิตศาสตร์</button>
-          <button type="button" class="chip" data-subject="วิทยาศาสตร์และเทคโนโลยี">วิทยาศาสตร์และเทคโนโลยี</button>
-          <button type="button" class="chip" data-subject="สังคมศึกษา ศาสนา และวัฒนธรรม">สังคมศึกษาฯ / ประวัติศาสตร์</button>
-          <button type="button" class="chip" data-subject="สุขศึกษาและพลศึกษา">สุขศึกษา / พลศึกษา / ลูกเสือ</button>
-          <button type="button" class="chip" data-subject="ศิลปะ">ศิลปะ / ดนตรี / นาฏศิลป์</button>
-          <button type="button" class="chip" data-subject="การงานอาชีพ">การงานอาชีพ / ธุรกิจ</button>
-          <button type="button" class="chip" data-subject="ภาษาต่างประเทศ">ภาษาต่างประเทศ / ภาษาอังกฤษ</button>
-          <button type="button" class="chip" data-subject="ทุกวิชา/ทั่วไป">ทั่วไป / งานดูแล / งานโรงเรียน</button>
+        <p class="eyebrow !text-sm mb-2">กลุ่มสาระการเรียนรู้ (8 กลุ่มสาระ สพฐ.)</p>
+        <div class="chip-group flex flex-wrap gap-2" data-filter="subject">
+          <button type="button" class="chip active !text-sm !py-2 !px-4" data-subject="all">ทุกกลุ่มสาระ</button>
+          <button type="button" class="chip !text-sm !py-2 !px-4" data-subject="ภาษาไทย">ภาษาไทย</button>
+          <button type="button" class="chip !text-sm !py-2 !px-4" data-subject="คณิตศาสตร์">คณิตศาสตร์</button>
+          <button type="button" class="chip !text-sm !py-2 !px-4" data-subject="วิทยาศาสตร์และเทคโนโลยี">วิทยาศาสตร์และเทคโนโลยี</button>
+          <button type="button" class="chip !text-sm !py-2 !px-4" data-subject="สังคมศึกษา ศาสนา และวัฒนธรรม">สังคมศึกษาฯ / ประวัติศาสตร์</button>
+          <button type="button" class="chip !text-sm !py-2 !px-4" data-subject="สุขศึกษาและพลศึกษา">สุขศึกษา / พลศึกษา / ลูกเสือ</button>
+          <button type="button" class="chip !text-sm !py-2 !px-4" data-subject="ศิลปะ">ศิลปะ / ดนตรี / นาฏศิลป์</button>
+          <button type="button" class="chip !text-sm !py-2 !px-4" data-subject="การงานอาชีพ">การงานอาชีพ / ธุรกิจ</button>
+          <button type="button" class="chip !text-sm !py-2 !px-4" data-subject="ภาษาต่างประเทศ">ภาษาต่างประเทศ / ภาษาอังกฤษ</button>
+          <button type="button" class="chip !text-sm !py-2 !px-4" data-subject="ทุกวิชา/ทั่วไป">ทั่วไป / งานดูแล / งานโรงเรียน</button>
         </div>
       </div>
 
       <!-- 3. Tool Filter -->
       <div>
-        <p class="eyebrow !text-[0.75rem] mb-2">เครื่องมือ AI ที่แนะนำ</p>
-        <div class="chip-group" data-filter="tool">
-          <button type="button" class="chip active" data-tool="all">ทุกเครื่องมือ</button>
-          <button type="button" class="chip" data-tool="Gemini">Gemini</button>
-          <button type="button" class="chip" data-tool="Canva">Canva</button>
-          <button type="button" class="chip" data-tool="NotebookLM">NotebookLM</button>
-          <button type="button" class="chip" data-tool="ChatGPT">ChatGPT</button>
-          <button type="button" class="chip" data-tool="Claude">Claude</button>
+        <p class="eyebrow !text-sm mb-2">เครื่องมือ AI ที่แนะนำ</p>
+        <div class="chip-group flex flex-wrap gap-2" data-filter="tool">
+          <button type="button" class="chip active !text-sm !py-2 !px-4" data-tool="all">ทุกเครื่องมือ</button>
+          <button type="button" class="chip !text-sm !py-2 !px-4" data-tool="Gemini">Gemini</button>
+          <button type="button" class="chip !text-sm !py-2 !px-4" data-tool="Canva">Canva</button>
+          <button type="button" class="chip !text-sm !py-2 !px-4" data-tool="NotebookLM">NotebookLM</button>
+          <button type="button" class="chip !text-sm !py-2 !px-4" data-tool="ChatGPT">ChatGPT</button>
+          <button type="button" class="chip !text-sm !py-2 !px-4" data-tool="Claude">Claude</button>
         </div>
       </div>
     </div>
