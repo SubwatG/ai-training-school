@@ -1043,16 +1043,16 @@
           slide.classList.toggle('prev', i < current);
         });
 
-        counter.textContent = `c{pad(current + 1)} / c{pad(total)}`;
-        progress.style.width = `c{((current + 1) / total) * 100}%`;
+        counter.textContent = `${pad(current + 1)} / ${pad(total)}`;
+        progress.style.width = `${((current + 1) / total) * 100}%`;
 
         const notes = slides[current].dataset.notes || 'ไม่มีบันทึกสำหรับสไลด์นี้';
         notesContent.textContent = notes;
 
-        const title = slides[current].dataset.title || `Slide c{current + 1}`;
-        document.title = `c{pad(current + 1)} — c{title} | AI for Education`;
+        const title = slides[current].dataset.title || `Slide ${current + 1}`;
+        document.title = `${pad(current + 1)} — ${title} | AI for Education`;
 
-        if (pushHash) history.replaceState(null, '', `#slide-c{current + 1}`);
+        if (pushHash) history.replaceState(null, '', `#slide-${current + 1}`);
         updateOverviewActive();
       }
 
@@ -1070,7 +1070,7 @@
           const btn = document.createElement('button');
           btn.className = 'overview-item';
           btn.dataset.index = i;
-          btn.innerHTML = `<div class="overview-num">c{pad(i + 1)}</div><div class="overview-title">c{slide.dataset.title || 'Untitled'}</div>`;
+          btn.innerHTML = `<div class="overview-num">${pad(i + 1)}</div><div class="overview-title">${slide.dataset.title || 'Untitled'}</div>`;
           btn.addEventListener('click', () => {
             showSlide(i);
             toggleOverview(false);
