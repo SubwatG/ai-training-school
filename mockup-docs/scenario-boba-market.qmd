@@ -1,0 +1,161 @@
+---
+title: "กรณีศึกษา: เศรษฐศาสตร์ชานมไข่มุก & ตลาดโต้รุ่งองค์พระปฐมเจดีย์"
+subtitle: "เอกสารจำลองสถานการณ์การเรียนรู้เชิงบูรณาการ (คณิตศาสตร์ · สังคมศึกษา · ภาษาอังกฤษ)"
+author: "โครงการพัฒนาครูและบุคลากรทางการศึกษา · โรงเรียนเทศบาล ๔ (เชาวนปรีชาอุทิศ)"
+date: "2026-08-29"
+format:
+  pdf:
+    pdf-engine: xelatex
+    keep-tex: false
+    fontsize: 11pt
+    geometry:
+      - top=2.2cm
+      - left=2.2cm
+      - right=2.2cm
+      - bottom=2.2cm
+    include-in-header:
+      - text: |
+          \usepackage{fontspec}
+          \usepackage{xunicode}
+          \usepackage{xltxtra}
+          \usepackage{tabularx}
+          \usepackage{booktabs}
+          \usepackage{enumitem}
+          \usepackage{tcolorbox}
+          \usepackage{tikz}
+          \usepackage{pgfplots}
+          \pgfplotsset{compat=1.18}
+          \tcbuselibrary{skins, breakable}
+
+          \XeTeXlinebreaklocale "th"
+          \XeTeXlinebreakskip = 0pt plus 2pt minus 1pt
+
+          \setmainfont[
+            Script=Thai,
+            WordSpace=1.25,
+            Mapping=tex-text
+          ]{TH Sarabun New}
+
+          \linespread{1.2}
+
+          \usepackage{fancyhdr}
+          \pagestyle{fancy}
+          \fancyhf{}
+          \fancyhead[L]{\textcolor{gray}{\small เอกสารกิจกรรมจำลองสำหรับ NotebookLM}}
+          \fancyhead[R]{\textcolor{gray}{\small โรงเรียนเทศบาล ๔ (เชาวนปรีชาอุทิศ)}}
+          \fancyfoot[C]{\thepage}
+          \renewcommand{\headrulewidth}{0.4pt}
+---
+
+# บทนำ: สถานการณ์จำลอง "ตลาดโต้รุ่งองค์พระปฐมเจดีย์"
+
+ในงานเทศกาลนมัสการองค์พระปฐมเจดีย์ประจำปี มีร้านค้าชานมไข่มุกและเครื่องดื่มเปิดจำหน่ายในบริเวณตลาดโต้รุ่งจำนวนมาก โดยมีร้านค้าเด่น 2 ร้าน คือ **"ร้านชาช้างยิ้ม (Smiling Elephant Tea)"** และ **"ร้านไข่มุกมหาชน (People's Boba)"** ซึ่งทั้งสองร้านต้องเผชิญกับการเปลี่ยนแปลงของราคาต้นทุนวัตถุดิบและพฤติกรรมของผู้บริโภค
+
+เอกสารฉบับนี้รวบรวมข้อมูลจำลอง 4 มิติ ได้แก่:
+
+1. ข้อมูลโครงสร้างต้นทุนและสูตรเครื่องดื่ม
+2. ข้อมูลสถิติยอดจำหน่ายและกลไกราคา (Demand & Supply)
+3. บทสนทนาสั่งเครื่องดื่มภาษาอังกฤษสำหรับนักท่องเที่ยวต่างชาติ (English Ordering Dialogue)
+4. สรุปประเด็นชวนคิดและปัญหาท้าทายสำหรับการจัดการเรียนรู้
+
+---
+
+# ส่วนที่ 1: ตารางโครงสร้างต้นทุนและราคาจำหน่าย (Cost & Pricing Matrix)
+
+\begin{tcolorbox}[colback=blue!5!white, colframe=blue!60!black, title=\textbf{ตารางที่ 1: รายการวัตถุดิบและราคาจำหน่ายต่อแก้ว (ขนาด 16 oz)}]
+\begin{tabularx}{\textwidth}{lcccc}
+\toprule
+\textbf{รายการเครื่องดื่ม} & \textbf{ต้นทุนวัตถุดิบ (บาท)} & \textbf{ต้นทุนคงที่/แก้ว (บาท)} & \textbf{ราคาจำหน่าย (บาท)} & \textbf{กำไรสุทธิ (บาท)} \\
+\midrule
+1. ชานมไต้หวันต้นตำรับ & 12.50 & 5.00 & 35.00 & 17.50 \\
+2. ชาเขียวมัทฉะลาเต้ & 16.00 & 5.00 & 45.00 & 24.00 \\
+3. ชาไทยโบราณนครปฐม & 10.00 & 5.00 & 30.00 & 15.00 \\
+4. ชาผลไม้รวมทวารวดี & 14.50 & 5.00 & 40.00 & 20.50 \\
+5. ท็อปปิ้งไข่มุกบราวชูการ์ & 3.00 & 1.00 & 5.00 & 1.00 \\
+\bottomrule
+\end{tabularx}
+\end{tcolorbox}
+
+> **ข้อสังเกต:** ต้นทุนคงที่เฉลี่ย (Fixed Cost Allocation) เช่น ค่าเช่าแผงตลาดโต้รุ่ง ค่าน้ำมัน และค่าไฟฟ้า คิดเฉลี่ยแก้วละ 5.00 บาท เมื่อมียอดจำหน่ายเกิน 150 แก้วต่อวัน
+
+---
+
+# ส่วนที่ 2: สถิติยอดจำหน่ายและกลไกราคาดุลยภาพ (Market Demand & Supply)
+
+จากการเก็บข้อมูลพฤติกรรมผู้บริโภคในงานเทศกาล 7 วัน พบความสัมพันธ์ระหว่าง **ราคาจำหน่าย** กับ **ปริมาณความต้องการซื้อ (Demand)** และ **ปริมาณความต้องการขาย (Supply)** ดังตารางต่อไปนี้:
+
+\begin{tcolorbox}[colback=green!5!white, colframe=teal!70!black, title=\textbf{ตารางที่ 2: ข้อมูลอุปสงค์และอุปทานของชานมไข่มุกในตลาดโต้รุ่ง}]
+\begin{center}
+\begin{tabular}{cccc}
+\toprule
+\textbf{ราคาต่อแก้ว (บาท)} & \textbf{ปริมาณซื้อ: Demand (แก้ว/วัน)} & \textbf{ปริมาณขาย: Supply (แก้ว/วัน)} & \textbf{สภาวะตลาด} \\
+\midrule
+20 & 450 & 100 & สินค้าขาดตลาด (Shortage) \\
+25 & 380 & 180 & สินค้าขาดตลาด (Shortage) \\
+\textbf{30} & \textbf{280} & \textbf{280} & \textbf{จุดดุลยภาพตลาด (Equilibrium)} \\
+35 & 190 & 350 & สินค้าล้นตลาด (Surplus) \\
+40 & 120 & 420 & สินค้าล้นตลาด (Surplus) \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{tcolorbox}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    width=11cm, height=6.5cm,
+    xlabel={ปริมาณ (แก้ว/วัน)},
+    ylabel={ราคาต่อแก้ว (บาท)},
+    xmin=50, xmax=500,
+    ymin=15, ymax=45,
+    xtick={100, 200, 280, 400},
+    ytick={20, 25, 30, 35, 40},
+    legend pos=north east,
+    ymajorgrids=true,
+    xmajorgrids=true,
+    grid style=dashed,
+]
+% Demand Curve
+\addplot[color=red, mark=square*, thick] coordinates {
+    (450,20) (380,25) (280,30) (190,35) (120,40)
+};
+\addlegendentry{อุปสงค์ (Demand)}
+
+% Supply Curve
+\addplot[color=blue, mark=triangle*, thick] coordinates {
+    (100,20) (180,25) (280,30) (350,35) (420,40)
+};
+\addlegendentry{อุปทาน (Supply)}
+
+% Equilibrium point
+\node[pin=120:{จุดดุลยภาพ (280, 30)}] at (axis cs:280,30) {};
+\draw[dashed, thick, color=gray] (axis cs:280,0) -- (axis cs:280,30) -- (axis cs:0,30);
+
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+---
+
+# ส่วนที่ 3: บทสนทนาภาษาอังกฤษสั่งเครื่องดื่ม (Bilingual Ordering Dialogue)
+
+เพื่อส่งเสริมทักษะภาษาอังกฤษเชิงสถานการณ์จริง (Communicative English) สำหรับนักเรียน:
+
+\begin{tcolorbox}[colback=orange!5!white, colframe=orange!70!black, title=\textbf{Scenario: Ordering Boba Tea at the Night Market}]
+\textbf{Customer (Tourist):} "Hello! What is your best-selling drink here?" \\
+\textbf{Barista (Student):} "Hi! Our signature drink is the \textbf{Nakhon Pathom Traditional Milk Tea} with Brown Sugar Boba. It's freshly brewed every day!" \\
+\textbf{Customer:} "Sounds great! Can I customize the sweetness level?" \\
+\textbf{Barista:} "Certainly! We have 4 sweetness levels: 100\% (Normal), 50\% (Less sweet), 25\% (Slightly sweet), and 0\% (No sugar). Which one would you prefer?" \\
+\textbf{Customer:} "I will take 50\% sweetness with less ice, please. How much is it?" \\
+\textbf{Barista:} "That will be 35 Baht in total. Thank you very much, please enjoy your drink!"
+\end{tcolorbox}
+
+---
+
+# ส่วนที่ 4: ชุดคำถามชวนคิดสำหรับการฝึกปฏิบัติบน NotebookLM
+
+เมื่อครูอัปโหลดเอกสาร PDF ฉบับนี้เข้าสู่ **NotebookLM** สามารถทดลองพิมพ์คำสั่งต่อไปนี้:
+
+1. **คำถามเชิงคณิตศาสตร์:** *"จากตารางที่ 1 หากร้านค้าขายชานมไต้หวันได้ 100 แก้ว และชาเขียวมัทฉะ 50 แก้ว จะได้กำไรสุทธิรวมกี่บาท และรายการใดให้อัตรากำไรสูงสุด?"*
+2. **คำถามเชิงเศรษฐศาสตร์:** *"อธิบายความหมายของจุดดุลยภาพราคา 30 บาท จากข้อมูลในตารางที่ 2 และหากรัฐบาลประกาศขึ้นราคาน้ำตาลทราย กราฟจะเปลี่ยนแปลงอย่างไร?"*
+3. **คำถามสร้างสื่อ (Studio):** *"กดสร้าง Study Guide สรุปบทเรียน 1 หน้า หรือกดปุ่ม Generate Audio Overview เพื่อฟังพอดแคสต์ 2 คนคุยเรื่องการบริหารร้านชานม"*
