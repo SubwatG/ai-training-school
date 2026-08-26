@@ -353,7 +353,7 @@
         <div class="grid-2" style="margin: auto 0;">
           <div class="card" style="border-left: 5px solid var(--lavender); background:var(--lavender-soft);">
             <h3 style="color:var(--lavender); margin-bottom:6px;">1. Prompt ภาษาไทยคมชัด</h3>
-            <p style="margin:0; font-size:15px;">ใช้สูตร <b>ร-บ-ภ-ผ (C-G-I-C-O-V)</b> สร้างแผน Active Learning และชุดข้อสอบพร้อมเฉลยละเอียดได้ตรงตามบริบทห้องเรียน</p>
+            <p style="margin:0; font-size:15px;">ใช้กรอบ <b>Context → Goal → Input → Criteria → Output → Verify</b> สร้างแผน Active Learning และชุดข้อสอบพร้อมเฉลยละเอียดได้ตรงตามบริบทห้องเรียน</p>
           </div>
           <div class="card" style="border-left: 5px solid var(--coral); background:var(--coral-soft);">
             <h3 style="color:var(--coral); margin-bottom:6px;">2. ออกแบบสื่อสวยงามใน Canva</h3>
@@ -534,7 +534,7 @@
 
           <div class="card" style="text-align:center; padding:16px; border:2px dashed var(--coral); background:var(--coral-soft);">
             <div style="font-size:32px; margin-bottom:6px;">⚡</div>
-            <h3 style="font-size:16px; margin-bottom:4px; color:var(--coral);">2. สั่งด้วยสูตร ร-บ-ภ-ผ</h3>
+            <h3 style="font-size:16px; margin-bottom:4px; color:var(--coral);">2. สั่งด้วยกรอบชัดเจน</h3>
             <p style="font-size:13px; color:var(--ink); margin:0;">
               <i>“อ่านข้อสอบนี้ แล้วแปลงเป็นโจทย์ประยุกต์สถานการณ์จริง 5 ข้อ ภาษาไทย”</i>
             </p>
@@ -594,31 +594,31 @@
       <!-- ==========================================
            SLIDE 08: PROMPTING FRAMEWORK
            ========================================== -->
-      <section class="slide" data-title="สูตรคำสั่งครูไทย: C-G-I-C-O-V (ร-บ-ภ-ผ)" data-notes="สอนสูตรคำสั่งที่ทรงพลัง จำง่าย นำไปประยุกต์ใช้ได้ทันที">
+      <section class="slide" data-title="กรอบคำสั่งครูไทย: 6-Part Context Framework" data-notes="สอนกรอบคำสั่ง Context Goal Input Criteria Output Verification ให้ครูใช้สั่ง AI ได้อย่างเป็นระบบ">
         <div>
-          <span class="eyebrow" style="color:var(--lavender)"><span class="dot"></span> โครงสร้างคำสั่งมาตรฐาน (Core Prompting Framework)</span>
-          <h2 style="margin-top:6px;">สูตรคำสั่งครูไทย: Context → Goal → Input → Criteria → Output</h2>
+          <span class="eyebrow" style="color:var(--lavender)"><span class="dot"></span> โครงสร้างคำสั่งมาตรฐาน (Core Context Framework)</span>
+          <h2 style="margin-top:6px;">กรอบคำสั่งครูไทย: Context → Goal → Input → Criteria → Output → Verify</h2>
         </div>
         <div class="grid-2" style="margin: auto 0; gap:12px;">
           <div class="card" style="padding:10px 14px; border-left:4px solid var(--lavender);">
-            <b style="color:var(--lavender); font-size:15px;">1. Context (บริบท / ร-บ):</b>
+            <b style="color:var(--lavender); font-size:15px;">1. Context (บริบทผู้เรียน):</b>
             <p style="margin:2px 0 0 0; font-size:13px;">คุณเป็นครูคณิตศาสตร์ ม.2 ชั้นเรียน 35 คน มีพื้นฐานปานกลาง</p>
           </div>
           <div class="card" style="padding:10px 14px; border-left:4px solid var(--coral);">
-            <b style="color:var(--coral); font-size:15px;">2. Goal / Task (เป้าหมาย / ภ):</b>
+            <b style="color:var(--coral); font-size:15px;">2. Goal (เป้าหมายการเรียนรู้):</b>
             <p style="margin:2px 0 0 0; font-size:13px;">ออกแบบแผน Active Learning 1 คาบ (50 นาที) เรื่อง ทฤษฎีบทพีทาโกรัส</p>
           </div>
           <div class="card" style="padding:10px 14px; border-left:4px solid var(--mint);">
-            <b style="color:var(--mint); font-size:15px;">3. Input (ข้อมูลตั้งต้น):</b>
+            <b style="color:var(--mint); font-size:15px;">3. Input (ข้อมูลตั้งต้น / แหล่งข้อมูล):</b>
             <p style="margin:2px 0 0 0; font-size:13px;">นักเรียนมักมี Misconception คิดว่าด้าน c ต้องเป็นเส้นเอียงเสมอ</p>
           </div>
           <div class="card" style="padding:10px 14px; border-left:4px solid var(--gold);">
-            <b style="color:var(--gold); font-size:15px;">4. Criteria (เกณฑ์เฉพาะ):</b>
+            <b style="color:var(--gold); font-size:15px;">4. Criteria (เกณฑ์คุณภาพที่ต้องการ):</b>
             <p style="margin:2px 0 0 0; font-size:13px;">มีคำถามนำแบบ Socratic 3 ข้อ, ชุดโจทย์ 3 ระดับ พร้อมเฉลยวิธีคิด</p>
           </div>
         </div>
         <div class="card" style="background:#F8FAFC; padding:8px 14px; font-size:13px;">
-          🎯 <b>Output & Verification (ผ-ต):</b> ขอรูปแบบตาราง 5 ขั้นตอน ภาษาไทยกระชับ และตรวจทานเฉลยตัวเลขทุกข้อ
+          🎯 <b>5. Output & 6. Verification (รูปแบบ & ตรวจทาน):</b> ขอรูปแบบตาราง 5 ขั้นตอน ภาษาไทยกระชับ และตรวจทานเฉลยตัวเลขทุกข้อ
         </div>
       </section>
 
