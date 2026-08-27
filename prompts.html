@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>คลัง Prompt · AI เพื่อการเรียนการสอน</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Mali:wght@500;600;700&family=Noto+Sans+Thai+Looped:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="assets/css/styles.css?v=20260827_font15b" />
+  <link rel="stylesheet" href="assets/css/prompt-split-pane.css?v=20260827_v1" />
+</head>
+<body class="antialiased" data-page="prompts">
+
+  <!-- ======= Header ======= -->
+  <header class="masthead sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="flex items-center justify-between h-16">
+        <a href="index.html" class="flex items-center gap-3">
+          <span class="bg-[#26394A] text-white font-bold text-sm px-3 py-1.5 rounded-lg font-display tracking-wider shadow-sm">AI–ครู 2569</span>
+          <span class="hidden md:inline font-display text-sm font-bold text-[#26394A]">โรงเรียนเทศบาล ๔ (เชาวนปรีชาอุทิศ)</span>
+        </a>
+        <nav class="flex items-center gap-2 sm:gap-4" aria-label="หลัก">
+          <a href="index.html" class="nav-link" data-page="home">🏠 แผนการอบรม</a>
+          <a href="mockups.html" class="nav-link" data-page="mockups">📂 ศูนย์กิจกรรม & สไลด์</a>
+          <a href="prompts.html" class="nav-link" data-page="prompts">🔍 คลัง Prompt (370+)</a>
+          <a href="image-prompts.html" class="nav-link" data-page="image-prompts">🎨 สูตรสร้างภาพ</a>
+          <a href="tutorials.html" class="nav-link" data-page="tutorials">📖 วิธีใช้</a>
+          <a href="showcase.html" class="nav-link" data-page="showcase">🌟 ส่งผลงาน</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+
+    <!-- Page Title & Top Quick Summary -->
+    <div class="mb-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
+      <div>
+        <p class="eyebrow mb-1">คลัง Prompt ภาษาไทยมาตรฐาน & Interactive Tools</p>
+        <h1 class="font-display font-bold text-3xl sm:text-4xl text-[#26394A] tracking-tight">Prompt ภาระงานครูไทย & นวัตกรรมสื่อ</h1>
+        <p class="text-xs sm:text-sm text-slate-600 mt-1 max-w-3xl leading-relaxed">
+          ค้นหา คัดลอก และปรับแต่งค่าตัวแปรได้ในคลิกเดียว ครอบคลุมงานสอน วัดผล ซ่อมเสริม ว.PA และสื่อการสอนตามสูตรแกน <b>บทบาท–บริบท–เงื่อนไข</b>
+        </p>
+      </div>
+
+      <!-- Quick Feature Access -->
+      <div class="flex items-center gap-2 shrink-0">
+        <button type="button" id="btn-toggle-starter-kits" class="btn-ghost text-xs !py-2 !px-3.5 !text-slate-700">
+          🎯 ชุดโจทย์ 8 กลุ่มสาระ (Zero-Prep)
+        </button>
+      </div>
+    </div>
+
+    <!-- Pinned Collapsible: Starter Kits (พับเก็บได้ ไม่บังสายตา) -->
+    <div id="starter-kits-panel" class="hidden mb-8 p-5 sm:p-6 rounded-2xl border bg-white shadow-sm" style="border-color:#5FA99E; border-width:2px;">
+      <div class="flex items-center justify-between gap-3 mb-4">
+        <div>
+          <span class="px-3 py-1 rounded-full text-xs font-bold font-display uppercase tracking-wider text-white" style="background:#5FA99E;">🎯 Zero-Prep Starter Kit</span>
+          <h2 class="font-display font-bold text-xl sm:text-2xl mt-1 text-slate-800">ชุดโจทย์จำลอง 8 กลุ่มสาระ (เริ่มทำได้ทันทีไม่ต้องมีไฟล์เดิม)</h2>
+        </div>
+        <button type="button" id="btn-close-starter-kits" class="text-xs font-bold px-3 py-1.5 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200">
+          ✕ ปิดส่วนนี้
+        </button>
+      </div>
+      <div id="starter-kits-container" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <!-- Injected via JS -->
+      </div>
+    </div>
+
+    <!-- ======= SPLIT-PANE WORKSPACE ======= -->
+    <div class="prompt-split-container">
+
+      <!-- ===== LEFT COLUMN: STICKY FILTER & SEARCH PANEL ===== -->
+      <aside class="prompt-sidebar bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+
+        <!-- 1. Search Box -->
+        <div>
+          <label for="prompt-search" class="block font-display font-bold text-sm text-[#26394A] mb-2">🔍 ค้นหา Prompt</label>
+          <div class="relative">
+            <input
+              id="prompt-search"
+              type="search"
+              placeholder="พิมพ์: แผน, ข้อสอบ, SDQ, ว.PA..."
+              class="w-full pl-3 pr-8 py-2.5 border rounded-xl focus:outline-none focus:ring-2 focus:ring-[#E8877A] text-sm"
+              style="border-color:var(--line); background:#FAFAFA;"
+              aria-label="ค้นหา prompt"
+            />
+          </div>
+        </div>
+
+        <!-- 2. Quick Highlight Toggles -->
+        <div>
+          <p class="font-display font-bold text-xs text-slate-400 uppercase tracking-wider mb-2">⭐ คัดสรรพิเศษ</p>
+          <div class="flex flex-col gap-1.5" id="top10-quick-chips">
+            <button type="button" id="btn-show-top10" class="chip w-full justify-between !text-xs !py-2 !px-3 font-display font-bold" style="border-color:var(--accent); color:var(--accent);">
+              <span>⭐ 10 Prompt กู้ชีพครู</span>
+              <span class="text-[10px] bg-[#E8877A]/15 px-1.5 py-0.5 rounded">ฮิต</span>
+            </button>
+            <button type="button" id="btn-show-all" class="chip active w-full justify-between !text-xs !py-2 !px-3 font-display">
+              <span>📋 ทั้งหมด (370+ รายการ)</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 3. Learning Areas (8 กลุ่มสาระ) -->
+        <div>
+          <p class="font-display font-bold text-xs text-slate-400 uppercase tracking-wider mb-2">📚 กลุ่มสาระ (8 วิชา)</p>
+          <div class="chip-group flex flex-col gap-1 text-xs" data-filter="subject">
+            <button type="button" class="chip active justify-start !py-1.5 !px-2.5 !text-xs" data-subject="all">🌐 ทุกกลุ่มสาระ</button>
+            <button type="button" class="chip justify-start !py-1.5 !px-2.5 !text-xs" data-subject="ภาษาไทย">📖 ภาษาไทย</button>
+            <button type="button" class="chip justify-start !py-1.5 !px-2.5 !text-xs" data-subject="คณิตศาสตร์">📐 คณิตศาสตร์</button>
+            <button type="button" class="chip justify-start !py-1.5 !px-2.5 !text-xs" data-subject="วิทยาศาสตร์และเทคโนโลยี">🔬 วิทยาศาสตร์ & เทคโนฯ</button>
+            <button type="button" class="chip justify-start !py-1.5 !px-2.5 !text-xs" data-subject="สังคมศึกษา ศาสนา และวัฒนธรรม">🏛️ สังคมศึกษาฯ / ประวัติฯ</button>
+            <button type="button" class="chip justify-start !py-1.5 !px-2.5 !text-xs" data-subject="สุขศึกษาและพลศึกษา">⚽ สุขศึกษา & พลศึกษา</button>
+            <button type="button" class="chip justify-start !py-1.5 !px-2.5 !text-xs" data-subject="ศิลปะ">🎨 ศิลปะ & ดนตรี</button>
+            <button type="button" class="chip justify-start !py-1.5 !px-2.5 !text-xs" data-subject="การงานอาชีพ">🛠️ การงานอาชีพ</button>
+            <button type="button" class="chip justify-start !py-1.5 !px-2.5 !text-xs" data-subject="ภาษาต่างประเทศ">🇬🇧 ภาษาต่างประเทศ</button>
+            <button type="button" class="chip justify-start !py-1.5 !px-2.5 !text-xs" data-subject="ทุกวิชา/ทั่วไป">🏫 งานโรงเรียน / ทั่วไป</button>
+          </div>
+        </div>
+
+        <!-- 4. Task Types (ภาระงาน) -->
+        <div>
+          <p class="font-display font-bold text-xs text-slate-400 uppercase tracking-wider mb-2">📋 ภาระงานครู</p>
+          <div class="chip-group flex flex-wrap gap-1 text-xs" data-filter="task">
+            <button type="button" class="chip active !py-1 !px-2.5 !text-xs" data-task="all">ทุกงาน</button>
+            <button type="button" class="chip !py-1 !px-2.5 !text-xs" data-task="ออกแบบการสอน">แผนการสอน</button>
+            <button type="button" class="chip !py-1 !px-2.5 !text-xs" data-task="ข้อสอบ & การวัดผล">ข้อสอบ/วัดผล</button>
+            <button type="button" class="chip !py-1 !px-2.5 !text-xs" data-task="สร้างสื่อ & ภาพประกอบ">สื่อ & ภาพ Canva</button>
+            <button type="button" class="chip !py-1 !px-2.5 !text-xs" data-task="เอกสาร & สรุปรายงาน">ว.PA/PLC/SDQ</button>
+            <button type="button" class="chip !py-1 !px-2.5 !text-xs" data-task="นวัตกรรม & กิจกรรม">เกม & กิจกรรม</button>
+          </div>
+        </div>
+
+        <!-- 5. Recommended Tools -->
+        <div>
+          <p class="font-display font-bold text-xs text-slate-400 uppercase tracking-wider mb-2">🤖 เครื่องมือ AI</p>
+          <div class="chip-group flex flex-wrap gap-1 text-xs" data-filter="tool">
+            <button type="button" class="chip active !py-1 !px-2 !text-xs" data-tool="all">ทั้งหมด</button>
+            <button type="button" class="chip !py-1 !px-2 !text-xs" data-tool="Gemini">Gemini</button>
+            <button type="button" class="chip !py-1 !px-2 !text-xs" data-tool="Canva">Canva</button>
+            <button type="button" class="chip !py-1 !px-2 !text-xs" data-tool="NotebookLM">NotebookLM</button>
+            <button type="button" class="chip !py-1 !px-2 !text-xs" data-tool="ChatGPT">ChatGPT</button>
+            <button type="button" class="chip !py-1 !px-2 !text-xs" data-tool="Claude">Claude</button>
+          </div>
+        </div>
+
+      </aside>
+
+      <!-- ===== RIGHT COLUMN: MASTER CONTENT LIST / GRID ===== -->
+      <section class="min-w-0">
+
+        <!-- Top Controls Bar -->
+        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm mb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div class="flex items-center gap-2">
+            <h2 class="font-display font-bold text-base text-[#26394A]">รายการ Prompt</h2>
+            <span id="prompt-count" class="badge-pill bg-slate-100 text-slate-700 text-xs font-bold">—</span>
+          </div>
+
+          <!-- View Mode Switcher -->
+          <div class="flex items-center gap-1.5 self-end sm:self-auto">
+            <span class="text-xs text-slate-400 mr-1 font-display">มุมมอง:</span>
+            <button type="button" id="btn-view-list" class="view-mode-btn active flex items-center gap-1">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+              <span>กระชับ (List)</span>
+            </button>
+            <button type="button" id="btn-view-grid" class="view-mode-btn flex items-center gap-1">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+              <span>การ์ดเต็ม (Cards)</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Prompts Dynamic Container -->
+        <div id="prompt-grid" class="space-y-3">
+          <!-- Injected via JavaScript -->
+        </div>
+
+        <!-- Ethics & Help Callout -->
+        <div class="mt-10 callout">
+          <p class="font-display font-semibold text-sm mb-1">📌 กติกาการใช้และจริยธรรม AI สำหรับครู</p>
+          <ul class="text-xs sm:text-sm space-y-1 text-slate-600">
+            <li>· <strong>ตรวจทานก่อนใช้เสมอ:</strong> AI อาจแต่งระเบียบปลอมหรือคำนวณเลขผิด ครูเป็นผู้รับผิดชอบผลลัพธ์</li>
+            <li>· <strong>คุ้มครองข้อมูลส่วนบุคคล (PDPA):</strong> ห้ามใส่ชื่อ-สกุลจริง รูปถ่าย หรือเลขประจำตัวนักเรียนลงใน AI ให้ใช้นามสมมติเสมอ</li>
+            <li>· <strong>สูตรคณิตศาสตร์:</strong> คัดลอกโค้ด LaTeX ไปกด <code>Alt + =</code> ใน Word/PowerPoint หรือใส่ใน Canva Math App</li>
+          </ul>
+        </div>
+
+      </section>
+
+    </div>
+
+  </main>
+
+  <!-- ======= DETAIL DRAWER (แผงข้างสำหรับดู Prompt เต็ม + ปรับตัวแปร) ======= -->
+  <div id="prompt-drawer-backdrop" class="prompt-drawer-backdrop" aria-hidden="true">
+    <div class="prompt-drawer-panel" role="dialog" aria-modal="true" aria-labelledby="drawer-title">
+      
+      <!-- Drawer Header -->
+      <div class="p-5 border-b border-slate-200 flex items-start justify-between gap-3 bg-slate-50/80">
+        <div class="min-w-0">
+          <div id="drawer-badges" class="flex flex-wrap gap-1.5 mb-2"></div>
+          <h2 id="drawer-title" class="font-display font-bold text-xl sm:text-2xl text-[#26394A] leading-snug">หัวข้อ Prompt</h2>
+        </div>
+        <button type="button" id="btn-close-drawer" class="text-slate-400 hover:text-slate-700 p-2 rounded-xl hover:bg-slate-200/60 transition" aria-label="ปิด">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+
+      <!-- Drawer Body (Full Content) -->
+      <div class="drawer-body space-y-5">
+        
+        <!-- RCC Framework Box -->
+        <div id="drawer-rcc" class="p-4 rounded-xl text-sm space-y-2 bg-slate-50 border border-slate-200"></div>
+
+        <!-- Variable Slot Inputs -->
+        <div id="drawer-slots-container" class="p-4 rounded-xl border border-slate-200 bg-white space-y-3">
+          <div class="flex items-center justify-between border-b pb-2 border-slate-100">
+            <span class="font-display font-bold text-sm text-[#E8877A] flex items-center gap-1.5">
+              <span>⚙️ ปรับแต่งตัวแปรก่อนคัดลอก</span>
+            </span>
+            <button type="button" id="btn-drawer-reset-slots" class="text-xs text-slate-500 hover:text-slate-800 underline">ล้างค่า</button>
+          </div>
+          <div id="drawer-slots-inputs" class="space-y-2.5"></div>
+        </div>
+
+        <!-- Raw Full Prompt Text -->
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <label class="font-display font-bold text-sm text-[#26394A]">ข้อความคำสั่ง (Full Prompt):</label>
+            <span class="text-xs text-slate-400">ข้อความจริง 100% ครบถ้วน</span>
+          </div>
+          <pre id="drawer-prompt-text" class="p-4 rounded-xl font-mono text-sm leading-relaxed bg-[#F8FAFC] border border-slate-200 text-slate-800 whitespace-pre-wrap break-words max-h-[360px] overflow-y-auto"></pre>
+        </div>
+
+        <!-- Tips & Review Advice -->
+        <div id="drawer-tips" class="text-xs sm:text-sm p-3.5 rounded-xl bg-amber-50/70 border border-amber-200/60 text-amber-900 leading-relaxed"></div>
+
+      </div>
+
+      <!-- Drawer Footer Actions -->
+      <div class="p-4 border-t border-slate-200 bg-white flex items-center justify-between gap-3">
+        <span class="text-xs text-slate-500">กดปุ่มเพื่อคัดลอกไปวางใน AI ทันที</span>
+        <div class="flex gap-2">
+          <button type="button" id="btn-drawer-copy-raw" class="btn-ghost text-xs !py-2.5 !px-4 font-bold">
+            คัดลอกต้นฉบับ
+          </button>
+          <button type="button" id="btn-drawer-copy-customized" class="btn-accent text-xs !py-2.5 !px-5 font-bold shadow-md flex items-center gap-1.5">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            ✨ คัดลอก Prompt
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ======= Footer ======= -->
+  <footer class="border-t mt-16 py-8" style="border-color:var(--line); background:var(--paper-2)">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+      <p class="font-display">© 2569 · การประยุกต์ใช้ AI เพื่อการจัดการเรียนการสอน · โรงเรียนเทศบาล ๔ (เชาวนปรีชาอุทิศ)</p>
+      <nav class="flex gap-4">
+        <a href="index.html" class="hover:underline">แผนการอบรม</a>
+        <a href="mockups.html" class="hover:underline">ศูนย์กิจกรรม</a>
+        <a href="tutorials.html" class="hover:underline">คู่มือวิธีใช้</a>
+        <a href="showcase.html" class="hover:underline">ส่งผลงาน</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="assets/js/app.js?v=20260827_v1"></script>
+</body>
+</html>

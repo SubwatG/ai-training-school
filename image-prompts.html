@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>คลังสูตร & คำศัพท์สร้างภาพ AI เพื่อการศึกษา · AI–ครู 2569</title>
+
+  <!-- Google Fonts: Mali, Noto Sans Thai Looped & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Mali:wght@500;600;700&family=Noto+Sans+Thai+Looped:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="assets/css/styles.css?v=20260827_font15b" />
+
+  <style>
+    .word-chip {
+      background: #FFFFFF;
+      border: 1.5px solid var(--line-strong);
+      padding: 6px 14px;
+      border-radius: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--ink);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .word-chip:hover {
+      border-color: var(--accent);
+      background: rgba(232, 135, 122, 0.06);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(30, 41, 59, 0.05);
+    }
+    .word-chip:active {
+      transform: translateY(0);
+    }
+    .preset-card {
+      background: #FFFFFF;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 20px;
+      transition: all 0.22s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .preset-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--mint);
+    }
+  </style>
+</head>
+<body class="antialiased" data-page="image-prompts">
+
+  <!-- ======= Masthead / Sticky Nav ======= -->
+  <header class="masthead sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="flex items-center justify-between h-16">
+        <a href="index.html" class="flex items-center gap-3">
+          <span class="bg-[#26394A] text-white font-bold text-sm px-3 py-1.5 rounded-lg font-display tracking-wider shadow-sm">AI–ครู 2569</span>
+          <span class="hidden md:inline font-display text-sm font-bold text-[#26394A]">โรงเรียนเทศบาล ๔ (เชาวนปรีชาอุทิศ)</span>
+        </a>
+        <nav class="flex items-center gap-2 sm:gap-4" aria-label="หลัก">
+          <a href="index.html" class="nav-link" data-page="home">🏠 แผนการอบรม</a>
+          <a href="mockups.html" class="nav-link" data-page="mockups">📂 ศูนย์กิจกรรม & สไลด์</a>
+          <a href="prompts.html" class="nav-link" data-page="prompts">🔍 คลัง Prompt (370+)</a>
+          <a href="image-prompts.html" class="nav-link" data-page="image-prompts">🎨 สูตรสร้างภาพ</a>
+          <a href="tutorials.html" class="nav-link" data-page="tutorials">📖 วิธีใช้</a>
+          <a href="showcase.html" class="nav-link" data-page="showcase">🌟 ส่งผลงาน</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
+
+    <!-- ======= HERO BANNER ======= -->
+    <section class="card p-8 sm:p-12 mb-12 bg-white/95 backdrop-blur-sm border border-slate-200/80 shadow-md">
+      <div class="max-w-3xl">
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#5FA99E]/15 text-[#3F7E75] border border-[#5FA99E]/30 text-xs font-bold font-display mb-4">
+          🎨 AI Image-Gen Masterclass · Banana 2.0 & ChatGPT Image
+        </div>
+        <h1 class="font-display font-bold text-3xl sm:text-5xl text-[#26394A] leading-tight tracking-tight mb-4">
+          คู่มือสูตรคำสั่ง & คลังคำศัพท์สร้างภาพการศึกษา
+        </h1>
+        <p class="text-slate-600 text-base sm:text-lg leading-relaxed mb-6">
+          แก้ปัญหาภาพตัวหนังสือเละ พื้นหลังรก และภาพไม่ตรงหลักสูตร ด้วย <b>สูตรภาพคลีน 2D เวกเตอร์</b>, <b>คลังคำศัพท์สไตล์ภาพ</b>, และ <b>สูตรให้ Gemini แปลงเนื้อหาบทเรียนเป็นคำสั่งภาพมือโปร</b>
+        </p>
+
+        <!-- Quick Jump Pills -->
+        <div class="flex flex-wrap gap-2 pt-2">
+          <a href="#golden-rules" class="chip !text-xs font-display font-bold">⭐ 3 กฎเหล็กภาพการศึกษา</a>
+          <a href="#vocabulary-bank" class="chip !text-xs font-display font-bold">📚 คลังคำศัพท์สไตล์ภาพ</a>
+          <a href="#prompt-bridge" class="chip !text-xs font-display font-bold">⚡ สูตรให้ AI แปลง Prompt ภาพ</a>
+          <a href="#subject-presets" class="chip !text-xs font-display font-bold">🎯 ตัวอย่างคำสั่ง 8 กลุ่มสาระ</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======= SECTION 1: 3 กฎเหล็กภาพการศึกษา (GOLDEN RULES) ======= -->
+    <section id="golden-rules" class="mb-14 scroll-mt-24">
+      <div class="flex items-center gap-2 mb-4">
+        <span class="badge-pill bg-[#E8877A]/20 text-[#D97365] border border-[#E8877A]/40">Core Rule</span>
+        <h2 class="font-display font-bold text-2xl text-[#26394A]">3 กฎเหล็กสร้างภาพเพื่อการสอน (จำแล้วใช้ตลอดชีพ)</h2>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        
+        <div class="card p-6 bg-white border-t-4 border-t-[#5FA99E] space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold px-2.5 py-1 rounded bg-[#5FA99E]/15 text-[#3F7E75] font-display">กฎข้อที่ 1</span>
+            <span class="text-xl">⚪</span>
+          </div>
+          <h3 class="font-display font-bold text-lg text-[#26394A]">Pure White Background</h3>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            สั่งให้พื้นหลังเป็นสีขาวสนิทเสมอ เพื่อนำภาพไปวางลงในใบงานหรือ Canva ได้ทันที ไม่ต้องเสียเวลาหรือเสียเงินซื้อโปรแกรมไดคัท
+          </p>
+          <div class="p-2.5 rounded-lg bg-slate-50 border border-slate-200 font-mono text-xs text-slate-700 flex items-center justify-between">
+            <code>pure white background</code>
+            <button type="button" class="btn-copy text-[11px] font-bold text-teal-700 hover:underline" data-copy="pure white background">คัดลอก</button>
+          </div>
+        </div>
+
+        <div class="card p-6 bg-white border-t-4 border-t-[#E8877A] space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold px-2.5 py-1 rounded bg-[#E8877A]/15 text-[#D97365] font-display">กฎข้อที่ 2</span>
+            <span class="text-xl">🚫</span>
+          </div>
+          <h3 class="font-display font-bold text-lg text-[#26394A]">Zero-Text Safeguard</h3>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            AI ยังสะกดตัวอักษรไม่นิ่ง โดยเฉพาะภาษาไทย สั่งห้ามมีตัวหนังสือในภาพเด็ดขาด แล้วนำรูปมาพิมพ์ข้อความคมๆ ใน Canva
+          </p>
+          <div class="p-2.5 rounded-lg bg-slate-50 border border-slate-200 font-mono text-xs text-slate-700 flex items-center justify-between">
+            <code>no text, no words, no letters</code>
+            <button type="button" class="btn-copy text-[11px] font-bold text-rose-700 hover:underline" data-copy="no text, no words, no letters, no watermark">คัดลอก</button>
+          </div>
+        </div>
+
+        <div class="card p-6 bg-white border-t-4 border-t-[#7A6FB1] space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold px-2.5 py-1 rounded bg-[#7A6FB1]/15 text-[#5C528E] font-display">กฎข้อที่ 3</span>
+            <span class="text-xl">📐</span>
+          </div>
+          <h3 class="font-display font-bold text-lg text-[#26394A]">2D Flat Vector / Clipart</h3>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            เลือกสไตล์ภาพการ์ตูนแบน 2D เส้นคมชัด ดูสบายตา เข้ากับวัยเรียน และพิมพ์ลงกระดาษ A4 ขาวดำได้สวยโดยไม่เปลืองหมึกพิมพ์
+          </p>
+          <div class="p-2.5 rounded-lg bg-slate-50 border border-slate-200 font-mono text-xs text-slate-700 flex items-center justify-between">
+            <code>2D flat vector illustration</code>
+            <button type="button" class="btn-copy text-[11px] font-bold text-indigo-700 hover:underline" data-copy="2D flat vector illustration, clean lines, minimalist educational style">คัดลอก</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======= SECTION 2: คลังคำศัพท์สไตล์ภาพ (VOCABULARY WORD BANK) ======= -->
+    <section id="vocabulary-bank" class="mb-14 scroll-mt-24">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-2">
+          <span class="badge-pill bg-[#5FA99E]/20 text-[#3F7E75] border border-[#5FA99E]/40">Word Bank</span>
+          <h2 class="font-display font-bold text-2xl text-[#26394A]">คลังคำศัพท์สไตล์ภาพ (คลิกเพื่อคัดลอกคำศัพท์)</h2>
+        </div>
+        <span class="text-xs text-slate-500 hidden sm:inline">กดที่ปุ่มคำศัพท์เพื่อคัดลอกไปประกอบ Prompt</span>
+      </div>
+
+      <div class="card p-6 sm:p-8 bg-white space-y-6">
+        
+        <!-- Category A: สไตล์ภาพหลัก -->
+        <div>
+          <h3 class="font-display font-bold text-sm text-[#26394A] mb-3 flex items-center gap-2">
+            <span>🎨 สไตล์ภาพเพื่อการศึกษา (Visual Style):</span>
+          </h3>
+          <div class="flex flex-wrap gap-2.5">
+            <button type="button" class="word-chip btn-copy-chip" data-copy="2D flat vector illustration">
+              <span>2D flat vector illustration</span>
+              <span class="text-slate-400 text-xs">(ภาพเวกเตอร์ 2 มิติ)</span>
+            </button>
+            <button type="button" class="word-chip btn-copy-chip" data-copy="cute children storybook clipart">
+              <span>cute storybook clipart</span>
+              <span class="text-slate-400 text-xs">(การ์ตูนนิทานเด็ก)</span>
+            </button>
+            <button type="button" class="word-chip btn-copy-chip" data-copy="isometric 3D diorama">
+              <span>isometric 3D diorama</span>
+              <span class="text-slate-400 text-xs">(ฉากจำลอง 3 มิติ)</span>
+            </button>
+            <button type="button" class="word-chip btn-copy-chip" data-copy="cross-section educational diagram">
+              <span>cross-section diagram</span>
+              <span class="text-slate-400 text-xs">(ภาพผ่าตัดขวาง/เซลล์)</span>
+            </button>
+            <button type="button" class="word-chip btn-copy-chip" data-copy="minimalist line art icon">
+              <span>minimalist line art</span>
+              <span class="text-slate-400 text-xs">(ภาพลายเส้นมินิมอล)</span>
+            </button>
+            <button type="button" class="word-chip btn-copy-chip" data-copy="infographic flow chart diagram">
+              <span>infographic flow diagram</span>
+              <span class="text-slate-400 text-xs">(ผังขั้นตอน/ลำดับ)</span>
+            </button>
+          </div>
+        </div>
+
+        <hr class="border-slate-100" />
+
+        <!-- Category B: สภาพแวดล้อมและพื้นหลัง -->
+        <div>
+          <h3 class="font-display font-bold text-sm text-[#26394A] mb-3 flex items-center gap-2">
+            <span>⚪ พื้นหลังและการจัดวาง (Background & Layout):</span>
+          </h3>
+          <div class="flex flex-wrap gap-2.5">
+            <button type="button" class="word-chip btn-copy-chip" data-copy="pure white background">
+              <span>pure white background</span>
+              <span class="text-slate-400 text-xs">(พื้นหลังขาวสนิท)</span>
+            </button>
+            <button type="button" class="word-chip btn-copy-chip" data-copy="isolated on white">
+              <span>isolated on white</span>
+              <span class="text-slate-400 text-xs">(แยกเดี่ยวบนพื้นขาว)</span>
+            </button>
+            <button type="button" class="word-chip btn-copy-chip" data-copy="clean soft pastel background">
+              <span>soft pastel background</span>
+              <span class="text-slate-400 text-xs">(พื้นสีพาสเทลนุ่ม)</span>
+            </button>
+            <button type="button" class="word-chip btn-copy-chip" data-copy="center composition, copy space on top">
+              <span>copy space on top</span>
+              <span class="text-slate-400 text-xs">(เว้นที่ว่างด้านบนพิมพ์ข้อความ)</span>
+            </button>
+          </div>
+        </div>
+
+        <hr class="border-slate-100" />
+
+        <!-- Category C: คำสั่งกำกับและป้องกันความผิดพลาด -->
+        <div>
+          <h3 class="font-display font-bold text-sm text-[#26394A] mb-3 flex items-center gap-2">
+            <span>🛡️ คำสั่งป้องกันตัวหนังสือเพี้ยนและสัดส่วนภาพ (Safeguards & Aspect Ratio):</span>
+          </h3>
+          <div class="flex flex-wrap gap-2.5">
+            <button type="button" class="word-chip btn-copy-chip" data-copy="no text, no words, no letters, no watermark">
+              <span>no text, no words, no watermark</span>
+              <span class="text-rose-500 text-xs font-bold">(ห้ามมีตัวหนังสือ)</span>
+            </button>
+            <button type="button" class="word-chip btn-copy-chip" data-copy="--ar 16:9">
+              <span>--ar 16:9</span>
+              <span class="text-slate-400 text-xs">(แนวนอน จอสไลด์)</span>
+            </button>
+            <button type="button" class="word-chip btn-copy-chip" data-copy="--ar 1:1">
+              <span>--ar 1:1</span>
+              <span class="text-slate-400 text-xs">(จัตุรัส ใบงาน)</span>
+            </button>
+            <button type="button" class="word-chip btn-copy-chip" data-copy="--ar 4:5">
+              <span>--ar 4:5</span>
+              <span class="text-slate-400 text-xs">(แนวตั้ง โปสเตอร์)</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======= SECTION 3: META-PROMPT BRIDGE (สูตรให้ AI ช่วยเขียน PROMPT ภาพ) ======= -->
+    <section id="prompt-bridge" class="mb-14 scroll-mt-24">
+      <div class="flex items-center gap-2 mb-4">
+        <span class="badge-pill bg-[#7A6FB1]/20 text-[#5C528E] border border-[#7A6FB1]/40">AI Prompt Bridge</span>
+        <h2 class="font-display font-bold text-2xl text-[#26394A]">สูตรสั่ง Gemini / ChatGPT ช่วยแปลงไอเดียไทยเป็น Prompt ภาพ</h2>
+      </div>
+
+      <div class="card p-6 sm:p-8 bg-white border border-slate-200">
+        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4">
+          ครูเพียงพิมพ์ไอเดียบทเรียนเป็นภาษาไทย แล้วคัดลอกคำสั่งโครงสร้างนี้ส่งให้ <b>Gemini</b> หรือ <b>ChatGPT</b> เพื่อให้ AI ออกแบบ Prompt ภาษาอังกฤษระดับมือโปรให้พร้อมนำไปป้อนใส่ Banana หรือเครื่องมือสร้างภาพทันที:
+        </p>
+
+        <div class="relative">
+          <pre id="bridge-prompt-code" class="p-5 rounded-2xl bg-[#F8FAFC] border border-slate-200 font-mono text-xs sm:text-sm leading-relaxed text-slate-800 whitespace-pre-wrap break-words select-all">
+คุณคือผู้เชี่ยวชาญด้านการออกแบบสื่อการสอนและ Prompt Engineer สำหรับ AI สร้างภาพ (Gemini Image / ChatGPT)
+ฉันต้องการสร้างภาพประกอบบทเรียนเรื่อง: [ระบุหัวข้อ เช่น วงจรชีวิตกบ / รูปเรขาคณิตสามมิติ / การทดลองแรงดันอากาศ]
+
+ช่วยแปลงเป็น Prompt ภาษาอังกฤษสำหรับนำไปสร้างภาพ โดยมีเงื่อนไขบังคับดังนี้:
+1. สไตล์ภาพ: 2D flat vector illustration, clean lines, educational clipart style
+2. พื้นหลัง: pure white background (พื้นหลังขาวสนิท ไร้เงาสะท้อน)
+3. คำสั่งความปลอดภัย: บังคับใส่ "no text, no words, no letters, no watermark" ท้ายคำสั่งเสมอ
+4. ส่งผลลัพธ์มา 2 รูปแบบ:
+   - ตัวเลือก A (แบบเรียบง่ายสำหรับใบงาน A4 --ar 1:1)
+   - ตัวเลือก B (แบบมีฉากจำลองครบวงจรสำหรับสไลด์ --ar 16:9)</pre>
+
+          <div class="mt-3 flex justify-end">
+            <button type="button" id="btn-copy-bridge" class="btn-accent text-xs font-bold !py-2.5 !px-5 rounded-xl shadow-md flex items-center gap-2">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              <span>คัดลอกสูตร Meta-Prompt นี้</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======= SECTION 4: 8 SUBJECT PRESETS (ตัวอย่างคำสั่งสร้างภาพ 8 กลุ่มสาระ) ======= -->
+    <section id="subject-presets" class="mb-14 scroll-mt-24">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-2">
+          <span class="badge-pill bg-[#D2A54B]/20 text-[#8B671B] border border-[#D2A54B]/40">Ready-to-Use</span>
+          <h2 class="font-display font-bold text-2xl text-[#26394A]">ชุด Prompt ตัวอย่างสร้างภาพ 8 กลุ่มสาระ (สพฐ.)</h2>
+        </div>
+        <span class="text-xs text-slate-500 hidden sm:inline">คัดลอกไปวางใน Banana หรือ ChatGPT Image ได้ทันที</span>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        
+        <!-- 1. Math -->
+        <div class="preset-card">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold px-2 py-0.5 rounded bg-blue-50 text-blue-700">คณิตศาสตร์</span>
+              <span class="text-[11px] text-slate-400">รูปทรง 3D</span>
+            </div>
+            <h3 class="font-display font-bold text-base text-[#26394A] mb-1">ทรงเรขาคณิตสามมิติ</h3>
+            <p class="text-xs text-slate-500 mb-3 font-mono line-clamp-3">
+              A 3D geometric net diagram unfolding a rectangular prism into 2D flat shape, clean 2D vector, pure white background, pastel colors, no text --ar 1:1
+            </p>
+          </div>
+          <button type="button" class="btn-copy btn-accent text-xs font-bold !py-2 !px-3 rounded-lg w-full justify-center" data-copy="A 3D geometric net diagram unfolding a rectangular prism into 2D flat shape, clean 2D vector illustration, pure white background, vibrant pastel colors, no text, no letters --ar 1:1">
+            คัดลอก Prompt ↗
+          </button>
+        </div>
+
+        <!-- 2. Science -->
+        <div class="preset-card">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold px-2 py-0.5 rounded bg-teal-50 text-teal-700">วิทยาศาสตร์</span>
+              <span class="text-[11px] text-slate-400">โครงสร้างเซลล์</span>
+            </div>
+            <h3 class="font-display font-bold text-base text-[#26394A] mb-1">เซลล์พืชตัดขวาง</h3>
+            <p class="text-xs text-slate-500 mb-3 font-mono line-clamp-3">
+              Clear cross-section cutaway of a plant cell, showing chloroplast, cell wall, nucleus, 2D flat vector, pure white background, no text --ar 1:1
+            </p>
+          </div>
+          <button type="button" class="btn-copy btn-accent text-xs font-bold !py-2 !px-3 rounded-lg w-full justify-center" data-copy="Clear cross-section cutaway diagram of a plant cell, showing chloroplast, cell wall, and nucleus, 2D flat vector illustration, pure white background, clean lines, no text, no labels, no watermark --ar 1:1">
+            คัดลอก Prompt ↗
+          </button>
+        </div>
+
+        <!-- 3. Thai Language -->
+        <div class="preset-card">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold px-2 py-0.5 rounded bg-rose-50 text-rose-700">ภาษาไทย</span>
+              <span class="text-[11px] text-slate-400">วรรณคดี/มาสคอต</span>
+            </div>
+            <h3 class="font-display font-bold text-base text-[#26394A] mb-1">ตัวละครวรรณคดีน่ารัก</h3>
+            <p class="text-xs text-slate-500 mb-3 font-mono line-clamp-3">
+              Cute friendly cartoon chibi character of Sudsakorn riding Ma Nil Mangkorn, storybook clipart, pure white background, no text --ar 1:1
+            </p>
+          </div>
+          <button type="button" class="btn-copy btn-accent text-xs font-bold !py-2 !px-3 rounded-lg w-full justify-center" data-copy="Cute friendly cartoon chibi character of Sudsakorn boy riding Ma Nil Mangkorn mythical horse, vibrant children storybook clipart style, pure white background, clean outlines, no text, no words --ar 1:1">
+            คัดลอก Prompt ↗
+          </button>
+        </div>
+
+        <!-- 4. English -->
+        <div class="preset-card">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold px-2 py-0.5 rounded bg-indigo-50 text-indigo-700">ภาษาต่างประเทศ</span>
+              <span class="text-[11px] text-slate-400">Action Verbs</span>
+            </div>
+            <h3 class="font-display font-bold text-base text-[#26394A] mb-1">คำกริยา Flashcard</h3>
+            <p class="text-xs text-slate-500 mb-3 font-mono line-clamp-3">
+              Cute school students doing daily actions: reading, running, cooking, 2D flat vector icon set, pure white background, no text --ar 1:1
+            </p>
+          </div>
+          <button type="button" class="btn-copy btn-accent text-xs font-bold !py-2 !px-3 rounded-lg w-full justify-center" data-copy="A set of cute school children performing different action verbs: reading a book, watering plants, cooking food, clean 2D flat vector clipart, pure white background, no text, no letters, no words --ar 1:1">
+            คัดลอก Prompt ↗
+          </button>
+        </div>
+
+        <!-- 5. Social Studies -->
+        <div class="preset-card">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold px-2 py-0.5 rounded bg-amber-50 text-amber-800">สังคมศึกษา</span>
+              <span class="text-[11px] text-slate-400">ประวัติศาสตร์</span>
+            </div>
+            <h3 class="font-display font-bold text-base text-[#26394A] mb-1">องค์พระปฐมเจดีย์ (Diorama)</h3>
+            <p class="text-xs text-slate-500 mb-3 font-mono line-clamp-3">
+              Isometric 3D diorama of Phra Pathommachedi golden stupa, miniature architectural model, pure white background, soft lighting, no text --ar 16:9
+            </p>
+          </div>
+          <button type="button" class="btn-copy btn-accent text-xs font-bold !py-2 !px-3 rounded-lg w-full justify-center" data-copy="Isometric 3D miniature diorama of the giant golden Phra Pathommachedi stupa Nakhon Pathom, surrounded by tiny green trees, clean architectural scale model, pure white background, studio soft lighting, no text --ar 16:9">
+            คัดลอก Prompt ↗
+          </button>
+        </div>
+
+        <!-- 6. Health & PE -->
+        <div class="preset-card">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold px-2 py-0.5 rounded bg-emerald-50 text-emerald-700">สุขศึกษา</span>
+              <span class="text-[11px] text-slate-400">โภชนาการ</span>
+            </div>
+            <h3 class="font-display font-bold text-base text-[#26394A] mb-1">อาหารหลัก 5 หมู่</h3>
+            <p class="text-xs text-slate-500 mb-3 font-mono line-clamp-3">
+              Healthy food pyramid plate diagram with 5 food groups, colorful fruits, vegetables, clean 2D vector clipart, white background, no text --ar 1:1
+            </p>
+          </div>
+          <button type="button" class="btn-copy btn-accent text-xs font-bold !py-2 !px-3 rounded-lg w-full justify-center" data-copy="Healthy food plate diagram showing 5 food groups with colorful vegetables, fish, grains, fruits, clean 2D flat vector educational illustration, pure white background, no text, no letters --ar 1:1">
+            คัดลอก Prompt ↗
+          </button>
+        </div>
+
+        <!-- 7. Arts -->
+        <div class="preset-card">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold px-2 py-0.5 rounded bg-purple-50 text-purple-700">ศิลปะ</span>
+              <span class="text-[11px] text-slate-400">ทฤษฎีสี</span>
+            </div>
+            <h3 class="font-display font-bold text-base text-[#26394A] mb-1">วงล้อสี (Color Wheel)</h3>
+            <p class="text-xs text-slate-500 mb-3 font-mono line-clamp-3">
+              Circular artist color wheel showing primary and secondary color palette wheel, clean geometric vector, pure white background, no text --ar 1:1
+            </p>
+          </div>
+          <button type="button" class="btn-copy btn-accent text-xs font-bold !py-2 !px-3 rounded-lg w-full justify-center" data-copy="Circular artist color wheel chart displaying primary, secondary, and tertiary hue palette, clean minimalist geometric vector design, pure white background, vibrant accurate colors, no text, no letters --ar 1:1">
+            คัดลอก Prompt ↗
+          </button>
+        </div>
+
+        <!-- 8. Career & Tech -->
+        <div class="preset-card">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold px-2 py-0.5 rounded bg-cyan-50 text-cyan-800">การงานอาชีพ</span>
+              <span class="text-[11px] text-slate-400">งานช่าง/เกษตร</span>
+            </div>
+            <h3 class="font-display font-bold text-base text-[#26394A] mb-1">ชุดเครื่องมือการเกษตร</h3>
+            <p class="text-xs text-slate-500 mb-3 font-mono line-clamp-3">
+              Essential gardening tool set: watering can, spade, gloves, potted plant, clean 2D flat vector icons, pure white background, no text --ar 1:1
+            </p>
+          </div>
+          <button type="button" class="btn-copy btn-accent text-xs font-bold !py-2 !px-3 rounded-lg w-full justify-center" data-copy="Set of basic organic gardening tools: watering can, garden trowel, work gloves, young green seedling in pot, clean 2D flat vector illustration, pure white background, no text, no watermark --ar 1:1">
+            คัดลอก Prompt ↗
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ======= Footer ======= -->
+  <footer class="border-t py-8 text-center text-xs text-slate-500 font-display bg-white/80">
+    <div class="max-w-6xl mx-auto px-4">
+      <p>© 2569 · การประยุกต์ใช้ AI เพื่อการจัดการเรียนการสอน · โรงเรียนเทศบาล ๔ (เชาวนปรีชาอุทิศ)</p>
+      <p class="mt-1 text-slate-400">วิทยากร: อ.ดร.กิตติพงศ์ ทรัพย์วัฒนาชัย และ ผศ.ดร.ธนิษฐา โกวรรณ์</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Direct copy listeners for image-prompts page
+      document.querySelectorAll(".btn-copy, .btn-copy-chip").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const text = btn.dataset.copy;
+          if (text) copyText(text, "คัดลอกคำศัพท์/Prompt เรียบร้อยแล้ว!");
+        });
+      });
+
+      const btnCopyBridge = document.getElementById("btn-copy-bridge");
+      if (btnCopyBridge) {
+        btnCopyBridge.addEventListener("click", () => {
+          const code = document.getElementById("bridge-prompt-code").innerText.trim();
+          copyText(code, "คัดลอกสูตร Meta-Prompt เรียบร้อยแล้ว!");
+        });
+      }
+    });
+  </script>
+</body>
+</html>

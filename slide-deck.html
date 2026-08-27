@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#26394A" />
+  <title>การประยุกต์ใช้ AI เพื่อการจัดการเรียนการสอน — Interactive Slide Deck</title>
+
+  <!-- Google Fonts: Mali (Display/Heading) & IBM Plex Sans Thai Looped (Body/Content) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Mali:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=IBM+Plex+Sans+Thai+Looped:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    :root {
+      --ink: #26394A;
+      --cream: #FBFAF7;
+      --lavender: #7A6FB1;
+      --mint: #5FA99E;
+      --coral: #E8877A;
+      --gold: #D2A54B;
+      --sky: #70A7C7;
+      --plum: #5D4D7A;
+      
+      --lavender-soft: #ECE9F7;
+      --mint-soft: #E4F3EF;
+      --coral-soft: #FBE8E4;
+      --gold-soft: #F8F0D8;
+      --sky-soft: #E4F0F6;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      background: #DCE2E7;
+      color: var(--ink);
+      overflow: hidden;
+      font-family: 'IBM Plex Sans Thai Looped', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 12% 15%, rgba(122,111,177,.14), transparent 28%),
+        radial-gradient(circle at 88% 82%, rgba(95,169,158,.14), transparent 30%);
+    }
+
+    #stage {
+      position: fixed;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 16px;
+    }
+
+    #deck {
+      position: relative;
+      width: min(calc(100vw - 32px), calc((100vh - 32px) * 16 / 9));
+      aspect-ratio: 16 / 9;
+      background: var(--cream);
+      overflow: hidden;
+      border-radius: 24px;
+      box-shadow: 0 26px 90px rgba(38,57,74,.22);
+      border: 1px solid rgba(38,57,74,.08);
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      padding: 4.8% 5.8% 4.5%;
+      background: #FBFAF7;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateX(2%);
+      transition: opacity .32s ease, transform .32s ease, visibility .32s;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .slide.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(0);
+      z-index: 3;
+    }
+
+    .slide.prev {
+      transform: translateX(-2%);
+    }
+
+    .slide::after {
+      content: '';
+      position: absolute;
+      right: -5%;
+      bottom: -15%;
+      width: 28%;
+      aspect-ratio: 1;
+      border-radius: 999px;
+      border: 1px solid rgba(38,57,74,.04);
+      background: radial-gradient(circle at 35% 30%, rgba(122,111,177,.08), rgba(95,169,158,.04) 50%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* Typography */
+    .font-display, h1, h2, h3, .heading-mali {
+      font-family: 'Mali', cursive !important;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .font-body {
+      font-family: 'IBM Plex Sans Thai Looped', sans-serif;
+    }
+
+    .font-mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    h1 { font-size: clamp(30px, 3.8vw, 56px); line-height: 1.18; margin: 0; letter-spacing: -0.01em; }
+    h2 { font-size: clamp(24px, 2.8vw, 42px); line-height: 1.22; margin: 0; }
+    h3 { font-size: clamp(18px, 1.8vw, 26px); line-height: 1.3; margin: 0; }
+    p, li { font-size: clamp(14px, 1.35vw, 20px); line-height: 1.6; color: var(--ink); }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: .35rem .85rem;
+      border-radius: 999px;
+      background: rgba(38,57,74,.06);
+      color: #4A5D6E;
+      font-weight: 600;
+      font-size: clamp(11px, .85vw, 15px);
+      letter-spacing: .02em;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: currentColor;
+      flex: 0 0 auto;
+    }
+
+    .card {
+      border: 1px solid rgba(38,57,74,.08);
+      border-radius: 18px;
+      background: rgba(255,255,255,.88);
+      box-shadow: 0 8px 24px rgba(38,57,74,.04);
+      padding: 1.2rem 1.4rem;
+    }
+
+    .pill-badge {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      font-family: 'Mali', cursive;
+    }
+
+    /* Grid Layout Helpers */
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    .grid-custom { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 18px; }
+
+    /* Chrome Controls */
+    #progress-track {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: rgba(38,57,74,.08);
+      z-index: 30;
+    }
+
+    #progress-bar {
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, var(--lavender), var(--mint), var(--coral), var(--gold));
+      transition: width .25s ease;
+    }
+
+    #controls {
+      position: fixed;
+      right: 18px;
+      bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      z-index: 40;
+    }
+
+    .control-btn {
+      width: 38px;
+      height: 38px;
+      border: none;
+      border-radius: 12px;
+      background: rgba(38,57,74,.88);
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(38,57,74,.18);
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform .15s ease, background .15s ease;
+    }
+
+    .control-btn:hover { transform: translateY(-2px); background: rgba(38,57,74, 1); }
+
+    #counter {
+      min-width: 75px;
+      height: 38px;
+      padding: 0 12px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(38,57,74,.88);
+      color: white;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .05em;
+    }
+
+    /* Modal Overview */
+    #overview {
+      position: fixed;
+      inset: 0;
+      background: rgba(30,42,53,.94);
+      z-index: 50;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity .2s ease, visibility .2s;
+      padding: 30px;
+      overflow: auto;
+    }
+
+    #overview.open { opacity: 1; visibility: visible; }
+
+    .overview-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
+      padding-bottom: 60px;
+    }
+
+    .overview-item {
+      aspect-ratio: 16 / 9;
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 14px;
+      padding: 14px;
+      background: rgba(255,255,255,.08);
+      color: white;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-align: left;
+      transition: transform .15s ease, background .15s ease;
+    }
+
+    .overview-item:hover { transform: translateY(-3px); background: rgba(255,255,255,.14); border-color: var(--mint); }
+    .overview-item.active { outline: 2px solid var(--mint); background: rgba(95,169,158,.25); }
+
+    .overview-title { font-family: 'Mali', cursive; font-size: 14px; line-height: 1.35; }
+    .overview-num { font-size: 11px; opacity: .6; letter-spacing: .08em; }
+
+    /* Teacher notes panel */
+    #notes-panel {
+      position: fixed;
+      left: 50%;
+      bottom: 14px;
+      transform: translateX(-50%) translateY(140%);
+      width: min(800px, calc(100vw - 200px));
+      max-height: 30vh;
+      overflow: auto;
+      padding: 14px 18px;
+      border-radius: 16px;
+      background: rgba(38,57,74,.96);
+      color: #fff;
+      box-shadow: 0 16px 50px rgba(38,57,74,.3);
+      z-index: 45;
+      transition: transform .25s ease;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    #notes-panel.open { transform: translateX(-50%) translateY(0); }
+  </style>
+</head>
+<body>
+
+  <div id="progress-track"><div id="progress-bar"></div></div>
+
+  <div id="stage">
+    <div id="deck">
+
+      <!-- ==========================================
+           SLIDE 01: COVER
+           ========================================== -->
+      <section class="slide active" data-title="หน้าแรก: การประยุกต์ใช้ AI เพื่อการจัดการเรียนการสอน" data-notes="ยินดีต้อนรับคุณครูทุกท่านเข้าสู่อบรมเชิงปฏิบัติการ วันนี้เน้นทำจริง ไม่บรรยายทฤษฎียาว ครูทุกคนจะได้สื่อกลับไปใช้สอนสัปดาห์หน้า">
+        <div class="flex items-center justify-between">
+          <span class="eyebrow" style="color:var(--lavender)"><span class="dot"></span> การอบรมเชิงปฏิบัติการสำหรับครูไทย 2026</span>
+          <span class="pill-badge" style="background:var(--mint-soft); color:var(--mint);">29 สิงหาคม 2569</span>
+        </div>
+        <div style="margin: auto 0;">
+          <h1 style="color:var(--ink); font-size: clamp(34px, 4.2vw, 62px);">การประยุกต์ใช้ปัญญาประดิษฐ์ (AI)<br/><span style="color:var(--coral);">เพื่อการจัดการเรียนการสอน</span></h1>
+          <p style="font-size: clamp(16px, 1.5vw, 22px); margin-top: 14px; color:#536779; max-width: 85%;">
+            ก้าวข้ามการถาม-ตอบทั่วไป สู่การสร้างสื่อ Active Learning, ข้อสอบ, เอกสาร และเสียงบรรยายสรุปแบบครบวงจร
+          </p>
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:flex-end; border-top:1px solid rgba(38,57,74,.1); padding-top:12px;">
+          <div>
+            <p style="font-size:14px; margin:0; font-weight:600; color:var(--ink);">วิทยากร: อ.ดร. กิตติพงศ์ ทรัพย์วัฒนาชัย & ผศ.ดร. ธนิษฐา โกวรรณ์</p>
+            <p style="font-size:12px; margin:2px 0 0 0; color:#708496;">โครงการพัฒนาครูและบุคลากรทางการศึกษา</p>
+          </div>
+          <div style="display:flex; gap:8px;">
+            <span class="pill-badge" style="background:var(--lavender-soft); color:var(--lavender);">Gemini</span>
+            <span class="pill-badge" style="background:var(--mint-soft); color:var(--mint);">Canva</span>
+            <span class="pill-badge" style="background:var(--gold-soft); color:var(--gold);">NotebookLM</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SLIDE 02: LEARNING OUTCOMES
+           ========================================== -->
+      <section class="slide" data-title="เป้าหมายวันนี้: ครูได้อะไรกลับบ้าน" data-notes="ย้ำเป้าหมาย 4 ข้อ ชี้ให้เห็นว่าไม่ใช่อบรมแบบนั่งฟัง แต่จบวันต้องมีงาน 1 ชิ้นพร้อมใช้จริง">
+        <div>
+          <span class="eyebrow" style="color:var(--mint)"><span class="dot"></span> เป้าหมายการเรียนรู้ (Learning Outcomes)</span>
+          <h2 style="margin-top:8px;">วันนี้เราไม่ได้มานั่งดู AI โชว์ — แต่มาทำงานครูให้เสร็จ 1 ชิ้น</h2>
+        </div>
+        <div class="grid-2" style="margin: auto 0;">
+          <div class="card" style="border-left: 5px solid var(--lavender); background:var(--lavender-soft);">
+            <h3 style="color:var(--lavender); margin-bottom:6px;">1. Prompt ภาษาไทยคมชัด</h3>
+            <p style="margin:0; font-size:15px;">ใช้กรอบ <b>Context → Goal → Input → Criteria → Output → Verify</b> สร้างแผน Active Learning และชุดข้อสอบพร้อมเฉลยละเอียดได้ตรงตามบริบทห้องเรียน</p>
+          </div>
+          <div class="card" style="border-left: 5px solid var(--coral); background:var(--coral-soft);">
+            <h3 style="color:var(--coral); margin-bottom:6px;">2. ออกแบบสื่อสวยงามใน Canva</h3>
+            <p style="margin:0; font-size:15px;">แก้ปัญหาภาษาไทยในภาพ AI ด้วย 2-Step Pattern (Gen ภาพไร้ตัวหนังสือ → ประกอบร่างใน Canva สวย คมชัด)</p>
+          </div>
+          <div class="card" style="border-left: 5px solid var(--mint); background:var(--mint-soft);">
+            <h3 style="color:var(--mint); margin-bottom:6px;">3. สรุปเอกสาร & รันเสียง Podcast</h3>
+            <p style="margin:0; font-size:15px;">ใช้ <b>NotebookLM</b> ย่อยหลักสูตร/เกณฑ์ ว.PA และทำ Audio Overview เสียงคุย 2 คนให้นักเรียนฟังทบทวน</p>
+          </div>
+          <div class="card" style="border-left: 5px solid var(--gold); background:var(--gold-soft);">
+            <h3 style="color:var(--gold); margin-bottom:6px;">4. ทักษะการตรวจทาน (Verification)</h3>
+            <p style="margin:0; font-size:15px;">ติดเกราะคุ้มกัน AI มั่ว (Hallucination) รู้ทันกฎหมายอ้างอิงปลอม และปกป้องข้อมูลส่วนบุคคลของนักเรียน (PDPA)</p>
+          </div>
+        </div>
+        <div style="font-size:13px; color:#6B7C8C; text-align:right;">
+          ✨ มีระบบ Buddy Seating ช่วยเหลือตลอดการอบรม
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SLIDE 03: SCHEDULE
+           ========================================== -->
+      <section class="slide" data-title="กำหนดการทั้งวัน (08:30 – 16:00)" data-notes="อธิบายช่วงเวลาให้เห็นว่าช่วงเช้าเป็นทักษะย่อย และช่วงบ่ายแก่จะมี Speedrun 80 นาทีเพื่อประกอบร่างงาน">
+        <div>
+          <span class="eyebrow" style="color:var(--gold)"><span class="dot"></span> ตารางกิจกรรม (Master Schedule)</span>
+          <h2 style="margin-top:6px;">แผนการเดินทาง 6 ชั่วโมง สู่สื่อการสอนครบวงจร</h2>
+        </div>
+        <div style="margin: auto 0; display:flex; flex-direction:column; gap:8px;">
+          <div style="display:grid; grid-template-columns: 140px 1fr 140px; background:white; padding:8px 14px; border-radius:12px; border:1px solid #E2E8F0; align-items:center;">
+            <span style="font-family:'Mali', cursive; font-weight:700; color:var(--lavender);">08:30 – 09:00</span>
+            <span style="font-size:14px; font-weight:600;">Golden Opening: Reset Mindset + Live Wow Demo + Day Roadmap</span>
+            <span class="pill-badge" style="background:var(--lavender-soft); color:var(--lavender); text-align:center;">เปิดงาน</span>
+          </div>
+          <div style="display:grid; grid-template-columns: 140px 1fr 140px; background:white; padding:8px 14px; border-radius:12px; border:1px solid #E2E8F0; align-items:center;">
+            <span style="font-family:'Mali', cursive; font-weight:700; color:var(--lavender);">09:00 – 10:15</span>
+            <span style="font-size:14px; font-weight:600;">Session 1: Gemini & พลังการ Prompt ภาษาไทย + [Mini-Workshop 1: 50 น.]</span>
+            <span class="pill-badge" style="background:var(--mint-soft); color:var(--mint); text-align:center;">แผน & ข้อสอบ</span>
+          </div>
+          <div style="display:grid; grid-template-columns: 140px 1fr 140px; background:#F8FAFC; padding:4px 14px; border-radius:8px; font-size:13px; color:#64748B;">
+            <span>10:15 – 10:30</span><span>พักรับประทานอาหารว่างเช้า ☕</span><span>พักเบรก</span>
+          </div>
+          <div style="display:grid; grid-template-columns: 140px 1fr 140px; background:white; padding:8px 14px; border-radius:12px; border:1px solid #E2E8F0; align-items:center;">
+            <span style="font-family:'Mali', cursive; font-weight:700; color:var(--coral);">10:30 – 12:00</span>
+            <span style="font-size:14px; font-weight:600;">Session 2: Canva & การสร้างสื่อและภาพประกอบ + [Mini-Workshop 2: 65 น.]</span>
+            <span class="pill-badge" style="background:var(--coral-soft); color:var(--coral); text-align:center;">จัดหน้าสื่อ</span>
+          </div>
+          <div style="display:grid; grid-template-columns: 140px 1fr 140px; background:#F8FAFC; padding:4px 14px; border-radius:8px; font-size:13px; color:#64748B;">
+            <span>12:00 – 13:00</span><span>พักรับประทานอาหารกลางวัน 🍲</span><span>พักกลางวัน</span>
+          </div>
+          <div style="display:grid; grid-template-columns: 140px 1fr 140px; background:white; padding:8px 14px; border-radius:12px; border:1px solid #E2E8F0; align-items:center;">
+            <span style="font-family:'Mali', cursive; font-weight:700; color:var(--gold);">13:00 – 14:15</span>
+            <span style="font-size:14px; font-weight:600;">Session 3: NotebookLM ผู้ช่วยย่อยเอกสาร & Audio + [Mini-Workshop 3: 50 น.]</span>
+            <span class="pill-badge" style="background:var(--gold-soft); color:var(--gold); text-align:center;">ย่อยตำรา & เสียง</span>
+          </div>
+          <div style="display:grid; grid-template-columns: 140px 1fr 140px; background:#FFFBEB; padding:10px 14px; border-radius:12px; border:2px solid var(--gold); align-items:center;">
+            <span style="font-family:'Mali', cursive; font-weight:700; color:var(--coral);">14:30 – 15:50</span>
+            <span style="font-size:14px; font-weight:700; color:var(--ink);">⭐ Capstone Workshop: [AI Speedrun 80 นาที] สื่อครบวงจร 1 ชิ้น</span>
+            <span class="pill-badge" style="background:var(--coral); color:white; text-align:center;">Speedrun</span>
+          </div>
+        </div>
+        <div style="font-size:13px; color:#6B7C8C;">
+          15:50 – 16:00: สรุป 8 ทักษะคงทน + ส่งมอบกรอบคิดนวัตกรรม ว.PA (Take-Home W4) & ปิดงาน
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SLIDE 04: RESET MINDSET
+           ========================================== -->
+      <section class="slide" data-title="Reset Mindset: AI เป็นคู่คิด ไม่ใช่ Answer Machine" data-notes="เน้นย้ำจุดยืนสำคัญ: AI ไม่ใช่ตู้หยอดเหรียญตอบคำถาม แต่เป็นคู่คิดที่ต้องมีคนตรวจเสมอ">
+        <div>
+          <span class="eyebrow" style="color:var(--coral)"><span class="dot"></span> ปรับวิธีคิด (Mindset Reset)</span>
+          <h2 style="margin-top:8px;">AI ไม่ใช่ “เครื่องตอบคำถาม” แต่เป็น “คู่คิด (Co-thinker)”</h2>
+        </div>
+        <div class="grid-custom" style="margin: auto 0;">
+          <div class="card" style="border-top: 5px solid var(--coral); display:flex; flex-direction:column; justify-content:space-between;">
+            <div>
+              <span class="pill-badge" style="background:var(--coral-soft); color:var(--coral); margin-bottom:8px;">ความเข้าใจที่คลาดเคลื่อน ❌</span>
+              <h3 style="margin-bottom:8px; font-size:20px;">“สั่งสั้นๆ แล้วหวังให้ AI คิดแทนทุกอย่าง”</h3>
+              <p style="font-size:14px; color:#475569;">
+                สั่งว่า <i>“ช่วยทำแผนการสอนให้หน่อย”</i> → ได้ผลงานสำเร็จรูปที่กลวง ขาดบริบทห้องเรียนจริง และไม่ตอบโจทย์เด็ก
+              </p>
+            </div>
+            <div style="background:#FFF5F5; padding:10px; border-radius:10px; font-size:13px; color:#C53030;">
+              ⚠️ <b>Fluency ≠ Accuracy:</b> คำตอบที่เขียนดูมั่นใจ สละสลวย อาจแฝงข้อมูลผิดพลาดได้
+            </div>
+          </div>
+
+          <div class="card" style="border-top: 5px solid var(--mint); display:flex; flex-direction:column; justify-content:space-between;">
+            <div>
+              <span class="pill-badge" style="background:var(--mint-soft); color:var(--mint); margin-bottom:8px;">แนวทางที่ถูกต้องและยั่งยืน ✅</span>
+              <h3 style="margin-bottom:8px; font-size:20px;">“ให้บริบทชัดเจน เพื่อให้ AI เป็นผู้ช่วยคิด”</h3>
+              <p style="font-size:14px; color:#475569;">
+                บอกบทบาท สภาพเด็ก จุดประสงค์ และข้อจำกัด → AI ช่วยระดมไอเดีย ร่างกิจกรรม และเสนอทางเลือกให้ครูตัดสินใจ
+              </p>
+            </div>
+            <div style="background:#F0FDF4; padding:10px; border-radius:10px; font-size:13px; color:#22543D;">
+              🛡️ <b>Human Accountability:</b> AI ช่วยร่างได้ แต่ครูคือผู้ตรวจทานและลงนามรับผิดชอบ
+            </div>
+          </div>
+        </div>
+        <div style="font-size:14px; color:var(--ink); font-weight:600; text-align:center;">
+          “AI ควรช่วยให้ครูได้ <span style="color:var(--coral);">คิดมากขึ้นอย่างลึกซึ้ง</span> ไม่ใช่ทำให้เรา <span style="color:#718096;">คิดน้อยลง</span>”
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SLIDE 05: RISK MAP
+           ========================================== -->
+      <section class="slide" data-title="Traffic Light Risk Map: งานไหนให้ AI ช่วยได้แค่ไหน" data-notes="อธิบายแผนที่ความเสี่ยง 3 สี เพื่อให้ครูรู้ว่างานไหนทำได้เลย งานไหนต้องตรวจเข้ม และงานไหนห้ามทำ">
+        <div>
+          <span class="eyebrow" style="color:var(--lavender)"><span class="dot"></span> แผนที่ประเมินความเสี่ยง (Risk Quick Map)</span>
+          <h2 style="margin-top:8px;">งานครูด้านไหนที่ให้ AI ช่วยได้ และต้องระวังระดับใด?</h2>
+        </div>
+        <div class="grid-3" style="margin: auto 0;">
+          <div class="card" style="border-top: 6px solid #48BB78; background:#F0FFF4;">
+            <div style="display:flex; align-items:center; gap:6px; margin-bottom:6px;">
+              <span style="font-size:20px;">🟢</span>
+              <h3 style="color:#276749; font-size:18px;">โซนเขียว (ทำได้เต็มที่)</h3>
+            </div>
+            <p style="font-size:13px; font-weight:600; color:#2F855A; margin-bottom:8px;">ความเสี่ยงต่ำ · ประหยัดเวลาสูง</p>
+            <ul style="margin:0; padding-left:18px; font-size:13px; color:#2D3748; line-height:1.5;">
+              <li>Brainstorm ไอเดียกิจกรรม/เกม</li>
+              <li>สร้างภาพประกอบบทเรียน</li>
+              <li>ร่างใบงานความรู้ทั่วไป</li>
+              <li>สรุปบทความยาวๆ ให้สั้นกระชับ</li>
+            </ul>
+          </div>
+
+          <div class="card" style="border-top: 6px solid #ECC94B; background:#FFFFF0;">
+            <div style="display:flex; align-items:center; gap:6px; margin-bottom:6px;">
+              <span style="font-size:20px;">🟡</span>
+              <h3 style="color:#975A16; font-size:18px;">โซนเหลือง (ตรวจเข้ม)</h3>
+            </div>
+            <p style="font-size:13px; font-weight:600; color:#B7791F; margin-bottom:8px;">ต้องผ่าน Verification Ladder</p>
+            <ul style="margin:0; padding-left:18px; font-size:13px; color:#2D3748; line-height:1.5;">
+              <li>ข้อสอบและเฉลยคำตอบ (ตรวจเลข)</li>
+              <li>แผนการสอนอิงหลักสูตรแกนกลาง</li>
+              <li>บันทึกข้อความ/รายงานราชการ</li>
+              <li>เอกสารอ้างอิงเกณฑ์ ว.PA</li>
+            </ul>
+          </div>
+
+          <div class="card" style="border-top: 6px solid #F56565; background:#FFF5F5;">
+            <div style="display:flex; align-items:center; gap:6px; margin-bottom:6px;">
+              <span style="font-size:20px;">🔴</span>
+              <h3 style="color:#9B2C2C; font-size:18px;">โซนแดง (ห้ามเด็ดขาด)</h3>
+            </div>
+            <p style="font-size:13px; font-weight:600; color:#C53030; margin-bottom:8px;">วิจารณญาณมนุษย์เท่านั้น</p>
+            <ul style="margin:0; padding-left:18px; font-size:13px; color:#2D3748; line-height:1.5;">
+              <li>ตัดสินผลการเรียน / ตัดเกรดเด็ก</li>
+              <li>ประเมินวินัยและพฤติกรรมผู้เรียน</li>
+              <li>อัปโหลดข้อมูลส่วนบุคคล (PDPA)</li>
+              <li>ลงนามในเอกสารโดยไม่อ่านทวน</li>
+            </ul>
+          </div>
+        </div>
+        <div style="font-size:13px; color:#6B7C8C; text-align:center;">
+          📌 กฎทอง: ยิ่งผลกระทบต่อผู้เรียนสูง → ยิ่งต้องผ่านการตรวจสอบหลายชั้น
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SLIDE 06: LIVE WOW DEMO
+           ========================================== -->
+      <section class="slide" data-title="Live Wow Demo: จากกระดาษสู่โจทย์ใหม่ 30 วิ" data-notes="สาธิตสดให้ดู 3 นาที ให้ครูตื่นเต้นและเห็นภาพจริง">
+        <div>
+          <span class="eyebrow" style="color:var(--gold)"><span class="dot"></span> สาธิตสด 3 นาที (Live Demonstration)</span>
+          <h2 style="margin-top:8px;">จากกระดาษเก่า 1 แผ่น → สู่สื่อ Active Learning ใน 30 วินาที</h2>
+        </div>
+        <div class="grid-3" style="margin: auto 0;">
+          <div class="card" style="text-align:center; padding:16px;">
+            <div style="font-size:32px; margin-bottom:6px;">📸</div>
+            <h3 style="font-size:16px; margin-bottom:4px;">1. ถ่ายรูปหรือโหลดไฟล์</h3>
+            <p style="font-size:13px; color:#64748B; margin:0;">
+              ถ่ายภาพข้อสอบเก่า หรือลากไฟล์ PDF บทเรียนที่เคยสอนเข้าสู่ระบบ
+            </p>
+          </div>
+
+          <div class="card" style="text-align:center; padding:16px; border:2px dashed var(--coral); background:var(--coral-soft);">
+            <div style="font-size:32px; margin-bottom:6px;">⚡</div>
+            <h3 style="font-size:16px; margin-bottom:4px; color:var(--coral);">2. สั่งด้วยกรอบชัดเจน</h3>
+            <p style="font-size:13px; color:var(--ink); margin:0;">
+              <i>“อ่านข้อสอบนี้ แล้วแปลงเป็นโจทย์ประยุกต์สถานการณ์จริง 5 ข้อ ภาษาไทย”</i>
+            </p>
+          </div>
+
+          <div class="card" style="text-align:center; padding:16px;">
+            <div style="font-size:32px; margin-bottom:6px;">🎧</div>
+            <h3 style="font-size:16px; margin-bottom:4px;">3. สรุปเป็นเสียง Audio</h3>
+            <p style="font-size:13px; color:#64748B; margin:0;">
+              กดสร้าง Audio Overview ใน NotebookLM เพื่อฟังบทสนทนาสรุปเนื้อหา
+            </p>
+          </div>
+        </div>
+        <div class="card" style="background:#FAF5FF; border:1px solid #E9D8FD; font-size:14px; text-align:center; color:#553C9A;">
+          💡 <b>ข้อคิดสำคัญ:</b> AI ทำเสร็จใน 30 วินาที แต่ครูต้องใช้เวลาอีก 1 นาทีในการ <b>“ตรวจทานความถูกต้อง”</b>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SLIDE 07: ZERO-PREP STARTER KITS
+           ========================================== -->
+      <section class="slide" data-title="Zero-Prep Starter Kits: ไม่ต้องมีไฟล์เดิมก็เริ่มได้" data-notes="อธิบายทางเลือก 3 เส้นทางสำหรับครู เพื่อให้ทุกคนเริ่มทำกิจกรรมได้ทันที">
+        <div>
+          <span class="eyebrow" style="color:var(--mint)"><span class="dot"></span> หมดกังวลเรื่องเตรียมไฟล์ (Zero-Prep Starter Kits)</span>
+          <h2 style="margin-top:8px;">ไม่มีไฟล์งานเดิมมา? ไม่เป็นไร! เลือก 3 เส้นทางนี้ได้ทันที</h2>
+        </div>
+        <div class="grid-3" style="margin: auto 0;">
+          <div class="card" style="border-top:5px solid var(--lavender);">
+            <span class="pill-badge" style="background:var(--lavender-soft); color:var(--lavender);">Path A: มีไฟล์จริง</span>
+            <h3 style="margin:8px 0 4px 0; font-size:17px;">นำไฟล์ของตัวเองมา</h3>
+            <p style="font-size:13px; color:#475569; margin:0;">
+              อัปโหลดไฟล์ Word/PDF หรือรูปถ่ายข้อสอบ แผนการสอนเดิม เพื่อต่อยอดพัฒนาให้ดีขึ้น
+            </p>
+          </div>
+
+          <div class="card" style="border-top:5px solid var(--coral);">
+            <span class="pill-badge" style="background:var(--coral-soft); color:var(--coral);">Path B: มีหัวข้อในใจ</span>
+            <h3 style="margin:8px 0 4px 0; font-size:17px;">มีแค่ชื่อเรื่องที่จะสอน</h3>
+            <p style="font-size:13px; color:#475569; margin:0;">
+              พิมพ์ชื่อบทเรียน เช่น <i>“ระบบสุริยะ ม.2”</i> หรือ <i>“เศษส่วน ป.5”</i> แล้วใช้สูตรคำสั่งสร้างใหม่จากศูนย์
+            </p>
+          </div>
+
+          <div class="card" style="border-top:5px solid var(--mint); background:var(--mint-soft);">
+            <span class="pill-badge" style="background:#5FA99E; color:white;">Path C: กดคัดลอกในเว็บ</span>
+            <h3 style="margin:8px 0 4px 0; font-size:17px; color:#234E52;">Zero-Prep Starter Kit</h3>
+            <p style="font-size:13px; color:#234E52; margin:0;">
+              เปิดเว็บ <code>prompts.html</code> เลือกวิชาของคุณ แล้วกด <b>“คัดลอกโจทย์พร้อม Prompt”</b> ใน 1 คลิก!
+            </p>
+          </div>
+        </div>
+        <div style="text-align:center; font-size:13px; color:#6B7C8C;">
+          🌐 เข้าใช้งานคลังคำสั่งและ Starter Kits ได้ที่ <code>https://.../prompts.html</code> (สแกน QR Code บนโต๊ะ)
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SLIDE 08: PROMPTING FRAMEWORK
+           ========================================== -->
+      <section class="slide" data-title="กรอบคำสั่งครูไทย: 6-Part Context Framework" data-notes="สอนกรอบคำสั่ง Context Goal Input Criteria Output Verification ให้ครูใช้สั่ง AI ได้อย่างเป็นระบบ">
+        <div>
+          <span class="eyebrow" style="color:var(--lavender)"><span class="dot"></span> โครงสร้างคำสั่งมาตรฐาน (Core Context Framework)</span>
+          <h2 style="margin-top:6px;">กรอบคำสั่งครูไทย: Context → Goal → Input → Criteria → Output → Verify</h2>
+        </div>
+        <div class="grid-2" style="margin: auto 0; gap:12px;">
+          <div class="card" style="padding:10px 14px; border-left:4px solid var(--lavender);">
+            <b style="color:var(--lavender); font-size:15px;">1. Context (บริบทผู้เรียน):</b>
+            <p style="margin:2px 0 0 0; font-size:13px;">คุณเป็นครูคณิตศาสตร์ ม.2 ชั้นเรียน 35 คน มีพื้นฐานปานกลาง</p>
+          </div>
+          <div class="card" style="padding:10px 14px; border-left:4px solid var(--coral);">
+            <b style="color:var(--coral); font-size:15px;">2. Goal (เป้าหมายการเรียนรู้):</b>
+            <p style="margin:2px 0 0 0; font-size:13px;">ออกแบบแผน Active Learning 1 คาบ (50 นาที) เรื่อง ทฤษฎีบทพีทาโกรัส</p>
+          </div>
+          <div class="card" style="padding:10px 14px; border-left:4px solid var(--mint);">
+            <b style="color:var(--mint); font-size:15px;">3. Input (ข้อมูลตั้งต้น / แหล่งข้อมูล):</b>
+            <p style="margin:2px 0 0 0; font-size:13px;">นักเรียนมักมี Misconception คิดว่าด้าน c ต้องเป็นเส้นเอียงเสมอ</p>
+          </div>
+          <div class="card" style="padding:10px 14px; border-left:4px solid var(--gold);">
+            <b style="color:var(--gold); font-size:15px;">4. Criteria (เกณฑ์คุณภาพที่ต้องการ):</b>
+            <p style="margin:2px 0 0 0; font-size:13px;">มีคำถามนำแบบ Socratic 3 ข้อ, ชุดโจทย์ 3 ระดับ พร้อมเฉลยวิธีคิด</p>
+          </div>
+        </div>
+        <div class="card" style="background:#F8FAFC; padding:8px 14px; font-size:13px;">
+          🎯 <b>5. Output & 6. Verification (รูปแบบ & ตรวจทาน):</b> ขอรูปแบบตาราง 5 ขั้นตอน ภาษาไทยกระชับ และตรวจทานเฉลยตัวเลขทุกข้อ
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SLIDE 09: PEDAGOGY: MISCONCEPTION & SOCRATIC
+           ========================================== -->
+      <section class="slide" data-title="Pedagogy: Misconceptions & Socratic Tutor" data-notes="สอนให้ใช้ AI เพื่อการสอนจริง ไม่ใช่แค่สร้างเนื้อหา แต่แก้จุดเข้าใจผิดของเด็ก">
+        <div>
+          <span class="eyebrow" style="color:var(--coral)"><span class="dot"></span> AI-Native Pedagogy (การสอนเชิงลึก)</span>
+          <h2 style="margin-top:6px;">ใช้ AI จัดการความเข้าใจผิด (Misconceptions) & ถามนำ</h2>
+        </div>
+        <div class="grid-2" style="margin: auto 0;">
+          <div class="card" style="border-top:4px solid var(--coral);">
+            <h3 style="color:var(--coral); font-size:18px; margin-bottom:6px;">💡 Misconception Targeting</h3>
+            <p style="font-size:13px; color:#475569; margin-bottom:8px;">
+              บอกจุดที่เด็กมักเข้าใจผิดลงในคำสั่ง เพื่อให้ AI ออกแบบโจทย์ดักทาง:
+            </p>
+            <div style="background:#FFF5F5; padding:8px 10px; border-radius:8px; font-size:12px; font-family:'JetBrains Mono', monospace;">
+              “นักเรียนคิดว่า 1/8 > 1/6 เพราะ 8 > 6 ช่วยออกแบบกิจกรรมเปรียบเทียบขนาดเค้กเพื่อแก้จุดนี้”
+            </div>
+          </div>
+
+          <div class="card" style="border-top:4px solid var(--mint);">
+            <h3 style="color:var(--mint); font-size:18px; margin-bottom:6px;">🦉 Socratic Tutor Prompting</h3>
+            <p style="font-size:13px; color:#475569; margin-bottom:8px;">
+              สั่งให้ AI สวมบทบาทเป็นผู้ช่วยสอนที่ไม่รีบเฉลย แต่ค่อยๆ ถามนำ:
+            </p>
+            <div style="background:#F0FDF4; padding:8px 10px; border-radius:8px; font-size:12px; font-family:'JetBrains Mono', monospace;">
+              “ทำหน้าที่เป็นติวเตอร์แบบ Socratic ถามทีละคำถาม เพื่อให้นักเรียนค้นพบคำตอบด้วยตนเอง”
+            </div>
+          </div>
+        </div>
+        <div class="card" style="background:#EDF2F7; padding:8px 14px; font-size:13px; text-align:center;">
+          🔍 <b>Critique the AI:</b> ให้ AI แกล้งทำเฉลยผิด 1 จุด แล้วให้นักเรียนแข่งกันเป็นนักสืบจับผิดในห้องเรียน
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SLIDE 09B: GEMINI GEMS EXPLAINED
+           ========================================== -->
+      <section class="slide" data-title="Gemini Gems: ผู้ช่วยเฉพาะทางประจำวิชา" data-notes="อธิบายว่า Gems คืออะไร ทำไมครูต้องสร้างไว้ใช้เอง เพื่อลดเวลาพิมพ์คำสั่งซ้ำๆ ทุกวัน">
+        <div>
+          <span class="eyebrow" style="color:var(--lavender)"><span class="dot"></span> Feature Deep Dive 01</span>
+          <h2 style="margin-top:6px;">Gemini Gems คืออะไร? ทำไมครูต้องมีไว้ประจำตัว?</h2>
+        </div>
+        <div class="grid-2" style="margin: auto 0; gap:16px;">
+          <div class="card" style="border-left: 5px solid var(--lavender); background:var(--lavender-soft);">
+            <h3 style="color:var(--lavender); margin-bottom:6px; font-size:18px;">💡 คอนเซปต์: "ผู้ช่วยที่จำหน้าที่ไว้ล่วงหน้า"</h3>
+            <p style="margin:0; font-size:14px; line-height:1.6;">
+              แทนที่จะต้องพิมพ์สูตร <b>บทบาท-บริบท-เงื่อนไข</b> ใหม่ทุกครั้งที่เปิดแชท ครูสามารถตั้งค่า <b>Gems</b> ล็อกบทบาท เช่น <i>"ตรวจข้อสอบคณิต ม.2"</i> หรือ <i>"ผู้ช่วยถอดความใบงานเก่า"</i> เอาไว้ เมื่อเปิดใช้ ก็แค่วางไฟล์หรือรูปภาพ AI จะตอบตามสไตล์ที่เราตั้งไว้ 100% ทันที
+            </p>
+          </div>
+          <div class="card" style="border-left: 5px solid var(--mint); background:var(--mint-soft);">
+            <h3 style="color:var(--mint); margin-bottom:6px; font-size:18px;">🚀 ตัวอย่าง Gems ประจำวันของครูไทย</h3>
+            <ul style="margin:0; padding-left:18px; font-size:13px; line-height:1.6;">
+              <li><b>1. Gem สกัดข้อความ (OCR Master):</b> สแกนกระดาษเก่าแล้วถอดเป็นตัวพิมพ์สะอาด</li>
+              <li><b>2. Gem ตรวจการบ้าน & จัดกลุ่มผิดบ่อย:</b> ชี้จุดที่นักเรียนสับสน (Misconceptions)</li>
+              <li><b>3. Gem ร่างแผน Active Learning:</b> วางแผน 5 ขั้นตอนตามตัวชี้วัด สพฐ.</li>
+            </ul>
+          </div>
+        </div>
+        <div style="border-top:1px solid rgba(38,57,74,.1); padding-top:8px; display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:13px; color:#536779;">💡 <b>เคล็ดลับ:</b> Gems สามารถแก้ไขคำสั่ง Instructions ได้ตลอดเวลาในเมนู Gem Manager</span>
+          <span class="pill-badge" style="background:var(--lavender-soft); color:var(--lavender);">Gemini Ecosystem</span>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SLIDE 09C: GEMINI CANVAS EXPLAINED
+           ========================================== -->
+      <section class="slide" data-title="Gemini Canvas: พื้นที่เกลาเนื้อหา Side-by-Side" data-notes="เน้นย้ำว่า Canvas ไม่ใช่โปรแกรมจัดหน้า A4 แต่เป็น Smart Text Editor ที่ลากคลุมสั่งแก้เฉพาะจุดได้">
+        <div>
+          <span class="eyebrow" style="color:var(--mint)"><span class="dot"></span> Feature Deep Dive 02</span>
+          <h2 style="margin-top:6px;">Gemini Canvas: หน้าจอคู่ สั่งแก้เนื้อหาเฉพาะจุด</h2>
+        </div>
+        <div class="grid-2" style="margin: auto 0; gap:16px;">
+          <div class="card" style="border-left: 5px solid var(--mint); background:var(--mint-soft);">
+            <h3 style="color:var(--mint); margin-bottom:6px; font-size:18px;">📝 หน้าจอแยก 2 ฝั่ง (Side-by-Side)</h3>
+            <p style="margin:0; font-size:14px; line-height:1.6;">
+              • <b>ฝั่งซ้าย:</b> แชทพูดคุยสั่งงานตามปกติ<br/>
+              • <b>ฝั่งขวา:</b> หน้ากระดานเอกสารจริง (Draft Document)<br/>
+              ไม่ต้องคอยเลื่อนหาข้อความในแชทยาวๆ และสั่งแก้ข้อความได้แบบ Interactive
+            </p>
+          </div>
+          <div class="card" style="border-left: 5px solid var(--coral); background:var(--coral-soft);">
+            <h3 style="color:var(--coral); margin-bottom:6px; font-size:18px;">✨ ท่าไม้ตาย: ลากคลุม (Highlight & Edit)</h3>
+            <ul style="margin:0; padding-left:18px; font-size:13px; line-height:1.6;">
+              <li><b>ปรับระดับภาษา:</b> ลากคลุมข้อสอบ แล้วสั่ง <i>"แปลงเป็นภาษาเด็ก ป.3"</i></li>
+              <li><b>เพิ่มสถานการณ์จริง:</b> ลากคลุมโจทย์ แล้วสั่ง <i>"ผูกกับชีวิตประจำวัน"</i></li>
+              <li><b>ปรับความยาว:</b> สั่งย่อให้เหลือ 2 บรรทัด หรือขยายความพร้อมตัวอย่าง</li>
+            </ul>
+          </div>
+        </div>
+        <div style="border-top:1px solid rgba(38,57,74,.1); padding-top:8px; display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:13px; color:#536779;">📌 <b>Workflow:</b> สกัดข้อความด้วย Gem → เกลาเนื้อหาใน Canvas → คัดลอกไปวางใน Canva A4</span>
+          <span class="pill-badge" style="background:var(--coral-soft); color:var(--coral);">Smart Editing</span>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SLIDE 10: MATH & SCIENCE BRIDGE
+           ========================================== -->
+      <section class="slide" data-title="Math & Science Bridge: จัดการสูตรคณิต-วิทย์" data-notes="แก้ปัญหาโลกแตกของครูวิทย์คณิต: การพิมพ์สูตรและสมการใน Word และ Canva">
+        <div>
+          <span class="eyebrow" style="color:var(--lavender)"><span class="dot"></span> Math & Science Equation Bridge</span>
+          <h2 style="margin-top:6px;">สะพานเชื่อมสมการคณิต-วิทย์: สวย คมชัด ไม่ต้องพิมพ์ใหม่</h2>
+        </div>
+        <div class="grid-2" style="margin: auto 0;">
+          <div class="card" style="border-left:5px solid #3182CE;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+              <h3 style="color:#2B6CB0; font-size:18px;">1. นำสมการไปใช้ใน Word / PPT</h3>
+              <span class="pill-badge" style="background:#EBF8FF; color:#2B6CB0;">Alt + =</span>
+            </div>
+            <ol style="margin:0; padding-left:18px; font-size:13px; color:#4A5568; line-height:1.6;">
+              <li>สั่งให้ AI แสดงสมการในรูปแบบ <b>LaTeX</b> เช่น <code>c = \sqrt{a^2 + b^2}</code></li>
+              <li>เปิดโปรแกรม Microsoft Word แล้วกดปุ่ม <kbd style="background:#E2E8F0; padding:1px 6px; border-radius:4px;">Alt</kbd> + <kbd style="background:#E2E8F0; padding:1px 6px; border-radius:4px;">=</kbd></li>
+              <li>วางโค้ด LaTeX ลงในกล่องสมการ แล้วกด <kbd style="background:#E2E8F0; padding:1px 6px; border-radius:4px;">Enter</kbd> → ได้สมการทางการทันที!</li>
+            </ol>
+          </div>
+
+          <div class="card" style="border-left:5px solid #DD6B20;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+              <h3 style="color:#C05621; font-size:18px;">2. นำสมการไปใช้ใน Canva</h3>
+              <span class="pill-badge" style="background:#FEEBC8; color:#C05621;">Canva Math App</span>
+            </div>
+            <ol style="margin:0; padding-left:18px; font-size:13px; color:#4A5568; line-height:1.6;">
+              <li>ในหน้าออกแบบ Canva ไปที่แถบเมนูซ้ายมือ เลือก <b>แอป (Apps)</b></li>
+              <li>ค้นหาแอปชื่อ <b>Math</b> (ไอคอนสมการคณิตศาสตร์)</li>
+              <li>วางโค้ดสมการ LaTeX → กด <b>Insert</b> ได้ภาพเวกเตอร์คมชัด 100% ย่อขยายไม่แตก!</li>
+            </ol>
+          </div>
+        </div>
+        <div style="font-size:13px; color:#6B7C8C; text-align:center;">
+          ✨ รองรับทั้งเครื่องหมายบวกลบคูณหาร, สแควร์รูท, เศษส่วน, อินทิกรัล และสมการเคมี
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SLIDE 11: CANVA 2-STEP PATTERN
+           ========================================== -->
+      <section class="slide" data-title="Canva & กฎเหล็ก AI Visuals: The 2-Step Pattern" data-notes="สอนวิธีแก้ปัญหาภาษาไทยในภาพ AI ด้วยการแยกบทบาท">
+        <div>
+          <span class="eyebrow" style="color:var(--coral)"><span class="dot"></span> การสร้างสื่อและภาพประกอบ (Visual Design)</span>
+          <h2 style="margin-top:6px;">กฎเหล็กภาพ AI: The 2-Step Pattern (ทำไม AI เขียนไทยไม่ได้?)</h2>
+        </div>
+        <div class="grid-custom" style="margin: auto 0;">
+          <div class="card" style="border-left:5px solid var(--coral);">
+            <h3 style="color:var(--coral); font-size:18px; margin-bottom:6px;">1. สร้างภาพไร้ตัวอักษรด้วย AI</h3>
+            <p style="font-size:13px; color:#4A5568; line-height:1.5;">
+              โมเดล AI วาดตัวอักษรไทยเป็นพิกเซล ทำให้เบลอหรือสะกดผิดเสมอ<br/>
+              <b>ทางแก้:</b> สั่ง Prompt ภาพเป็นภาษาอังกฤษ และกำชับว่า <code>no text, no letters</code>
+            </p>
+            <div style="background:#FFF5F5; padding:6px 10px; border-radius:6px; font-size:12px; font-family:'JetBrains Mono';">
+              “vector illustration of water cycle, vibrant colors, white background, no text”
+            </div>
+          </div>
+
+          <div class="card" style="border-left:5px solid var(--mint);">
+            <h3 style="color:var(--mint); font-size:18px; margin-bottom:6px;">2. นำมาจัดหน้าและพิมพ์ไทยใน Canva</h3>
+            <p style="font-size:13px; color:#4A5568; line-height:1.5;">
+              นำภาพที่ได้มาตัดพื้นหลังด้วย <b>Background Remover</b> แล้ววางลงใน Template โปสเตอร์ จากนั้นพิมพ์ข้อความภาษาไทยด้วยฟอนต์มาตรฐาน
+            </p>
+            <div style="background:#F0FDF4; padding:6px 10px; border-radius:6px; font-size:12px; color:#22543D;">
+              ✅ ได้สื่อคมชัด ตัวสะกดภาษาไทยถูกต้อง 100% และปรับแก้ได้ตลอดเวลา
+            </div>
+          </div>
+        </div>
+        <div style="font-size:13px; color:#718096; text-align:center;">
+          🎨 เครื่องมือเสริมใน Canva: Magic Eraser (ลบส่วนเกิน), Magic Expand (ขยายภาพ), ฟอนต์ครูไทย (Mali / IBM Plex)
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SLIDE 11B: BANANA 2.0 (IMAGEN 3)
+           ========================================== -->
+      <section class="slide" data-title="Banana 2.0 (Imagen 3): สูตรสร้างภาพการศึกษา ไร้ตัวหนังสือเละ" data-notes="ชี้ปัญหาตัวหนังสือเละในภาพ AI และให้สูตรท่องจำ 3 คีย์เวิร์ด">
+        <div>
+          <span class="eyebrow" style="color:var(--gold)"><span class="dot"></span> Feature Deep Dive 03</span>
+          <h2 style="margin-top:6px;">Banana 2.0 (Imagen 3): สูตรสร้างภาพการศึกษา ไร้ตัวหนังสือเละ</h2>
+        </div>
+        <div class="grid-2" style="margin: auto 0; gap:16px;">
+          <div class="card" style="border-left: 5px solid var(--gold); background:var(--gold-soft);">
+            <h3 style="color:var(--gold); margin-bottom:6px; font-size:18px;">⚠️ กฎเหล็กภาพ AI สำหรับครู</h3>
+            <p style="margin:0; font-size:14px; line-height:1.6;">
+              AI ยังวาดตัวอักษรภาษาไทยไม่ได้ (มักกลายเป็นภาษาต่างดาว)<br/>
+              <b>ทางแก้ที่ถูกต้อง:</b> สั่งให้ AI <u>วาดเฉพาะรูปภาพ</u> แล้วนำมาพิมพ์ข้อความภาษาไทยที่คมชัด สวยงาม ใน <b>Canva</b>
+            </p>
+          </div>
+          <div class="card" style="border-left: 5px solid var(--mint); background:var(--mint-soft);">
+            <h3 style="color:var(--mint); margin-bottom:6px; font-size:18px;">🍌 3 คีย์เวิร์ดทองคำ (สูตรภาพพื้นขาว)</h3>
+            <div style="background:#fff; padding:10px; border-radius:8px; border:1px solid rgba(38,57,74,.1); font-family:'JetBrains Mono', monospace; font-size:13px; color:var(--ink); margin-bottom:6px;">
+              [สิ่งที่ต้องการ], <b>2D flat vector illustration, pure white background, no text, no words</b>
+            </div>
+            <p style="margin:0; font-size:13px; color:#536779;">
+              ✓ ได้ภาพการ์ตูน/ไอคอนสะอาดตา วางลงบนกระดาษใบงานสีขาวได้เนียนตาโดยไม่ต้องเสียเวลาไดคัท
+            </p>
+          </div>
+        </div>
+        <div style="border-top:1px solid rgba(38,57,74,.1); padding-top:8px; display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:13px; color:#536779;">💡 <b>ตัวอย่าง:</b> "Anatomy of human heart, 2D flat vector illustration, pure white background, no text"</span>
+          <span class="pill-badge" style="background:var(--gold-soft); color:var(--gold);">Clean Vector</span>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SLIDE 11C: CANVA AI & MAGIC STUDIO
+           ========================================== -->
+      <section class="slide" data-title="Canva AI & Magic Studio: จัดหน้าใบงานและสื่อการสอน" data-notes="แนะนำเครื่องมือ Magic Grab, Magic Eraser และ Canva Math App สำหรับครู">
+        <div>
+          <span class="eyebrow" style="color:var(--lavender)"><span class="dot"></span> Feature Deep Dive 04</span>
+          <h2 style="margin-top:6px;">Canva AI & Magic Tools: พลังจัดรูปเล่มและพิมพ์สื่อการสอน</h2>
+        </div>
+        <div class="grid-2" style="margin: auto 0; gap:16px;">
+          <div class="card" style="border-left: 5px solid var(--lavender); background:var(--lavender-soft);">
+            <h3 style="color:var(--lavender); margin-bottom:6px; font-size:18px;">🪄 3 เครื่องมือ Magic ที่ช่วยชีวิตครู</h3>
+            <ul style="margin:0; padding-left:18px; font-size:13px; line-height:1.6;">
+              <li><b>1. Magic Grab:</b> แตะเพื่อดึงตัวการ์ตูน/วัตถุออกจากรูปเดิม แล้วย้ายตำแหน่งได้อย่างอิสระ</li>
+              <li><b>2. Magic Eraser:</b> ยางลบ AI ปาดลบข้อความภาษาอังกฤษหรือสิ่งรบกวนในภาพใน 1 คลิก</li>
+              <li><b>3. Magic Expand:</b> ขยายภาพแนวตั้งให้กลายเป็นภาพแนวนอน 16:9 สวยงาม</li>
+            </ul>
+          </div>
+          <div class="card" style="border-left: 5px solid var(--coral); background:var(--coral-soft);">
+            <h3 style="color:var(--coral); margin-bottom:6px; font-size:18px;">📐 Canva Math App (สมการเวกเตอร์คมชัด)</h3>
+            <p style="margin:0; font-size:14px; line-height:1.6;">
+              ไปที่เมนู <b>แอป (Apps)</b> ด้านซ้าย → ค้นหา <b>Math</b> → วางโค้ด LaTeX จาก Gemini เช่น <code>c = \sqrt{a^2+b^2}</code><br/>
+              สูตรจะกลายเป็นภาพเวกเตอร์ที่ย่อขยายไม่แตก และเปลี่ยนสีได้ตามต้องการ
+            </p>
+          </div>
+        </div>
+        <div style="border-top:1px solid rgba(38,57,74,.1); padding-top:8px; display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:13px; color:#536779;">📄 <b>ส่งออก:</b> เลือก Download → PDF Print หรือ PNG สำหรับพิมพ์แจกในห้องเรียน</span>
+          <span class="pill-badge" style="background:var(--lavender-soft); color:var(--lavender);">Canva for Education</span>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SLIDE 12: NOTEBOOKLM & GROUNDED AI
+           ========================================== -->
+      <section class="slide" data-title="NotebookLM: Grounded AI & Audio Overview" data-notes="นำเสนอ NotebookLM เพื่อการย่อยเอกสารหนาๆ แบบไม่มั่ว">
+        <div>
+          <span class="eyebrow" style="color:var(--gold)"><span class="dot"></span> Grounded AI (ตอบจากเอกสารจริง 100%)</span>
+          <h2 style="margin-top:6px;">NotebookLM: ผู้ช่วยย่อยตำรา & ทำเสียง Podcast</h2>
+        </div>
+        <div class="grid-2" style="margin: auto 0;">
+          <div class="card" style="border-top:4px solid var(--gold);">
+            <h3 style="color:var(--gold); font-size:18px; margin-bottom:6px;">📚 Zero Hallucination จากเอกสาร</h3>
+            <ul style="margin:0; padding-left:18px; font-size:13px; color:#4A5568; line-height:1.6;">
+              <li>อัปโหลดไฟล์หลักสูตร, ตำรา PDF หนาๆ, คู่มือ ว.PA, SAR เข้าไป</li>
+              <li>AI จะตอบคำถาม<b>อ้างอิงเฉพาะจากไฟล์ที่เราใส่</b>เท่านั้น ไม่มั่วจากที่อื่น</li>
+              <li>มีเลข <b>Citation</b> คลิกเพื่อกระโดดไปดูหน้าต้นฉบับได้ทันที</li>
+            </ul>
+          </div>
+
+          <div class="card" style="border-top:4px solid var(--lavender);">
+            <h3 style="color:var(--lavender); font-size:18px; margin-bottom:6px;">🎙️ Audio Overview (Deep Dive)</h3>
+            <ul style="margin:0; padding-left:18px; font-size:13px; color:#4A5568; line-height:1.6;">
+              <li>กดปุ่มเดียว เปลี่ยนเอกสาร 50 หน้า เป็น<b>บทสนทนาเสียง 2 คนคุยกัน</b></li>
+              <li>ครูใช้ฟังสรุปเกณฑ์ราชการระหว่างขับรถกลับบ้าน</li>
+              <li>สร้างเป็นสื่อเสียงสรุปบทเรียนส่งให้นักเรียนฟังทบทวนก่อนสอบ</li>
+            </ul>
+          </div>
+        </div>
+        <div class="card" style="background:#FFFBEB; padding:8px 14px; font-size:13px; text-align:center; color:#975A16;">
+          ⚠️ <b>Audio Fallback:</b> หากช่วงบ่ายคนกดสร้างเสียงพร้อมกันแล้วช้า ให้ใช้ฟังก์ชัน <b>Study Guide / Briefing Doc</b> แทนทันที
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SLIDE 13: CAPSTONE AI SPEEDRUN
+           ========================================== -->
+      <section class="slide" data-title="Capstone Workshop: AI Speedrun 80 นาที" data-notes="ชี้แจงกติกา Hackathon Speedrun 80 นาที ที่จะร้อยเรียง 3 เครื่องมือ">
+        <div>
+          <span class="eyebrow" style="color:var(--coral)"><span class="dot"></span> ช่วงเวลาไฮไลต์บ่าย (14:30 – 15:50 น.)</span>
+          <h2 style="margin-top:6px;">Capstone Workshop: “AI Speedrun 80 นาที: สื่อครบวงจร 1 ชุด”</h2>
+        </div>
+        <div class="grid-4" style="margin: auto 0;">
+          <div class="card" style="text-align:center; padding:12px; border-top:4px solid var(--lavender);">
+            <span class="pill-badge" style="background:var(--lavender-soft); color:var(--lavender);">0–20 นาที</span>
+            <h3 style="font-size:15px; margin:6px 0 2px 0;">Gemini</h3>
+            <p style="font-size:12px; color:#64748B; margin:0;">สรุปเนื้อหา 5 บรรทัด + เจนภาพประกอบไร้ตัวหนังสือ</p>
+          </div>
+
+          <div class="card" style="text-align:center; padding:12px; border-top:4px solid var(--gold);">
+            <span class="pill-badge" style="background:var(--gold-soft); color:var(--gold);">20–30 นาที</span>
+            <h3 style="font-size:15px; margin:6px 0 2px 0;">NotebookLM</h3>
+            <p style="font-size:12px; color:#64748B; margin:0;">โยนข้อความเข้า กดรัน Audio Overview ทิ้งไว้เบื้องหลัง</p>
+          </div>
+
+          <div class="card" style="text-align:center; padding:12px; border-top:4px solid var(--coral);">
+            <span class="pill-badge" style="background:var(--coral-soft); color:var(--coral);">30–60 นาที</span>
+            <h3 style="font-size:15px; margin:6px 0 2px 0;">Canva</h3>
+            <p style="font-size:12px; color:#64748B; margin:0;">เลือก Template นำภาพ AI มาตัดพื้นหลัง + พิมพ์ข้อความไทย</p>
+          </div>
+
+          <div class="card" style="text-align:center; padding:12px; border-top:4px solid var(--mint);">
+            <span class="pill-badge" style="background:var(--mint-soft); color:var(--mint);">60–80 นาที</span>
+            <h3 style="font-size:15px; margin:6px 0 2px 0;">Showcase</h3>
+            <p style="font-size:12px; color:#64748B; margin:0;">ตรวจทานผลงาน → ฉายผลงานตัวแทนครูขึ้นจอใหญ่</p>
+          </div>
+        </div>
+        <div style="background:#F7FAFC; border:1px solid #E2E8F0; padding:10px 16px; border-radius:12px; font-size:13px; text-align:center;">
+          🤝 <b>Buddy Support:</b> ครูที่เชี่ยวชาญช่วยแนะนำเพื่อนข้างๆ · ผู้ช่วยวิทยากรเดินสนับสนุนประจำทุกโซน
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SLIDE 14: VERIFICATION LADDER & ETHICS
+           ========================================== -->
+      <section class="slide" data-title="Verification Ladder & จริยธรรม AI ครูไทย" data-notes="เน้นย้ำจริยธรรม การตรวจทาน และความปลอดภัยข้อมูล">
+        <div>
+          <span class="eyebrow" style="color:var(--coral)"><span class="dot"></span> การใช้ AI อย่างรู้เท่าทันและปลอดภัย</span>
+          <h2 style="margin-top:6px;">บันไดตรวจทาน 3 ขั้น (Verification Ladder) & PDPA</h2>
+        </div>
+        <div class="grid-2" style="margin: auto 0;">
+          <div class="card" style="border-left:5px solid var(--coral);">
+            <h3 style="color:var(--coral); font-size:17px; margin-bottom:6px;">🪜 บันไดตรวจทาน 3 ขั้น (Verification)</h3>
+            <ol style="margin:0; padding-left:18px; font-size:13px; color:#4A5568; line-height:1.6;">
+              <li><b>ตรวจตาเปล่า (Red Flag Scan):</b> ตัวสะกดไทย, วันที่แปลกๆ (เช่น 31 ก.พ.), ตัวเลขสมการ</li>
+              <li><b>Cross-Check อ้างอิง:</b> สั่ง AI ระบุที่มา แล้วค้นหาใน Google / เว็บราชการจริง</li>
+              <li><b>Human Sign-off:</b> ครูเป็นผู้ตัดสินใจขั้นตอนสุดท้ายก่อนนำไปสอน</li>
+            </ol>
+          </div>
+
+          <div class="card" style="border-left:5px solid var(--lavender);">
+            <h3 style="color:var(--lavender); font-size:17px; margin-bottom:6px;">🔒 การคุ้มครองข้อมูลนักเรียน (PDPA)</h3>
+            <ul style="margin:0; padding-left:18px; font-size:13px; color:#4A5568; line-height:1.6;">
+              <li>❌ <b>ห้ามอัปโหลด:</b> ชื่อ-สกุลจริง, เลขบัตร 13 หลัก, รูปหน้าเด็ก, ผลประเมินรายบุคคล</li>
+              <li>✅ <b>Data Masking:</b> แปลงเป็น <i>“นักเรียนคนที่ 1, นักเรียนกลุ่ม B”</i> เสมอ</li>
+              <li>คำถามก่อนส่ง: <i>“AI จำเป็นต้องรู้ว่าเด็กคนนี้คือใครเพื่อทำงานนี้ไหม?”</i></li>
+            </ul>
+          </div>
+        </div>
+        <div style="font-size:13px; color:#718096; text-align:center;">
+          📜 AI เป็นเครื่องมือเสริมพลังครู — แต่หัวใจความเป็นครูและการดูแลเด็กคือสิ่งที่ AI แทนที่ไม่ได้
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SLIDE 15: CLOSING & TAKEAWAYS
+           ========================================== -->
+      <section class="slide" data-title="ปิดงาน: 8 ทักษะคงทน และของขวัญนำกลับบ้าน" data-notes="สรุปปิดการอบรม มอบกรอบคิดนวัตกรรม ว.PA และช่องทางติดต่อ">
+        <div class="flex items-center justify-between">
+          <span class="eyebrow" style="color:var(--mint)"><span class="dot"></span> สรุปภาพรวมและก้าวต่อไป</span>
+          <span class="pill-badge" style="background:var(--mint-soft); color:var(--mint);">Takeaways</span>
+        </div>
+        <div style="margin: auto 0;">
+          <h2 style="color:var(--ink); font-size: clamp(24px, 2.8vw, 40px); margin-bottom:12px;">สิ่งที่ครูได้รับกลับบ้านในวันนี้</h2>
+          <div class="grid-2" style="gap:14px;">
+            <div class="card" style="background:white; font-size:14px;">
+              ✅ <b>สื่อการสอนจริง 1 ชุด:</b> แผน/ข้อสอบ + โปสเตอร์ Canva + เสียงสรุป Podcast<br/>
+              ✅ <b>แผ่นพับสูตรคำสั่ง Prompt Cheat-sheet</b> ภาษาไทยมาตรฐาน
+            </div>
+            <div class="card" style="background:white; font-size:14px;">
+              ✅ <b>สิทธิ์เข้าถึงเว็บคลังคำสั่ง 373 Prompts & Starter Kits</b> ใช้งานได้ตลอดชีพ<br/>
+              ✅ <b>กรอบแนวคิดนวัตกรรมการสอน 5 ขั้นตอน (W4 Framework)</b> สำหรับต่อยอด ว.PA
+            </div>
+          </div>
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid rgba(38,57,74,.1); padding-top:14px;">
+          <div>
+            <h3 style="color:var(--coral); font-size:18px; margin:0;">ขอขอบคุณคุณครูทุกท่านครับ 🙏</h3>
+            <p style="font-size:13px; margin:2px 0 0 0; color:#64748B;">อ.ดร. กิตติพงศ์ ทรัพย์วัฒนาชัย & ผศ.ดร. ธนิษฐา โกวรรณ์</p>
+          </div>
+          <div style="text-align:right;">
+            <span class="pill-badge" style="background:var(--lavender-soft); color:var(--lavender);">แบบประเมินโครงการ</span>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- ======= Chrome Controls ======= -->
+  <div id="controls">
+    <button class="control-btn" id="prevBtn" title="สไลด์ก่อนหน้า (←, PageUp)">❮</button>
+    <div id="counter">01 / 15</div>
+    <button class="control-btn" id="nextBtn" title="สไลด์ถัดไป (→, Space, PageDown)">❯</button>
+    <button class="control-btn" id="notesBtn" title="บันทึกวิทยากร (N)">📝</button>
+    <button class="control-btn" id="overviewBtn" title="ดูสไลด์ทั้งหมด (O, Esc)">⊞</button>
+    <button class="control-btn" id="fullBtn" title="เต็มจอ (F)">⛶</button>
+  </div>
+
+  <!-- ======= Teacher Notes Panel ======= -->
+  <div id="notes-panel">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+      <span style="font-family:'Mali', cursive; font-weight:700; color:var(--mint); font-size:14px;">📝 บันทึกวิทยากร (Speaker Notes)</span>
+      <span style="font-size:11px; opacity:.6;">กด N เพื่อปิด</span>
+    </div>
+    <div id="notes-content">ยินดีต้อนรับคุณครูทุกท่าน...</div>
+  </div>
+
+  <!-- ======= Overview Modal ======= -->
+  <div id="overview">
+    <div style="display:flex; justify-content:space-between; align-items:center; max-width:1200px; margin:0 auto 20px auto; color:white;">
+      <h2 style="color:white; font-family:'Mali', cursive; margin:0;">ภาพรวมสไลด์ทั้งหมด (Slide Navigator)</h2>
+      <button id="closeOverview" style="background:none; border:none; color:white; font-size:24px; cursor:pointer;">✕</button>
+    </div>
+    <div id="overview-grid" class="overview-grid"></div>
+  </div>
+
+  <script>
+    (() => {
+      const slides = Array.from(document.querySelectorAll('.slide'));
+      const total = slides.length;
+      const counter = document.getElementById('counter');
+      const progress = document.getElementById('progress-bar');
+      const notesPanel = document.getElementById('notes-panel');
+      const notesContent = document.getElementById('notes-content');
+      const overview = document.getElementById('overview');
+      const overviewGrid = document.getElementById('overview-grid');
+      let current = 0;
+      let notesOpen = false;
+      let overviewOpen = false;
+
+      function clamp(n, min, max) { return Math.max(min, Math.min(max, n)); }
+      function pad(n) { return String(n).padStart(2, '0'); }
+
+      function showSlide(index, pushHash = true) {
+        current = clamp(index, 0, total - 1);
+        slides.forEach((slide, i) => {
+          slide.classList.toggle('active', i === current);
+          slide.classList.toggle('prev', i < current);
+        });
+
+        counter.textContent = `${pad(current + 1)} / ${pad(total)}`;
+        progress.style.width = `${((current + 1) / total) * 100}%`;
+
+        const notes = slides[current].dataset.notes || 'ไม่มีบันทึกสำหรับสไลด์นี้';
+        notesContent.textContent = notes;
+
+        const title = slides[current].dataset.title || `Slide ${current + 1}`;
+        document.title = `${pad(current + 1)} — ${title} | AI for Education`;
+
+        if (pushHash) history.replaceState(null, '', `#slide-${current + 1}`);
+        updateOverviewActive();
+      }
+
+      function next() { showSlide(current + 1); }
+      function prev() { showSlide(current - 1); }
+
+      function toggleNotes(force) {
+        notesOpen = typeof force === 'boolean' ? force : !notesOpen;
+        notesPanel.classList.toggle('open', notesOpen);
+      }
+
+      function buildOverview() {
+        overviewGrid.innerHTML = '';
+        slides.forEach((slide, i) => {
+          const btn = document.createElement('button');
+          btn.className = 'overview-item';
+          btn.dataset.index = i;
+          btn.innerHTML = `<div class="overview-num">${pad(i + 1)}</div><div class="overview-title">${slide.dataset.title || 'Untitled'}</div>`;
+          btn.addEventListener('click', () => {
+            showSlide(i);
+            toggleOverview(false);
+          });
+          overviewGrid.appendChild(btn);
+        });
+        updateOverviewActive();
+      }
+
+      function updateOverviewActive() {
+        overviewGrid.querySelectorAll('.overview-item').forEach((el, i) => el.classList.toggle('active', i === current));
+      }
+
+      function toggleOverview(force) {
+        overviewOpen = typeof force === 'boolean' ? force : !overviewOpen;
+        overview.classList.toggle('open', overviewOpen);
+        if (overviewOpen) updateOverviewActive();
+      }
+
+      async function toggleFullscreen() {
+        try {
+          if (!document.fullscreenElement) await document.documentElement.requestFullscreen();
+          else await document.exitFullscreen();
+        } catch (_) {}
+      }
+
+      document.getElementById('prevBtn').addEventListener('click', prev);
+      document.getElementById('nextBtn').addEventListener('click', next);
+      document.getElementById('notesBtn').addEventListener('click', () => toggleNotes());
+      document.getElementById('overviewBtn').addEventListener('click', () => toggleOverview());
+      document.getElementById('closeOverview').addEventListener('click', () => toggleOverview(false));
+      document.getElementById('fullBtn').addEventListener('click', toggleFullscreen);
+
+      window.addEventListener('keydown', (e) => {
+        if (overviewOpen && e.key === 'Escape') { toggleOverview(false); return; }
+        switch (e.key) {
+          case 'ArrowRight':
+          case 'PageDown':
+          case ' ':
+            e.preventDefault();
+            next();
+            break;
+          case 'ArrowLeft':
+          case 'PageUp':
+            e.preventDefault();
+            prev();
+            break;
+          case 'Home':
+            e.preventDefault();
+            showSlide(0);
+            break;
+          case 'End':
+            e.preventDefault();
+            showSlide(total - 1);
+            break;
+          case 'n':
+          case 'N':
+            toggleNotes();
+            break;
+          case 'o':
+          case 'O':
+            toggleOverview();
+            break;
+          case 'f':
+          case 'F':
+            toggleFullscreen();
+            break;
+          case 'Escape':
+            if (notesOpen) toggleNotes(false);
+            break;
+        }
+      });
+
+      // Swipe support for touch screens
+      let touchStartX = 0;
+      window.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; }, { passive: true });
+      window.addEventListener('touchend', (e) => {
+        const delta = e.changedTouches[0].clientX - touchStartX;
+        if (Math.abs(delta) > 50) {
+          if (delta < 0) next();
+          else prev();
+        }
+      }, { passive: true });
+
+      buildOverview();
+      
+      const hashMatch = location.hash.match(/slide-(\d+)/);
+      if (hashMatch) {
+        showSlide(parseInt(hashMatch[1], 10) - 1, false);
+      } else {
+        showSlide(0, false);
+      }
+    })();
+  </script>
+</body>
+</html>
