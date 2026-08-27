@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2326394A'/%3E%3Ctext x='32' y='43' text-anchor='middle' font-size='30' font-family='sans-serif' fill='white'%3EAI%3C/text%3E%3C/svg%3E" />
   <title>การประยุกต์ใช้ AI เพื่อการจัดการเรียนการสอน 2569 · พอร์ทัลอบรมครู</title>
 
   <!-- Google Fonts: Mali & Noto Sans Thai Looped -->
@@ -14,7 +15,7 @@
   />
 
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="assets/css/styles.css" />
+  <link rel="stylesheet" href="assets/css/styles.css?v=20260827_font15b" />
 </head>
 <body class="antialiased" data-page="home">
 
@@ -24,14 +25,15 @@
       <div class="flex items-center justify-between h-16">
         <a href="index.html" class="flex items-center gap-3">
           <span class="bg-[#26394A] text-white font-bold text-sm px-3 py-1.5 rounded-lg font-display tracking-wider shadow-sm">AI–ครู 2569</span>
-          <span class="hidden md:inline font-display text-sm font-bold text-[#26394A]">โรงเรียนเทศบาล ๔ (เชาวนปรีชาอุทิศ)</span>
+          <span class="brand-school hidden md:inline font-display text-sm font-bold text-[#26394A]">โรงเรียนเทศบาล ๔ (เชาวนปรีชาอุทิศ)</span>
         </a>
         <nav class="flex items-center gap-2 sm:gap-4" aria-label="หลัก">
-          <a href="index.html" class="nav-link active">🏠 แผนการอบรม</a>
-          <a href="mockups.html" class="nav-link">📂 ศูนย์กิจกรรม & สไลด์</a>
-          <a href="prompts.html" class="nav-link">🔍 คลัง Prompt (370+)</a>
-          <a href="tutorials.html" class="nav-link">📖 วิธีใช้</a>
-          <a href="showcase.html" class="nav-link">🌟 ส่งผลงาน</a>
+          <a href="index.html" class="nav-link" data-page="home">🏠 แผนการอบรม</a>
+          <a href="mockups.html" class="nav-link" data-page="mockups">📂 ศูนย์กิจกรรม & สไลด์</a>
+          <a href="prompts.html" class="nav-link" data-page="prompts">🔍 คลัง Prompt (370+)</a>
+          <a href="image-prompts.html" class="nav-link" data-page="image-prompts">🎨 สูตรสร้างภาพ</a>
+          <a href="tutorials.html" class="nav-link" data-page="tutorials">📖 วิธีใช้</a>
+          <a href="showcase.html" class="nav-link" data-page="showcase">🌟 ส่งผลงาน</a>
         </nav>
       </div>
     </div>
@@ -54,14 +56,17 @@
 
         <!-- Quick Access CTA -->
         <div class="flex flex-wrap items-center gap-3 pt-2">
-          <a href="assets/slides.pdf" target="_blank" class="btn-accent">
-            📄 สไลด์บรรยายทางการ (PDF)
+          <a href="mockups.html" class="btn-accent">
+            📦 ศูนย์กิจกรรม & ดาวน์โหลดไฟล์ PDF/CSV
           </a>
-          <a href="mockups.html" class="btn-mint">
-            🚀 เข้าสู่ศูนย์กิจกรรม & คู่มือ
+          <a href="slide-deck.html" target="_blank" class="btn-ghost">
+            📺 สไลด์นำเสนอจริง (Interactive)
           </a>
-          <a href="prompts.html" class="btn-ghost">
+          <a href="prompts.html" class="btn-mint">
             🔍 เปิดคลังคำสั่ง 370+ Prompt
+          </a>
+          <a href="image-prompts.html" class="btn-ghost !text-slate-700">
+            🎨 คลังสูตรภาพ Banana 2.0
           </a>
         </div>
       </div>
@@ -156,11 +161,11 @@
             </p>
           </div>
           <div class="flex flex-col sm:flex-row gap-2 shrink-0">
-            <a href="Outputs-from-ai/การเริ่มต้นใช้งาน Canva.html" target="_blank" class="btn-mint text-xs">
-              🖌️ คู่มือ Canva ฉบับเต็ม (49 สเต็ป) ↗
+            <a href="image-prompts.html" class="btn-accent text-xs">
+              🎨 สูตร & คำศัพท์สร้างภาพ ↗
             </a>
-            <a href="prompts.html#imagegen" class="btn-ghost text-xs">
-              🎨 สูตร Prompt ภาพ
+            <a href="Outputs-from-ai/การเริ่มต้นใช้งาน Canva.html" target="_blank" class="btn-mint text-xs">
+              🖌️ คู่มือ Canva ↗
             </a>
           </div>
         </div>
@@ -180,8 +185,8 @@
             </p>
           </div>
           <div class="flex flex-col sm:flex-row gap-2 shrink-0">
-            <a href="Outputs-from-ai/NotebookLM-ปราบความหลอนและสร้างAudioPodcast.html" target="_blank" class="btn-accent text-xs">
-              🎙️ คู่มือ NotebookLM Podcast ↗
+            <a href="Outputs-from-ai/notebooklm/index.html" target="_blank" class="btn-accent text-xs">
+              📚 ศูนย์รวม 6 โมดูล NotebookLM ↗
             </a>
             <a href="mockups.html" class="btn-ghost text-xs">
               📂 ชุดข้อมูลฝึกปฏิบัติ
@@ -223,5 +228,6 @@
     </div>
   </footer>
 
+  <script src="assets/js/app.js"></script>
 </body>
 </html>
