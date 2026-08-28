@@ -732,8 +732,68 @@ const StarterKitsModule = (() => {
   return { init };
 })();
 
+// ======= Visual Infographics Read-only Viewer & Modal =======
+window.switchDiagram = function(index) {
+  for (let i = 0; i < 3; i++) {
+    const panel = document.getElementById('diagram-panel-' + i);
+    const tab = document.getElementById('diagram-tab-' + i);
+    if (panel && tab) {
+      if (i === index) {
+        panel.classList.remove('hidden');
+        panel.classList.add('block');
+        tab.className = 'diagram-tab-btn px-3 py-1.5 rounded-lg text-xs font-display font-bold transition-all bg-white text-[#26394A] shadow-xs';
+      } else {
+        panel.classList.add('hidden');
+        panel.classList.remove('block');
+        tab.className = 'diagram-tab-btn px-3 py-1.5 rounded-lg text-xs font-display font-bold transition-all text-slate-600 hover:text-[#26394A]';
+      }
+    }
+  }
+};
+
+window.openDiagramModal = function(imgSrc, title) {
+  const modal = document.getElementById('diagramModal');
+  const modalImg = document.getElementById('diagramModalImg');
+  const modalTitle = document.getElementById('diagramModalTitle');
+  const modalDl = document.getElementById('diagramModalDownload');
+  if (modal && modalImg && modalTitle) {
+    modalImg.src = imgSrc;
+    modalTitle.textContent = title;
+    if (modalDl) modalDl.href = imgSrc;
+    modal.classList.remove('hidden');
+    setTimeout(() => {
+      modal.classList.remove('opacity-0');
+    }, 10);
+  }
+};
+
+window.closeDiagramModal = function() {
+  const modal = document.getElementById('diagramModal');
+  if (modal) {
+    modal.classList.add('opacity-0');
+    setTimeout(() => {
+      modal.classList.add('hidden');
+    }, 200);
+  }
+};
+
 document.addEventListener("DOMContentLoaded", () => {
   initActiveNav();
   PromptsLibrary.init();
   StarterKitsModule.init();
+
+  const modal = document.getElementById('diagramModal');
+  if (modal) {
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        closeDiagramModal();
+      }
+    });
+  }
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeDiagramModal();
+    }
+  });
 });
+
