@@ -30,7 +30,7 @@
 }
 
 html {
-  font-size: 19px; /* Big & Clear base size for teacher readability */
+  font-size: 21.85px; /* 19px × 1.15: larger type for projector/readability */
   scroll-behavior: smooth;
 }
 
@@ -110,6 +110,45 @@ body::before {
   background: #FFFFFF;
   box-shadow: 0 2px 8px rgba(30, 41, 59, 0.08);
   border: 1px solid var(--line);
+}
+
+/* The larger type scale makes the nav line box taller; let the masthead grow. */
+.masthead .max-w-6xl > .flex {
+  height: auto !important;
+  min-height: 4rem;
+  padding-block: 0.35rem;
+}
+
+/* Small screens: keep the full navigation reachable without page overflow. */
+@media (max-width: 1100px) {
+  .brand-school {
+    display: none !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .masthead .max-w-6xl > .flex {
+    min-height: 4rem;
+    flex-wrap: wrap;
+    row-gap: 0.35rem;
+  }
+
+  .masthead nav {
+    order: 2;
+    flex: 1 1 100%;
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding-bottom: 0.2rem;
+    scrollbar-width: thin;
+  }
+
+  .masthead nav .nav-link {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
 }
 
 /* Surfaces and Cards */
@@ -259,4 +298,36 @@ body::before {
   background: rgba(122, 111, 177, 0.15);
   color: var(--lavender);
   border: 1px solid rgba(122, 111, 177, 0.3);
+}
+
+/* Padlet & Embed Layout */
+.padlet-embed {
+  width: 100%;
+  height: 750px;
+  min-height: 70vh;
+  border: 0;
+  display: block;
+}
+
+.gif-placeholder {
+  background: var(--paper-2);
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--ink-light);
+}
+
+.link-accent {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.2s;
+}
+
+.link-accent:hover {
+  color: var(--accent-hover);
 }

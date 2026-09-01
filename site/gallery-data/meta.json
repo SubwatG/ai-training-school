@@ -1,0 +1,102 @@
+{
+  "categories": [
+    {
+      "slug": "profile-avatar",
+      "title": "Profile / Avatar",
+      "count": 2038
+    },
+    {
+      "slug": "social-media-post",
+      "title": "Social Media Post",
+      "count": 9620
+    },
+    {
+      "slug": "infographic-edu-visual",
+      "title": "Infographic / Edu Visual",
+      "count": 600
+    },
+    {
+      "slug": "youtube-thumbnail",
+      "title": "YouTube Thumbnail",
+      "count": 219
+    },
+    {
+      "slug": "comic-storyboard",
+      "title": "Comic / Storyboard",
+      "count": 666
+    },
+    {
+      "slug": "product-marketing",
+      "title": "Product Marketing",
+      "count": 5616
+    },
+    {
+      "slug": "ecommerce-main-image",
+      "title": "E-commerce Main Image",
+      "count": 569
+    },
+    {
+      "slug": "game-asset",
+      "title": "Game Asset",
+      "count": 708
+    },
+    {
+      "slug": "poster-flyer",
+      "title": "Poster / Flyer",
+      "count": 974
+    },
+    {
+      "slug": "app-web-design",
+      "title": "App / Web Design",
+      "count": 235
+    },
+    {
+      "slug": "others",
+      "title": "Uncategorized",
+      "count": 1095
+    }
+  ],
+  "styles": [
+    {
+      "key": "bento",
+      "label": "🍱 Bento Grid"
+    },
+    {
+      "key": "education",
+      "label": "🎓 Edu & Infographic"
+    },
+    {
+      "key": "patent",
+      "label": "📜 Patent & Blueprint"
+    },
+    {
+      "key": "handdrawn",
+      "label": "✏️ Hand-Drawn & Chalk"
+    },
+    {
+      "key": "watercolor",
+      "label": "🎨 Watercolor & Vintage"
+    },
+    {
+      "key": "3d-glass",
+      "label": "💎 3D Glass & Clay"
+    },
+    {
+      "key": "flat-vector",
+      "label": "📐 Minimal & Vector"
+    },
+    {
+      "key": "cyberpunk",
+      "label": "⚡ Sci-Fi & Cyberpunk"
+    },
+    {
+      "key": "storyboard",
+      "label": "📖 Storyboard & Manga"
+    },
+    {
+      "key": "macro-photo",
+      "label": "📸 Studio & Macro Photo"
+    }
+  ],
+  "total": 22340
+}

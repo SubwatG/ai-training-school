@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>แกลเลอรีภาพตัวอย่าง AI & Prompt สื่อการสอน · AI–ครู 2569</title>
+
+  <!-- Google Fonts: Mali (Display/Title), Noto Sans Thai Looped / IBM Plex Sans Thai (Body), JetBrains Mono (Code) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai+Looped:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Mali:ital,wght@0,500;0,600;0,700;1,500&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="assets/css/styles.css?v=20260827_font15b" />
+
+  <style>
+    :root {
+      --bg: #FFFDF7;
+      --ink: #1E293B;
+      --card-yellow: #FEF08A;
+      --card-green: #BBF7D0;
+      --card-pink: #FECDD3;
+      --card-blue: #BAE6FD;
+      --card-purple: #E9D5FF;
+      --card-orange: #FFEDD5;
+      --card-cyan: #A5F3FC;
+    }
+
+    body {
+      background-color: var(--bg);
+      background-image: radial-gradient(#E2E8F0 1.5px, transparent 1.5px);
+      background-size: 24px 24px;
+      color: var(--ink);
+      font-family: 'IBM Plex Sans Thai Looped', sans-serif;
+      min-height: 100vh;
+    }
+
+    .font-mali { font-family: 'Mali', cursive, sans-serif; }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+
+    /* Cute Neo-Brutalist Card */
+    .cute-card {
+      border: 2.5px solid var(--ink);
+      border-radius: 20px;
+      box-shadow: 4px 4px 0px var(--ink);
+      background: #FFFFFF;
+      transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .cute-card:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0px var(--ink);
+    }
+
+    /* Cute Buttons */
+    .cute-btn {
+      border: 2px solid var(--ink);
+      border-radius: 14px;
+      box-shadow: 3px 3px 0px var(--ink);
+      font-family: 'Mali', cursive;
+      font-weight: 700;
+      transition: all 0.12s ease-in-out;
+      cursor: pointer;
+    }
+    .cute-btn:hover {
+      transform: translate(-1.5px, -1.5px);
+      box-shadow: 4.5px 4.5px 0px var(--ink);
+    }
+    .cute-btn:active {
+      transform: translate(2px, 2px);
+      box-shadow: 1px 1px 0px var(--ink);
+    }
+
+    /* Sticker Chips */
+    .sticker-chip {
+      border: 2px solid var(--ink);
+      border-radius: 12px;
+      box-shadow: 2px 2px 0px var(--ink);
+      font-family: 'Mali', cursive;
+      font-weight: 600;
+      transition: all 0.15s ease;
+      cursor: pointer;
+    }
+    .sticker-chip:hover {
+      transform: translateY(-1px);
+    }
+    .sticker-chip.active {
+      background-color: var(--ink) !important;
+      color: #FFFFFF !important;
+      transform: translate(1px, 1px);
+      box-shadow: 1px 1px 0px var(--ink);
+    }
+
+    /* Sidebar Drawer Transitions */
+    #sidebar {
+      transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .sidebar-collapsed {
+      transform: translateX(-100%);
+      width: 0 !important;
+      padding: 0 !important;
+      border-right: none !important;
+      position: absolute;
+    }
+
+    /* Custom scrollbars */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(0,0,0,0.03);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #CBD5E1;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body class="antialiased flex flex-col selection:bg-yellow-200" data-page="gallery">
+
+  <!-- ======= Masthead / Sticky Nav ======= -->
+  <header class="masthead sticky top-0 z-50 bg-[#FFFDF7]/95 border-b-[2.5px] border-slate-900 shadow-[0_3px_0px_#1E293B] backdrop-blur-md">
+    <div class="max-w-[1700px] mx-auto px-4 sm:px-6">
+      <div class="flex items-center justify-between h-16 gap-4">
+        
+        <!-- Left: Brand Logo & Title -->
+        <a href="index.html" class="flex items-center gap-2.5 shrink-0">
+          <span class="bg-[#26394A] text-white font-bold text-sm px-3 py-1.5 rounded-xl font-mali tracking-wider border-2 border-slate-900 shadow-[2px_2px_0px_#1E293B]">AI–ครู 2569</span>
+          <span class="hidden xl:inline font-mali text-sm font-bold text-[#26394A]">รร.เทศบาล ๔ (เชาวนปรีชาอุทิศ)</span>
+        </a>
+
+        <!-- Right: Nav Links (Cute Brutalist Buttons) -->
+        <nav class="flex items-center gap-1.5 sm:gap-2.5 shrink-0" aria-label="หลัก">
+          <a href="index.html" class="cute-btn bg-white hover:bg-slate-50 px-3 py-1.5 text-xs text-slate-800 flex items-center gap-1" data-page="home">
+            <span>🏠</span> แผนการอบรม
+          </a>
+          <a href="prompts.html" class="cute-btn bg-white hover:bg-slate-50 px-3 py-1.5 text-xs text-slate-800 flex items-center gap-1" data-page="prompts">
+            <span>🔍</span> คลัง Prompt
+          </a>
+          <a href="image-prompts.html" class="cute-btn bg-white hover:bg-slate-50 px-3 py-1.5 text-xs text-slate-800 flex items-center gap-1" data-page="image-prompts">
+            <span>🎨</span> สูตรสร้างภาพ
+          </a>
+          <a href="gallery.html" class="cute-btn bg-[#FEF08A] hover:bg-yellow-300 px-3 py-1.5 text-xs text-slate-900 flex items-center gap-1 font-bold shadow-[2.5px_2.5px_0px_#1E293B]" data-page="gallery">
+            <span>🖼️</span> แกลเลอรีภาพจริง
+          </a>
+          <a href="tutorials.html" class="cute-btn bg-white hover:bg-slate-50 px-3 py-1.5 text-xs text-slate-800 flex items-center gap-1" data-page="tutorials">
+            <span>📖</span> วิธีใช้
+          </a>
+          <a href="showcase.html" class="cute-btn bg-white hover:bg-slate-50 px-3 py-1.5 text-xs text-slate-800 flex items-center gap-1" data-page="showcase">
+            <span>🌟</span> ส่งผลงาน
+          </a>
+        </nav>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Search Bar (Visible on small screens) -->
+  <div class="p-3 bg-[#FFFDF7] border-b-2 border-slate-900 md:hidden">
+    <input 
+      type="text" 
+      id="globalSearchMobile" 
+      placeholder="🔍 ค้นหาไอเดียภาพ (เช่น กระดานดำ, bento, สีน้ำ)..." 
+      class="w-full pl-3 pr-3 py-1.5 text-sm bg-white border-2 border-slate-900 rounded-xl font-medium focus:outline-none shadow-[2px_2px_0px_#1E293B]"
+    >
+  </div>
+
+  <!-- WORKSPACE WRAPPER (SIDEBAR + MAIN CONTENT) -->
+  <div class="flex-1 flex max-w-[1700px] w-full mx-auto relative">
+
+    <!-- COLLAPSIBLE SIDEBAR DRAWER -->
+    <aside id="sidebar" class="w-72 sm:w-80 bg-[#FFFDF7] border-r-[2.5px] border-slate-900 flex flex-col p-4 shrink-0 max-h-[calc(100vh-68px)] sticky top-[68px] overflow-y-auto z-20 space-y-6">
+      
+      <!-- Close / Hide button -->
+      <div class="flex items-center justify-between pb-2 border-b-2 border-slate-200">
+        <span class="font-mali font-bold text-sm text-slate-800 flex items-center gap-1.5">
+          <span>🎨</span> ตัวกรองภาพ & สไตล์
+        </span>
+        <button onclick="toggleSidebar()" class="text-xs text-slate-500 hover:text-slate-900 font-mali font-bold px-2 py-1 bg-slate-100 hover:bg-slate-200 rounded-lg border border-slate-300">
+          ◀ ซ่อนแถบนี้
+        </button>
+      </div>
+
+      <!-- Filter Section 1: Curated Styles -->
+      <div class="space-y-2.5">
+        <div class="flex items-center justify-between">
+          <label class="font-mali font-bold text-xs uppercase tracking-wider text-slate-600">🎯 สไตล์ยอดนิยมเพื่อการศึกษา</label>
+          <button onclick="selectStyle('all')" class="text-[11px] font-mali text-blue-600 hover:underline">รีเซ็ต</button>
+        </div>
+        <div class="flex flex-wrap gap-1.5" id="stylePills">
+          <!-- Dynamic Style Chips -->
+        </div>
+      </div>
+
+      <!-- Filter Section 2: Main Categories -->
+      <div class="space-y-2.5">
+        <div class="flex items-center justify-between">
+          <label class="font-mali font-bold text-xs uppercase tracking-wider text-slate-600">📁 หมวดหมู่การใช้งาน</label>
+        </div>
+        <div class="flex flex-col gap-1.5" id="categoryPills">
+          <!-- Dynamic Category List -->
+        </div>
+      </div>
+
+      <!-- Attribution & Source Box (ขอขอบคุณต้นทาง YouMind & Nano Banana) -->
+      <div class="p-3 bg-[#E9D5FF]/60 border-2 border-slate-900 rounded-2xl shadow-[3px_3px_0px_#1E293B] space-y-1 text-xs">
+        <div class="font-mali font-bold flex items-center gap-1.5 text-slate-900">
+          <span>❤️</span> แหล่งอ้างอิงและขอบคุณ:
+        </div>
+        <p class="text-slate-700 text-[11px] leading-relaxed">
+          ชุดข้อมูลตัวอย่างภาพและ Prompt คัดสรรจากโครงการโอเพนซอร์ส 
+          <a href="https://github.com/YouMind-OpenLab/nano-banana-pro-prompts-recommend-skill" target="_blank" class="text-indigo-700 font-bold underline">YouMind-OpenLab</a> 
+          (Nano Banana Pro Prompt Library) เพื่อประโยชน์ทางการศึกษาครับ ✨
+        </p>
+      </div>
+
+    </aside>
+
+    <!-- MAIN GALLERY FEED -->
+    <main class="flex-1 p-4 sm:p-6 overflow-y-auto">
+      
+      <!-- HERO BANNER / HELPER -->
+      <div class="mb-6 cute-card bg-gradient-to-r from-amber-50 via-yellow-50 to-orange-50 p-5 sm:p-6 border-2 border-slate-900">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FEF08A] border-2 border-slate-900 text-slate-900 text-xs font-mali font-bold mb-2 shadow-[2px_2px_0px_#1E293B]">
+              <span>🍌</span> ส่องภาพตัวอย่างจริงก่อนเจนใน Gemini / ChatGPT
+            </div>
+            <h2 class="font-mali font-bold text-xl sm:text-2xl text-slate-900 leading-tight">
+              คลังภาพตัวอย่างสื่อการสอน 22,000+ ภาพ
+            </h2>
+            <p class="text-xs sm:text-sm text-slate-600 mt-1 font-medium">
+              ชอบภาพสไตล์ไหน กดปุ่ม <strong>Copy Prompt</strong> แล้วนำไปแทนที่เนื้อหาวิชาใน Gemini หรือ ChatGPT Image ได้ทันที!
+            </p>
+          </div>
+          
+          <div class="shrink-0 flex items-center gap-2">
+            <button id="toggleSidebarBtn" class="cute-btn bg-[#FEF08A] hover:bg-yellow-300 px-4 py-2 text-xs text-slate-900 flex items-center gap-1.5 shadow-[2px_2px_0px_#1E293B]">
+              <span id="toggleIcon">📂</span>
+              <span>ตัวกรองหมวดหมู่ & สไตล์</span>
+            </button>
+            <a href="image-prompts.html" class="cute-btn bg-white hover:bg-slate-50 px-4 py-2 text-xs text-slate-800 flex items-center gap-1.5">
+              <span>🎨</span> ดูกฎเหล็ก & คลังคำศัพท์
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Current State Banner & Integrated Search Box -->
+      <div class="mb-5 flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white border-2 border-slate-900 rounded-2xl p-4 shadow-[3px_3px_0px_#1E293B]">
+        
+        <!-- Left: Status Badges -->
+        <div class="flex flex-wrap items-center gap-2 text-xs sm:text-sm font-medium text-slate-800">
+          <span class="text-base">📌</span>
+          <span>หมวดปัจจุบัน: <strong id="filterSummaryCategory" class="font-mali font-bold text-purple-700">Infographic / Edu Visual</strong></span>
+          <span id="filterSummaryStyle" class="text-slate-500 font-mali"></span>
+          <span id="filteredMatchCount" class="sticker-chip bg-[#BAE6FD] text-slate-900 text-[11px] px-2.5 py-0.5 ml-1">600 รายการ</span>
+        </div>
+
+        <!-- Right: Search Bar + Reset Button -->
+        <div class="flex items-center gap-2 flex-1 max-w-md">
+          <div class="relative w-full">
+            <input 
+              type="text" 
+              id="globalSearch" 
+              placeholder="🔍 ค้นหาไอเดียภาพ (เช่น กระดานดำ, สีน้ำ, ไดอะแกรม)..." 
+              class="w-full pl-3.5 pr-10 py-1.5 text-xs sm:text-sm bg-slate-50 border-2 border-slate-900 rounded-xl font-medium focus:outline-none focus:bg-yellow-50/50 shadow-[2px_2px_0px_#1E293B] transition-all"
+            >
+            <button id="clearSearchBtn" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs font-mali font-bold text-slate-400 hover:text-slate-700 hidden">
+              ✕
+            </button>
+          </div>
+
+          <button onclick="resetAllFilters()" class="cute-btn bg-white hover:bg-slate-50 px-3 py-1.5 text-xs text-slate-700 shrink-0 flex items-center gap-1" title="ล้างตัวกรองและคำค้นหาทั้งหมด">
+            🔄 ล้าง
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Prompts Grid -->
+      <div id="galleryGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+        <!-- Dynamic Cards -->
+      </div>
+
+      <!-- Empty State -->
+      <div id="emptyState" class="hidden text-center py-16 cute-card bg-white p-8 max-w-md mx-auto my-8">
+        <div class="text-5xl mb-3">🐱🍃</div>
+        <h3 class="font-mali font-bold text-lg text-slate-900 mb-1">ไม่พบ Prompt ที่ตรงกับคำค้นหา</h3>
+        <p class="text-xs text-slate-500 mb-4 font-medium">ลองค้นหาด้วยคำง่ายๆ เช่น "กระดานดำ", "สีน้ำ", "สิทธิบัตร", "การ์ตูน" หรือเลือกสไตล์ในแถบซ้ายมือ</p>
+        <button onclick="resetAllFilters()" class="cute-btn bg-[#FEF08A] hover:bg-yellow-300 px-4 py-2 text-xs text-slate-900">
+          ดูรูปภาพทั้งหมด
+        </button>
+      </div>
+
+      <!-- Load More Section -->
+      <div id="loadMoreSection" class="mt-8 text-center hidden">
+        <button id="loadMoreBtn" class="cute-btn bg-[#BAE6FD] hover:bg-sky-300 text-slate-900 px-8 py-2.5 text-sm">
+          โหลดภาพเพิ่มอีก 24 รูป ↓
+        </button>
+      </div>
+
+    </main>
+
+  </div>
+
+  <!-- LIGHTBOX / PROMPT DETAIL MODAL -->
+  <div id="inspectorModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-3 sm:p-6">
+    <div class="relative cute-card bg-white max-w-5xl w-full max-h-[92vh] flex flex-col md:flex-row overflow-hidden shadow-[8px_8px_0px_#1E293B]">
+      
+      <!-- Close Button -->
+      <button onclick="closeModal()" class="absolute top-3 right-3 z-10 w-8 h-8 rounded-full bg-white border-2 border-slate-900 text-slate-900 flex items-center justify-center font-bold text-sm shadow-[2px_2px_0px_#1E293B] hover:bg-rose-100">
+        ✕
+      </button>
+
+      <!-- Left: Large Image Preview -->
+      <div class="md:w-1/2 bg-[#FFFDF7] border-b-2 md:border-b-0 md:border-r-2 border-slate-900 flex items-center justify-center p-3">
+        <img id="modalImg" src="" alt="Prompt Preview" class="max-w-full max-h-[70vh] object-contain rounded-xl border border-slate-300 shadow-sm">
+      </div>
+
+      <!-- Right: Prompt Inspector & Thai Metadata -->
+      <div class="md:w-1/2 p-5 sm:p-6 flex flex-col justify-between overflow-y-auto space-y-4">
+        <div class="space-y-3">
+          
+          <!-- Category & Aspect Ratio Badges -->
+          <div class="flex flex-wrap items-center gap-1.5">
+            <span id="modalCategory" class="sticker-chip bg-[#E9D5FF] text-slate-900 text-[10px] px-2 py-0.5">Category</span>
+            <span id="modalRatio" class="sticker-chip bg-[#BAE6FD] text-slate-900 text-[10px] px-2 py-0.5">สัดส่วน</span>
+          </div>
+
+          <!-- Thai Title -->
+          <h2 id="modalTitle" class="font-mali font-bold text-lg text-slate-900 leading-snug">Title</h2>
+          
+          <!-- Thai Use Cases Box -->
+          <div class="p-3 bg-[#FEF08A]/40 border-2 border-slate-900 rounded-xl space-y-1 text-xs">
+            <div class="font-mali font-bold text-slate-800 flex items-center gap-1">
+              <span>🎯</span> เหมาะสำหรับใช้ทำ:
+            </div>
+            <p id="modalBestFor" class="text-slate-700 font-medium"></p>
+          </div>
+
+          <!-- Thai Remix Tips Box -->
+          <div class="p-3 bg-[#BBF7D0]/40 border-2 border-slate-900 rounded-xl space-y-1 text-xs">
+            <div class="font-mali font-bold text-slate-800 flex items-center gap-1">
+              <span>✏️</span> คำแนะนำในการปรับแต่ง (Remix):
+            </div>
+            <p id="modalRemixTips" class="text-slate-700 font-medium"></p>
+          </div>
+
+          <!-- Original English Prompt Section -->
+          <div class="space-y-1.5 pt-1">
+            <div class="flex items-center justify-between text-xs font-mali font-bold text-slate-700">
+              <span>📋 ตัวอย่างข้อความ Prompt ภาษาอังกฤษ (ใช้สั่ง AI):</span>
+            </div>
+            <div id="modalPrompt" class="p-3 bg-slate-50 border-2 border-slate-900 rounded-xl font-mono text-xs text-slate-800 max-h-40 overflow-y-auto whitespace-pre-wrap leading-relaxed select-all"></div>
+          </div>
+        </div>
+
+        <div class="pt-3 border-t-2 border-slate-200 flex gap-2">
+          <button id="modalCopyBtn" class="flex-1 py-2.5 cute-btn bg-[#FEF08A] hover:bg-yellow-300 text-slate-900 text-xs flex items-center justify-center gap-2">
+            📋 Copy Prompt ตัวเต็ม
+          </button>
+          <button onclick="closeModal()" class="px-4 py-2.5 cute-btn bg-white hover:bg-slate-100 text-slate-700 text-xs">
+            ปิด
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 bg-[#BBF7D0] text-slate-900 border-2 border-slate-900 px-4 py-2.5 rounded-2xl font-mali font-bold text-xs shadow-[4px_4px_0px_#1E293B] flex items-center gap-2 opacity-0 translate-y-3 pointer-events-none transition-all duration-300">
+    <span>✨</span> คัดลอก Prompt สำเร็จแล้ว!
+  </div>
+
+  <!-- ======= Footer ======= -->
+  <footer class="border-t py-8 text-center text-xs text-slate-500 font-mali bg-white/80 mt-12">
+    <div class="max-w-6xl mx-auto px-4 space-y-2">
+      <p>© 2569 · การประยุกต์ใช้ AI เพื่อการจัดการเรียนการสอน · โรงเรียนเทศบาล ๔ (เชาวนปรีชาอุทิศ)</p>
+      <p class="text-slate-500 font-medium">วิทยากร: <b>อ.ดร.กิตติพงศ์ ทรัพย์วัฒนาชัย</b> (Kittipong Subwattanachai) · อีเมล: <a href="mailto:kittipong.sub@ku.th" class="text-[#5FA99E] hover:underline font-semibold">kittipong.sub@ku.th</a> และ ผศ.ดร.ธนิษฐา โกวรรณ์</p>
+      <p class="text-[11px] text-slate-400">
+        🙏 ขอบคุณข้อมูลคลัง Prompt จาก <a href="https://github.com/YouMind-OpenLab/nano-banana-pro-prompts-recommend-skill" target="_blank" class="hover:underline font-bold text-slate-500">YouMind-OpenLab (Nano Banana Pro)</a> & <a href="https://youmind.com" target="_blank" class="hover:underline font-bold text-slate-500">YouMind.com</a>
+      </p>
+    </div>
+  </footer>
+
+  <!-- SCRIPT LOGIC -->
+  <script>
+    let meta = { categories: [], styles: [], total: 0 };
+    let currentCategory = 'infographic-edu-visual';
+    let currentStyle = 'all';
+    let currentSearch = '';
+    let categoryCache = {};
+    let activePrompts = [];
+    let displayedCount = 0;
+    let sidebarOpen = true;
+    const BATCH_SIZE = 24;
+
+    const pastelBgList = ['#FEF08A', '#BBF7D0', '#FECDD3', '#BAE6FD', '#E9D5FF', '#FFEDD5', '#A5F3FC'];
+
+    const el = {
+      sidebar: document.getElementById('sidebar'),
+      toggleSidebarBtn: document.getElementById('toggleSidebarBtn'),
+      toggleIcon: document.getElementById('toggleIcon'),
+      globalSearch: document.getElementById('globalSearch'),
+      globalSearchMobile: document.getElementById('globalSearchMobile'),
+      clearSearchBtn: document.getElementById('clearSearchBtn'),
+      stylePills: document.getElementById('stylePills'),
+      categoryPills: document.getElementById('categoryPills'),
+      galleryGrid: document.getElementById('galleryGrid'),
+      emptyState: document.getElementById('emptyState'),
+      loadMoreSection: document.getElementById('loadMoreSection'),
+      loadMoreBtn: document.getElementById('loadMoreBtn'),
+      filterSummaryCategory: document.getElementById('filterSummaryCategory'),
+      filterSummaryStyle: document.getElementById('filterSummaryStyle'),
+      filteredMatchCount: document.getElementById('filteredMatchCount'),
+      modal: document.getElementById('inspectorModal'),
+      modalImg: document.getElementById('modalImg'),
+      modalCategory: document.getElementById('modalCategory'),
+      modalRatio: document.getElementById('modalRatio'),
+      modalTitle: document.getElementById('modalTitle'),
+      modalBestFor: document.getElementById('modalBestFor'),
+      modalRemixTips: document.getElementById('modalRemixTips'),
+      modalPrompt: document.getElementById('modalPrompt'),
+      modalCopyBtn: document.getElementById('modalCopyBtn'),
+      toast: document.getElementById('toast')
+    };
+
+    async function init() {
+      try {
+        const res = await fetch('gallery-data/meta.json');
+        meta = await res.json();
+
+        renderFilters();
+        await loadAndFilter();
+      } catch (err) {
+        console.error("Initialization error:", err);
+      }
+    }
+
+    function toggleSidebar() {
+      sidebarOpen = !sidebarOpen;
+      if (sidebarOpen) {
+        el.sidebar.classList.remove('sidebar-collapsed');
+        el.toggleIcon.textContent = '📂';
+      } else {
+        el.sidebar.classList.add('sidebar-collapsed');
+        el.toggleIcon.textContent = '📁';
+      }
+    }
+
+    el.toggleSidebarBtn.addEventListener('click', toggleSidebar);
+
+    function renderFilters() {
+      // 1. Style chips
+      let styleHtml = `<button class="sticker-chip text-[11px] px-2.5 py-1 bg-white text-slate-700 ${currentStyle === 'all' ? 'active' : ''}" onclick="selectStyle('all')">ทั้งหมด</button>`;
+      meta.styles.forEach((s, idx) => {
+        const bg = pastelBgList[idx % pastelBgList.length];
+        styleHtml += `<button class="sticker-chip text-[11px] px-2.5 py-1 text-slate-800 ${currentStyle === s.key ? 'active' : ''}" style="background-color: ${bg};" onclick="selectStyle('${s.key}')">${s.label}</button>`;
+      });
+      el.stylePills.innerHTML = styleHtml;
+
+      // 2. Category rows
+      let catHtml = `
+        <button class="cute-btn w-full text-left px-3 py-2 text-xs flex items-center justify-between ${currentCategory === 'all' ? 'bg-slate-900 text-white' : 'bg-white text-slate-800'}" onclick="selectCategory('all')">
+          <span>🌟 ทุกหมวดหมู่</span>
+          <span class="text-[10px] opacity-75 font-mono">(${meta.total.toLocaleString()})</span>
+        </button>
+      `;
+      meta.categories.forEach((c, idx) => {
+        const isActive = currentCategory === c.slug;
+        catHtml += `
+          <button class="cute-btn w-full text-left px-3 py-2 text-xs flex items-center justify-between ${isActive ? 'bg-slate-900 text-white' : 'bg-white hover:bg-slate-50 text-slate-800'}" onclick="selectCategory('${c.slug}')">
+            <span class="truncate pr-2">${c.title}</span>
+            <span class="text-[10px] font-mono shrink-0 px-1.5 py-0.5 rounded-full ${isActive ? 'bg-slate-800 text-white' : 'bg-slate-100 text-slate-600'}">${c.count}</span>
+          </button>
+        `;
+      });
+      el.categoryPills.innerHTML = catHtml;
+    }
+
+    async function getCategoryData(slug) {
+      if (slug === 'all') {
+        let merged = [];
+        for (const c of meta.categories) {
+          if (!categoryCache[c.slug]) {
+            const res = await fetch(`gallery-data/data/${c.slug}.json`);
+            categoryCache[c.slug] = await res.json();
+          }
+          merged = merged.concat(categoryCache[c.slug]);
+        }
+        return merged;
+      }
+
+      if (!categoryCache[slug]) {
+        const res = await fetch(`gallery-data/data/${slug}.json`);
+        categoryCache[slug] = await res.json();
+      }
+      return categoryCache[slug];
+    }
+
+    async function loadAndFilter() {
+      const data = await getCategoryData(currentCategory);
+      
+      const q = currentSearch.toLowerCase().trim();
+      let filtered = data;
+
+      // Apply Style filter
+      if (currentStyle !== 'all') {
+        filtered = filtered.filter(item => item.styles && item.styles.includes(currentStyle));
+      }
+
+      // Apply Search filter (Bilingual: Thai + English)
+      if (q) {
+        filtered = filtered.filter(item => 
+          (item.thaiTitle && item.thaiTitle.toLowerCase().includes(q)) ||
+          (item.bestFor && item.bestFor.toLowerCase().includes(q)) ||
+          (item.thaiStyle && item.thaiStyle.toLowerCase().includes(q)) ||
+          (item.title && item.title.toLowerCase().includes(q)) ||
+          (item.desc && item.desc.toLowerCase().includes(q)) ||
+          (item.prompt && item.prompt.toLowerCase().includes(q))
+        );
+      }
+
+      activePrompts = filtered;
+      displayedCount = 0;
+      el.galleryGrid.innerHTML = '';
+
+      // Update Summary Header
+      const activeCatObj = meta.categories.find(c => c.slug === currentCategory);
+      const catName = currentCategory === 'all' ? 'ทุกหมวดหมู่' : (activeCatObj ? activeCatObj.title : currentCategory);
+      const activeStyleObj = meta.styles.find(s => s.key === currentStyle);
+      const styleName = currentStyle === 'all' ? '' : ` • สไตล์: ${activeStyleObj.label}`;
+      
+      el.filterSummaryCategory.textContent = catName;
+      el.filterSummaryStyle.textContent = styleName;
+      el.filteredMatchCount.textContent = `${activePrompts.length.toLocaleString()} รายการ`;
+
+      if (activePrompts.length === 0) {
+        el.emptyState.classList.remove('hidden');
+        el.loadMoreSection.classList.add('hidden');
+      } else {
+        el.emptyState.classList.add('hidden');
+        renderBatch();
+      }
+    }
+
+    function renderBatch() {
+      const batch = activePrompts.slice(displayedCount, displayedCount + BATCH_SIZE);
+      const frag = document.createDocumentFragment();
+
+      batch.forEach((item, idx) => {
+        const card = document.createElement('div');
+        card.className = 'cute-card overflow-hidden flex flex-col justify-between group';
+        
+        const imgSrc = item.images && item.images.length > 0 ? item.images[0] : '';
+        const tagBg = pastelBgList[(idx + item.id) % pastelBgList.length];
+
+        card.innerHTML = `
+          <div>
+            <!-- Image Area -->
+            <div class="relative w-full aspect-[4/3] bg-slate-100 border-b-2 border-slate-900 overflow-hidden cursor-pointer" onclick="openModal(${item.id})">
+              <img src="${imgSrc}" alt="${item.title}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.src='https://via.placeholder.com/400x300?text=Sample+Preview'">
+              <span class="absolute top-2.5 left-2.5 sticker-chip text-[10px] px-2 py-0.5" style="background-color: ${tagBg};">
+                ${item.thaiStyle || item.catTitle || item.category}
+              </span>
+            </div>
+
+            <!-- Content Area -->
+            <div class="p-3.5 space-y-2">
+              <!-- Thai Title -->
+              <h3 class="font-mali font-bold text-sm text-slate-900 line-clamp-1 group-hover:text-amber-600 transition-colors">${item.thaiTitle || item.title}</h3>
+              
+              <!-- Best for badge / Thai usecase -->
+              <div class="text-[11px] text-slate-600 bg-amber-50/70 border border-amber-200 rounded-lg p-1.5 font-medium line-clamp-2 leading-relaxed">
+                🎯 <strong>เหมาะกับ:</strong> ${item.bestFor}
+              </div>
+
+              <!-- Aspect ratio note -->
+              <div class="flex items-center justify-between text-[10px] text-slate-500 font-medium px-1">
+                <span>📐 ${item.aspectRatio}</span>
+                <span class="text-blue-600 font-mali">คลิกดูภาพขยาย →</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="p-3.5 pt-0 flex gap-2">
+            <button onclick="copyPromptItem(${item.id}, this)" class="flex-1 py-1.5 cute-btn bg-[#FEF08A] hover:bg-yellow-300 text-slate-900 text-xs flex items-center justify-center gap-1">
+              <span>📋</span> Copy Prompt
+            </button>
+            <button onclick="openModal(${item.id})" class="px-3 py-1.5 cute-btn bg-white hover:bg-slate-100 text-slate-700 text-xs">
+              🔍 ดู
+            </button>
+          </div>
+        `;
+        frag.appendChild(card);
+      });
+
+      el.galleryGrid.appendChild(frag);
+      displayedCount += batch.length;
+
+      if (displayedCount < activePrompts.length) {
+        el.loadMoreSection.classList.remove('hidden');
+      } else {
+        el.loadMoreSection.classList.add('hidden');
+      }
+    }
+
+    function selectCategory(slug) {
+      currentCategory = slug;
+      renderFilters();
+      loadAndFilter();
+    }
+
+    function selectStyle(key) {
+      currentStyle = key;
+      renderFilters();
+      loadAndFilter();
+    }
+
+    function resetAllFilters() {
+      currentCategory = 'all';
+      currentStyle = 'all';
+      currentSearch = '';
+      if (el.globalSearch) el.globalSearch.value = '';
+      if (el.globalSearchMobile) el.globalSearchMobile.value = '';
+      if (el.clearSearchBtn) el.clearSearchBtn.classList.add('hidden');
+      renderFilters();
+      loadAndFilter();
+    }
+
+    function openModal(id) {
+      const item = activePrompts.find(p => p.id === id);
+      if (!item) return;
+
+      el.modalImg.src = item.images[0] || '';
+      el.modalTitle.textContent = item.thaiTitle || item.title;
+      el.modalCategory.textContent = item.thaiStyle || item.catTitle || item.category;
+      el.modalRatio.textContent = item.aspectRatio || 'สัดส่วนยืดหยุ่น';
+      el.modalBestFor.textContent = item.bestFor;
+      el.modalRemixTips.textContent = item.remixTips;
+      el.modalPrompt.textContent = item.prompt;
+
+      el.modalCopyBtn.onclick = () => {
+        navigator.clipboard.writeText(item.prompt);
+        triggerToast();
+      };
+
+      el.modal.classList.remove('hidden');
+      el.modal.classList.add('flex');
+    }
+
+    function closeModal() {
+      el.modal.classList.add('hidden');
+      el.modal.classList.remove('flex');
+    }
+
+    function copyPromptItem(id, btn) {
+      const item = activePrompts.find(p => p.id === id);
+      if (!item) return;
+      
+      navigator.clipboard.writeText(item.prompt);
+      triggerToast();
+
+      if (btn) {
+        const orig = btn.innerHTML;
+        btn.innerHTML = '✓ Copied!';
+        btn.classList.add('bg-[#BBF7D0]');
+        setTimeout(() => {
+          btn.innerHTML = orig;
+          btn.classList.remove('bg-[#BBF7D0]');
+        }, 1200);
+      }
+    }
+
+    function triggerToast() {
+      el.toast.classList.remove('opacity-0', 'translate-y-3', 'pointer-events-none');
+      el.toast.classList.add('opacity-100', 'translate-y-0');
+      setTimeout(() => {
+        el.toast.classList.add('opacity-0', 'translate-y-3', 'pointer-events-none');
+        el.toast.classList.remove('opacity-100', 'translate-y-0');
+      }, 2000);
+    }
+
+    // Event Bindings
+    if (el.globalSearch) {
+      el.globalSearch.addEventListener('input', (e) => {
+        currentSearch = e.target.value;
+        if (currentSearch) {
+          el.clearSearchBtn.classList.remove('hidden');
+        } else {
+          el.clearSearchBtn.classList.add('hidden');
+        }
+        loadAndFilter();
+      });
+    }
+
+    if (el.clearSearchBtn) {
+      el.clearSearchBtn.addEventListener('click', () => {
+        currentSearch = '';
+        if (el.globalSearch) el.globalSearch.value = '';
+        el.clearSearchBtn.classList.add('hidden');
+        loadAndFilter();
+      });
+    }
+
+    el.loadMoreBtn.addEventListener('click', renderBatch);
+
+    el.modal.addEventListener('click', (e) => {
+      if (e.target === el.modal) closeModal();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    init();
+  </script>
+</body>
+</html>
