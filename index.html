@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2326394A'/%3E%3Ctext x='32' y='43' text-anchor='middle' font-size='30' font-family='sans-serif' fill='white'%3EAI%3C/text%3E%3C/svg%3E" />
+  <title>การประยุกต์ใช้ AI เพื่อการจัดการเรียนการสอน 2569 · พอร์ทัลอบรมครู</title>
+
+  <!-- Google Fonts: Mali & Noto Sans Thai Looped -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Mali:wght@500;600;700&family=Noto+Sans+Thai+Looped:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet"
+  />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="assets/css/styles.css?v=20260827_font15b" />
+</head>
+<body class="antialiased" data-page="home">
+
+  <!-- ======= Masthead / Sticky Nav ======= -->
+  <header class="masthead sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="flex items-center justify-between h-16">
+        <a href="index.html" class="flex items-center gap-3">
+          <span class="bg-[#26394A] text-white font-bold text-sm px-3 py-1.5 rounded-lg font-display tracking-wider shadow-sm">AI–ครู 2569</span>
+          <span class="brand-school hidden md:inline font-display text-sm font-bold text-[#26394A]">โรงเรียนเทศบาล ๔ (เชาวนปรีชาอุทิศ)</span>
+        </a>
+        <nav class="flex items-center gap-2 sm:gap-4" aria-label="หลัก">
+          <a href="index.html" class="nav-link" data-page="home">🏠 แผนการอบรม</a>
+          <a href="mockups.html" class="nav-link" data-page="mockups">📂 ศูนย์กิจกรรม & สไลด์</a>
+          <a href="prompts.html" class="nav-link" data-page="prompts">🔍 คลัง Prompt (370+)</a>
+          <a href="image-prompts.html" class="nav-link" data-page="image-prompts">🎨 สูตรสร้างภาพ</a>
+          <a href="tutorials.html" class="nav-link" data-page="tutorials">📖 วิธีใช้</a>
+          <a href="showcase.html" class="nav-link" data-page="showcase">🌟 ส่งผลงาน</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
+
+    <!-- ======= HERO SECTION ======= -->
+    <section class="card p-8 sm:p-12 mb-10 bg-white/95 backdrop-blur-sm border border-slate-200/80 shadow-md">
+      <div class="max-w-3xl">
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#E8877A]/15 text-[#D97365] border border-[#E8877A]/30 text-xs font-bold font-display mb-4">
+          ✨ 29 สิงหาคม 2569 · 08:30 – 16:00 น.
+        </div>
+        <h1 class="font-display font-bold text-3xl sm:text-5xl text-[#26394A] leading-tight tracking-tight mb-4">
+          การประยุกต์ใช้ AI เพื่อการจัดการเรียนการสอน
+        </h1>
+        <p class="text-slate-600 text-base sm:text-lg leading-relaxed mb-6">
+          โครงการอบรมเชิงปฏิบัติการพัฒนาครูและบุคลากรทางการศึกษา — เน้น <b>"ลงมือทำจริง ไม่นั่งดู AI โชว์"</b> ทุกคนออกจากห้องพร้อมชิ้นงานสื่อการสอน/ใบงาน 1 ชิ้น ด้วยเครื่องมือฟรี 100%
+        </p>
+
+        <!-- Quick Access CTA -->
+        <div class="flex flex-wrap items-center gap-3 pt-2">
+          <a href="mockups.html" class="btn-accent">
+            📦 ศูนย์กิจกรรม & ดาวน์โหลดไฟล์ PDF/CSV
+          </a>
+          <a href="slide-deck.html" target="_blank" class="btn-ghost">
+            📺 สไลด์นำเสนอจริง (Interactive)
+          </a>
+          <a href="prompts.html" class="btn-mint">
+            🔍 เปิดคลังคำสั่ง 370+ Prompt
+          </a>
+          <a href="image-prompts.html" class="btn-ghost !text-slate-700">
+            🎨 คลังสูตรภาพ Banana 2.0
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======= SECTION 1: 3-PILLAR MENTAL MODEL ======= -->
+    <section class="mb-12">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-2">
+          <span class="badge-pill bg-[#7A6FB1]/20 text-[#5C528E] border border-[#7A6FB1]/40">Core Framework</span>
+          <h2 class="font-display font-bold text-2xl text-[#26394A]">3 เสาหลัก AI สำหรับครูไทย</h2>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6 mb-8">
+        <div class="card p-6 bg-white border-t-4 border-t-[#E8877A]">
+          <span class="font-display font-bold text-sm text-[#E8877A] block mb-1">เสาที่ 1 · คุยให้ถูกทาง</span>
+          <h3 class="font-display font-bold text-lg text-[#26394A] mb-2">Input & Context Engineering</h3>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            ใช้กรอบคิด <b>6-Part Context Framework (บริบท → เป้าหมาย → ข้อมูลตั้งต้น → เกณฑ์ → รูปแบบผลลัพธ์ → การตรวจทาน)</b> สั่งงาน AI เสมือนผู้ช่วยสอน ยิ่งให้ข้อมูลชัด ผลงานยิ่งตรงหลักสูตร
+          </p>
+        </div>
+
+        <div class="card p-6 bg-white border-t-4 border-t-[#5FA99E]">
+          <span class="font-display font-bold text-sm text-[#46867D] block mb-1">เสาที่ 2 · วางงานให้ถูกตัว</span>
+          <h3 class="font-display font-bold text-lg text-[#26394A] mb-2">Tool Triad (ฟรี 100%)</h3>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            <b>Gemini</b> (OCR/เนื้อหา/ภาพ 2D) + <b>NotebookLM</b> (สรุปเอกสารจริง/พอดแคสต์) → ประกอบร่างใน <b>Canva</b>
+          </p>
+        </div>
+
+        <div class="card p-6 bg-white border-t-4 border-t-[#D2A54B]">
+          <span class="font-display font-bold text-sm text-[#8B671B] block mb-1">เสาที่ 3 · ตรวจให้ชัวร์ก่อนใช้</span>
+          <h3 class="font-display font-bold text-lg text-[#26394A] mb-2">Verification Ladder</h3>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            ตรวจ 3 ขั้น: 1. ตรวจระเบียบกฎหมาย 2. ตรวจสูตรคำนวณ 3. คุ้มครองข้อมูลเด็ก (PDPA) — ครูเป็นผู้ลงนามรับผิดชอบเสมอ
+          </p>
+        </div>
+      </div>
+
+      <!-- Interactive Infographics Viewer (Read-only Presentation) -->
+      <div class="card p-6 sm:p-8 bg-white border border-slate-200/90 shadow-sm rounded-2xl">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 pb-4 border-b border-slate-100">
+          <div>
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#5FA99E]/15 text-[#46867D] text-xs font-bold font-display mb-1.5">
+              🖼️ สื่อแผนภาพประกอบการสอน (Visual Infographics)
+            </div>
+            <h3 class="font-display font-bold text-xl text-[#26394A]">แผนผังโครงสร้าง & สถาปัตยกรรม AI</h3>
+            <p class="text-xs text-slate-500 mt-0.5">เลือกคลิกดูแผนผังแนวคิดแต่ละหัวข้อเพื่อขยายดูรายละเอียดอย่างคมชัด</p>
+          </div>
+          <div class="flex items-center gap-1.5 bg-slate-100/80 p-1 rounded-xl self-start sm:self-center" id="diagramTabButtons">
+            <button type="button" onclick="switchDiagram(0)" id="diagram-tab-0" class="diagram-tab-btn px-3 py-1.5 rounded-lg text-xs font-display font-bold transition-all bg-white text-[#26394A] shadow-xs">
+              🏗️ สถาปัตยกรรม AI Triad
+            </button>
+            <button type="button" onclick="switchDiagram(1)" id="diagram-tab-1" class="diagram-tab-btn px-3 py-1.5 rounded-lg text-xs font-display font-bold transition-all text-slate-600 hover:text-[#26394A]">
+              🛡️ NotebookLM vs LLM
+            </button>
+            <button type="button" onclick="switchDiagram(2)" id="diagram-tab-2" class="diagram-tab-btn px-3 py-1.5 rounded-lg text-xs font-display font-bold transition-all text-slate-600 hover:text-[#26394A]">
+              💎 Gemini & Gems
+            </button>
+          </div>
+        </div>
+
+        <!-- Diagram Showcase Area -->
+        <div class="relative bg-slate-50 rounded-xl p-3 sm:p-5 border border-slate-200/70 overflow-hidden text-center">
+          
+          <!-- Diagram 1 -->
+          <div id="diagram-panel-0" class="diagram-panel block">
+            <div class="relative group cursor-zoom-in inline-block max-w-full" onclick="openDiagramModal('assets/diagrams/ai-triad-workflow.png', 'สถาปัตยกรรมการผลิตสื่อการสอนด้วย AI Triad (Gemini + Canvas + NotebookLM)')">
+              <img src="assets/diagrams/ai-triad-workflow.png" alt="สถาปัตยกรรมการผลิตสื่อการสอนด้วย AI Triad" class="max-h-[500px] w-auto mx-auto rounded-lg shadow-sm group-hover:scale-[1.01] transition-transform duration-200" />
+              <div class="absolute inset-0 bg-[#26394A]/10 opacity-0 group-hover:opacity-100 rounded-lg transition-opacity flex items-center justify-center pointer-events-none">
+                <span class="bg-[#26394A]/90 text-white font-display text-xs px-3 py-1.5 rounded-full shadow-lg">🔍 คลิกเพื่อดูขนาดเต็ม</span>
+              </div>
+            </div>
+            <p class="text-xs text-slate-500 mt-3 font-display">
+              📌 แผนภาพสถาปัตยกรรม 3 เสาหลัก: ตั้งแต่วัตถุดิบครู (Legacy Notes/CLO) ➔ ประมวลผลผ่าน AI Triad ➔ สู่ผลผลิตพร้อมใช้งานจริง
+            </p>
+          </div>
+
+          <!-- Diagram 2 -->
+          <div id="diagram-panel-1" class="diagram-panel hidden">
+            <div class="relative group cursor-zoom-in inline-block max-w-full" onclick="openDiagramModal('assets/diagrams/ai-why-notebooklm.png', 'ทำไม NotebookLM ถึงไม่หลอน? (Open LLM vs Grounded AI)')">
+              <img src="assets/diagrams/ai-why-notebooklm.png" alt="ทำไม NotebookLM ถึงไม่หลอน" class="max-h-[500px] w-auto mx-auto rounded-lg shadow-sm group-hover:scale-[1.01] transition-transform duration-200" />
+              <div class="absolute inset-0 bg-[#26394A]/10 opacity-0 group-hover:opacity-100 rounded-lg transition-opacity flex items-center justify-center pointer-events-none">
+                <span class="bg-[#26394A]/90 text-white font-display text-xs px-3 py-1.5 rounded-full shadow-lg">🔍 คลิกเพื่อดูขนาดเต็ม</span>
+              </div>
+            </div>
+            <p class="text-xs text-slate-500 mt-3 font-display">
+              📌 เปรียบเทียบ Side-by-Side: Open LLM (เดาคำถัดไปตามสถิติ) vs Grounded AI (ค้นหาหลักฐานจากเอกสารจริง 100% Zero Hallucination)
+            </p>
+          </div>
+
+          <!-- Diagram 3 -->
+          <div id="diagram-panel-2" class="diagram-panel hidden">
+            <div class="relative group cursor-zoom-in inline-block max-w-full" onclick="openDiagramModal('assets/diagrams/ai-gems-overview.png', 'จาก อะไรๆ ก็ AI สู่การใช้งานจริงด้วย Google Gemini & Gems')">
+              <img src="assets/diagrams/ai-gems-overview.png" alt="Gemini และ Gems สู่การใช้งานจริง" class="max-h-[500px] w-auto mx-auto rounded-lg shadow-sm group-hover:scale-[1.01] transition-transform duration-200" />
+              <div class="absolute inset-0 bg-[#26394A]/10 opacity-0 group-hover:opacity-100 rounded-lg transition-opacity flex items-center justify-center pointer-events-none">
+                <span class="bg-[#26394A]/90 text-white font-display text-xs px-3 py-1.5 rounded-full shadow-lg">🔍 คลิกเพื่อดูขนาดเต็ม</span>
+              </div>
+            </div>
+            <p class="text-xs text-slate-500 mt-3 font-display">
+              📌 วิวัฒนาการจาก Narrow AI สู่ AGI, กลไก LLM Multimodal, และการตั้งค่า Gemini Gems ผู้ช่วยเฉพาะทาง 4 ด้าน
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ======= SECTION 2: TIMELINE WORKSHOP ROADMAP (เส้นทางกิจกรรมทั้งวัน) ======= -->
+    <section class="mb-12">
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <div class="flex items-center gap-2 mb-1">
+            <span class="badge-pill bg-[#5FA99E]/20 text-[#46867D] border border-[#5FA99E]/40">Roadmap</span>
+            <h2 class="font-display font-bold text-2xl text-[#26394A]">เส้นทางการเรียนรู้ตลอดวัน (4 Sessions)</h2>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-500">คลิกที่ปุ่มกิจกรรมของแต่ละช่วงเวลาเพื่อเปิดคู่มือหรือใบงานฝึกปฏิบัติ</p>
+        </div>
+      </div>
+
+      <div class="space-y-6">
+
+        <!-- Stage 1 -->
+        <div class="card p-6 bg-white border-l-8 border-l-[#E8877A] flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div class="max-w-2xl">
+            <div class="flex items-center gap-3 mb-2">
+              <span class="bg-[#E8877A]/15 text-[#D97365] text-xs font-bold px-2.5 py-1 rounded-md font-display">08:30 – 10:15 น.</span>
+              <span class="badge-pill bg-slate-100 text-slate-700">Session 1</span>
+            </div>
+            <h3 class="font-display font-bold text-xl text-[#26394A] mb-2">
+              💎 Gemini Ecosystem: ปรับ Mindset + Gems OCR + Gemini Canvas
+            </h3>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              เปิดโลก Live Wow Demo 3 นาที · ฝึกถอดความจากใบงานเก่าด้วย <b>Gems OCR</b> แล้วส่งต่อเข้า <b>Gemini Canvas</b> เพื่อปรับระดับภาษาและสร้างโจทย์แบบ Active Learning
+            </p>
+          </div>
+          <div class="flex flex-col sm:flex-row gap-2 shrink-0">
+            <a href="Outputs-from-ai/Gem-ถอดข้อความจากภาพและ PDF.html" target="_blank" class="btn-ghost text-xs">
+              🖼️ Gem ถอดข้อความภาพ & PDF
+            </a>
+            <a href="Outputs-from-ai/Gemini Canvas-ถอดข้อความไปสู่ Gemini Canvas.html" target="_blank" class="btn-accent text-xs">
+              ⚡ คู่มือ Gems → Canvas
+            </a>
+          </div>
+        </div>
+
+        <!-- Stage 2 -->
+        <div class="card p-6 bg-white border-l-8 border-l-[#5FA99E] flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div class="max-w-2xl">
+            <div class="flex items-center gap-3 mb-2">
+              <span class="bg-[#5FA99E]/15 text-[#46867D] text-xs font-bold px-2.5 py-1 rounded-md font-display">10:30 – 12:00 น.</span>
+              <span class="badge-pill bg-slate-100 text-slate-700">Session 2</span>
+            </div>
+            <h3 class="font-display font-bold text-xl text-[#26394A] mb-2">
+              🎨 Banana 2.0 (Imagen 3) & Canva Strategy สำหรับครู
+            </h3>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              สูตรเจนภาพการศึกษา: 2D เวกเตอร์, พื้นหลังขาว <code>#FFFFFF</code> · คู่มือเจาะลึก <b>Canva 49 ขั้นตอน</b> ตั้งแต่เลือกเทมเพลต แก้สมการคณิตศาสตร์ คุมโทนสี จนถึงส่งออก PDF
+            </p>
+          </div>
+          <div class="flex flex-col sm:flex-row gap-2 shrink-0">
+            <a href="image-prompts.html" class="btn-accent text-xs">
+              🎨 สูตร & คำศัพท์สร้างภาพ ↗
+            </a>
+            <a href="Outputs-from-ai/การเริ่มต้นใช้งาน Canva.html" target="_blank" class="btn-mint text-xs">
+              🖌️ คู่มือ Canva ↗
+            </a>
+          </div>
+        </div>
+
+        <!-- Stage 3 -->
+        <div class="card p-6 bg-white border-l-8 border-l-[#7A6FB1] flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div class="max-w-2xl">
+            <div class="flex items-center gap-3 mb-2">
+              <span class="bg-[#7A6FB1]/15 text-[#5C528E] text-xs font-bold px-2.5 py-1 rounded-md font-display">13:00 – 14:45 น.</span>
+              <span class="badge-pill bg-slate-100 text-slate-700">Session 3</span>
+            </div>
+            <h3 class="font-display font-bold text-xl text-[#26394A] mb-2">
+              📚 NotebookLM: ปราบความหลอนด้วยเอกสารจริง + สร้าง Audio Podcast
+            </h3>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              อิงเฉพาะเอกสารที่ป้อน 100% · การจัด Tier ไฟล์ (.docx, .pdf, .csv ตารางคะแนน) · กิจกรรมสร้าง Study Guide, แผนสรุป และ <b>Deep Dive Audio Podcast (AI คุย 2 คน)</b>
+            </p>
+          </div>
+          <div class="flex flex-col sm:flex-row gap-2 shrink-0">
+            <a href="Outputs-from-ai/notebooklm/index.html" target="_blank" class="btn-accent text-xs">
+              📚 ศูนย์รวม 6 โมดูล NotebookLM ↗
+            </a>
+            <a href="mockups.html" class="btn-ghost text-xs">
+              📂 ชุดข้อมูลฝึกปฏิบัติ
+            </a>
+          </div>
+        </div>
+
+        <!-- Stage 4 -->
+        <div class="card p-6 bg-white border-l-8 border-l-[#D2A54B] flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div class="max-w-2xl">
+            <div class="flex items-center gap-3 mb-2">
+              <span class="bg-[#D2A54B]/15 text-[#8B671B] text-xs font-bold px-2.5 py-1 rounded-md font-display">15:00 – 16:00 น.</span>
+              <span class="badge-pill bg-slate-100 text-slate-700">Session 4</span>
+            </div>
+            <h3 class="font-display font-bold text-xl text-[#26394A] mb-2">
+              🚀 Capstone Showcase & AI Speedrun ปล่อยของชิ้นงานจริง
+            </h3>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              สปีดรันผลิตสื่อ 1 ชิ้น (สแกน → ร่าง → ทำภาพ → โพสต์) · ส่งผลงานขึ้น Showcase Gallery ชื่นชมร่วมกัน พร้อมรับวุฒิบัตร
+            </p>
+          </div>
+          <div class="flex flex-col sm:flex-row gap-2 shrink-0">
+            <a href="showcase.html" class="btn-accent text-xs">
+              🌟 ชม & ส่งผลงาน
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ======= Diagram Lightbox Modal ======= -->
+  <div id="diagramModal" class="fixed inset-0 z-50 bg-[#1e293b]/85 backdrop-blur-md hidden flex items-center justify-center p-4 sm:p-6 opacity-0 transition-opacity duration-200">
+    <div class="relative bg-white rounded-2xl max-w-5xl w-full max-h-[92vh] flex flex-col shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+      <div class="flex items-center justify-between px-5 py-3.5 border-b border-slate-100 bg-slate-50/80">
+        <h4 id="diagramModalTitle" class="font-display font-bold text-base text-[#26394A] truncate">แผนภาพ</h4>
+        <button type="button" onclick="closeDiagramModal()" class="text-slate-400 hover:text-slate-700 bg-white hover:bg-slate-100 p-1.5 rounded-lg border border-slate-200 transition-colors">
+          ✕ ปิด
+        </button>
+      </div>
+      <div class="p-4 overflow-auto flex-1 flex items-center justify-center bg-slate-100/50">
+        <img id="diagramModalImg" src="" alt="ภาพขยาย" class="max-h-[78vh] w-auto object-contain rounded-lg shadow-sm" />
+      </div>
+      <div class="px-5 py-2.5 bg-slate-50 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-display">
+        <span>🔒 แสดงผลแบบ Read-Only (ปลอดภัย ไม่สามารถแก้ไขได้)</span>
+        <a id="diagramModalDownload" href="" download class="text-[#5FA99E] hover:underline font-bold">📥 บันทึกรูปภาพ</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======= Footer ======= -->
+  <footer class="bg-white/80 border-t border-slate-200 py-8 text-center text-xs text-slate-500 relative z-10">
+    <div class="max-w-6xl mx-auto px-4 font-display">
+      <p>โครงการอบรมเชิงปฏิบัติการพัฒนาครูและบุคลากรทางการศึกษา · โรงเรียนเทศบาล ๔ (เชาวนปรีชาอุทิศ)</p>
+      <p class="mt-1 text-slate-500 font-medium">วิทยากร: <b>อ.ดร.กิตติพงศ์ ทรัพย์วัฒนาชัย</b> (Kittipong Subwattanachai) · อีเมล: <a href="mailto:kittipong.sub@ku.th" class="text-[#5FA99E] hover:underline font-semibold">kittipong.sub@ku.th</a> และ ผศ.ดร.ธนิษฐา โกวรรณ์</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

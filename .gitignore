@@ -1,0 +1,6 @@
+.backup*/
+.hermes/
+.DS_Store
+Thumbs.db
+*.bak-*
+prompts-missing-*.json

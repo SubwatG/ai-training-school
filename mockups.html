@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ศูนย์กิจกรรมและคลังคู่มืออบรม (Mockup Hub) · AI เพื่อการเรียนการสอน</title>
+
+  <!-- Google Fonts: Mali & Noto Sans Thai Looped -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mali:wght@500;600;700&family=Noto+Sans+Thai+Looped:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="assets/css/styles.css?v=20260827_font15b" />
+  <script src="assets/training-mockups.js"></script>
+
+  <style>
+    .hub-card {
+      background: #FFFFFF;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .hub-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn-action {
+      font-family: 'Mali', cursive;
+      font-weight: 600;
+      font-size: 13px;
+      padding: 8px 16px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+  </style>
+</head>
+<body class="antialiased" data-page="mockups">
+
+  <!-- ======= Masthead / Sticky Nav ======= -->
+  <header class="masthead sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="flex items-center justify-between h-16">
+        <a href="index.html" class="flex items-center gap-3">
+          <span class="bg-[#26394A] text-white font-bold text-sm px-3 py-1.5 rounded-lg font-display tracking-wider shadow-sm">AI–ครู 2569</span>
+          <span class="brand-school hidden md:inline font-display text-sm font-bold text-[#26394A]">โรงเรียนเทศบาล ๔ (เชาวนปรีชาอุทิศ)</span>
+        </a>
+        <nav class="flex items-center gap-2 sm:gap-4" aria-label="หลัก">
+          <a href="index.html" class="nav-link" data-page="home">🏠 แผนการอบรม</a>
+          <a href="mockups.html" class="nav-link" data-page="mockups">📂 ศูนย์กิจกรรม & สไลด์</a>
+          <a href="prompts.html" class="nav-link" data-page="prompts">🔍 คลัง Prompt (370+)</a>
+          <a href="image-prompts.html" class="nav-link" data-page="image-prompts">🎨 สูตรสร้างภาพ</a>
+          <a href="tutorials.html" class="nav-link" data-page="tutorials">📖 วิธีใช้</a>
+          <a href="showcase.html" class="nav-link" data-page="showcase">🌟 ส่งผลงาน</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
+
+    <!-- Page Title & Header Card -->
+    <div class="card p-8 mb-10 bg-white border border-slate-200 shadow-sm">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#5FA99E]/15 text-[#46867D] text-xs font-bold font-display mb-3">
+        📂 Activity Hub & Mockup Files
+      </div>
+      <h1 class="font-display font-bold text-3xl sm:text-4xl text-[#26394A] mb-3">
+        ศูนย์กิจกรรมและเอกสารจำลอง (Mockup Hub)
+      </h1>
+      <p class="text-slate-600 text-sm sm:text-base leading-relaxed max-w-3xl">
+        รวมคู่มือคลิกทำตาม (Interactive Scribe Guides), สไลด์นำเสนอจริงแบบ Interactive และชุดไฟล์ PDF / CSV จำลองสำหรับฝึก Gems OCR และ NotebookLM ในงานอบรม
+      </p>
+    </div>
+
+    <!-- SECTION 1: INTERACTIVE GUIDES (4 เครื่องมือหลักจาก Local Scribe) -->
+    <section class="mb-12">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-2">
+          <span class="badge-pill bg-[#E8877A]/20 text-[#D97365] border border-[#E8877A]/40">Interactive Guides</span>
+          <h2 class="font-display font-bold text-xl text-[#26394A]">คู่มือแบบคลิกทำตาม (Scribe Interactive)</h2>
+        </div>
+        <span class="text-xs text-slate-500 hidden sm:inline">ครอบคลุมทั้ง 3 เครื่องมือหลัก</span>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        
+        <!-- Guide 1: Gems OCR -->
+        <div class="hub-card p-5 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="badge-pill bg-[#5FA99E]/20 text-[#46867D] border border-[#5FA99E]/40">Gemini</span>
+              <span class="text-xs text-slate-400">Gems OCR</span>
+            </div>
+            <h3 class="font-display font-bold text-base text-[#26394A] mb-2">Gem ถอดข้อความจากภาพ & PDF</h3>
+            <p class="text-xs text-slate-600 mb-4 leading-relaxed">
+              วิธีสร้าง Gem สำหรับสแกนเอกสาร PDF/รูปถ่ายใบงานเก่า สกัดข้อความสะอาด 100%
+            </p>
+          </div>
+          <div class="pt-3 border-t border-slate-100">
+            <a href="Outputs-from-ai/Gem-ถอดข้อความจากภาพและ PDF.html" target="_blank" class="btn-action bg-[#E8877A] text-white hover:bg-[#D97365] text-xs w-full justify-center shadow-sm">
+              เปิดดูคู่มือ ↗
+            </a>
+          </div>
+        </div>
+
+        <!-- Guide 2: Canvas -->
+        <div class="hub-card p-5 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="badge-pill bg-[#7A6FB1]/20 text-[#5C528E] border border-[#7A6FB1]/40">Canvas</span>
+              <span class="text-xs text-slate-400">Side-by-Side</span>
+            </div>
+            <h3 class="font-display font-bold text-base text-[#26394A] mb-2">Gemini Canvas: ถอดข้อความสู่ Canvas</h3>
+            <p class="text-xs text-slate-600 mb-4 leading-relaxed">
+              สเต็ปการส่งข้อความเข้าพื้นที่ Canvas เพื่อลากคลุมปรับระดับภาษาและสร้างโจทย์
+            </p>
+          </div>
+          <div class="pt-3 border-t border-slate-100">
+            <a href="Outputs-from-ai/Gemini Canvas-ถอดข้อความไปสู่ Gemini Canvas.html" target="_blank" class="btn-action bg-[#E8877A] text-white hover:bg-[#D97365] text-xs w-full justify-center shadow-sm">
+              เปิดดูคู่มือ ↗
+            </a>
+          </div>
+        </div>
+
+        <!-- Guide 3: Canva -->
+        <div class="hub-card p-5 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="badge-pill bg-[#5FA99E]/20 text-[#46867D] border border-[#5FA99E]/40">Canva Master</span>
+              <span class="text-xs text-slate-400">49 ขั้นตอน (ฉบับจริง)</span>
+            </div>
+            <h3 class="font-display font-bold text-base text-[#26394A] mb-2">การเริ่มต้นใช้งาน Canva</h3>
+            <p class="text-xs text-slate-600 mb-4 leading-relaxed">
+              คู่มือสมบูรณ์: เลือกเทมเพลตการศึกษา, แก้ไขสมการคณิตศาสตร์, คุมโทนสีแบรนด์, ปรับฟอนต์ Mali, และดาวน์โหลด PDF
+            </p>
+          </div>
+          <div class="pt-3 border-t border-slate-100">
+            <a href="Outputs-from-ai/การเริ่มต้นใช้งาน Canva.html" target="_blank" class="btn-action bg-[#5FA99E] text-white hover:bg-[#46867D] text-xs w-full justify-center shadow-sm">
+              เปิดดูคู่มือ (49 สเต็ป) ↗
+            </a>
+          </div>
+        </div>
+
+        <!-- Guide 4: NotebookLM -->
+        <div class="hub-card p-5 flex flex-col justify-between border-2 border-[#D2A54B]/30">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="badge-pill bg-[#D2A54B]/20 text-[#8B671B] border border-[#D2A54B]/40">NotebookLM</span>
+              <span class="text-xs font-bold text-[#8B671B]">6 โมดูลครบวงจร</span>
+            </div>
+            <h3 class="font-display font-bold text-base text-[#26394A] mb-2">NotebookLM Mastery Hub</h3>
+            <p class="text-xs text-slate-600 mb-4 leading-relaxed">
+              ศูนย์รวมคู่มือ 6 โมดูล: ตั้งค่าภาษาไทย, เจน Audio Podcast, Slide Deck, Quiz, Reports และ Infographic
+            </p>
+          </div>
+          <div class="pt-3 border-t border-slate-100 flex flex-col gap-2">
+            <a href="Outputs-from-ai/notebooklm/index.html" target="_blank" class="btn-action bg-[#D2A54B] text-white hover:bg-[#B88E3B] text-xs w-full justify-center shadow-sm">
+              📚 เปิดศูนย์รวม 6 โมดูล ↗
+            </a>
+            <a href="Outputs-from-ai/NotebookLM-ปราบความหลอนและสร้างAudioPodcast.html" target="_blank" class="text-center text-[0.75rem] text-[#7A6FB1] hover:underline font-semibold">
+              🎙️ หรือเปิดเฉพาะคู่มือพอดแคสต์
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 2: LIVE PRESENTATION & OCR PRACTICE INPUT -->
+        <section class="mb-12">
+          <div class="card p-6 bg-white border border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div class="max-w-2xl">
+              <span class="badge-pill bg-[#D2A54B]/20 text-[#8B671B] border border-[#D2A54B]/40 mb-2">Live Presentation</span>
+              <h3 class="font-display font-bold text-xl text-[#26394A] mb-2">สไลด์นำเสนอจริง (Interactive Slide Deck)</h3>
+              <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                ใช้สำหรับฉายและดำเนินการอบรมจริงในวันงาน เปิดเป็นสไลด์ HTML แบบ Interactive ไม่ใช่ไฟล์โจทย์ PDF สำหรับการฝึก OCR
+              </p>
+            </div>
+            <div class="flex flex-col sm:flex-row gap-2 shrink-0">
+              <a href="slide-deck.html" target="_blank" class="btn-action bg-[#26394A] text-white hover:bg-[#1E293B] text-xs justify-center">
+                📺 เปิดสไลด์นำเสนอจริง ↗
+              </a>
+              <a href="assets/slides.pdf" target="_blank" class="btn-action bg-[#E8877A] text-white hover:bg-[#D97365] text-xs justify-center">
+                📄 PDF สำหรับฝึก Gems OCR ↗
+              </a>
+            </div>
+          </div>
+        </section>
+
+    <!-- SECTION 3: WORKSHOP MOCKUPS & ACTIVITIES -->
+    <section class="mb-12">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-2">
+          <span class="badge-pill bg-[#5FA99E]/20 text-[#46867D] border border-[#5FA99E]/40">Mockup Ready for NotebookLM</span>
+          <h2 class="font-display font-bold text-xl text-[#26394A]">คลังไฟล์ PDF & Data จำลองสำหรับฝึกปฏิบัติ (Download & Upload to NotebookLM)</h2>
+        </div>
+      </div>
+
+      <!-- Quick Download Grid for Teachers -->
+      <div class="grid sm:grid-cols-3 gap-4 mb-8">
+        <div class="card p-5 bg-white border-l-4 border-l-[#E8877A] flex flex-col justify-between">
+          <div>
+            <span class="badge-pill bg-[#E8877A]/20 text-[#D97365] mb-2">Scenario PDF 01</span>
+            <h3 class="font-display font-bold text-base text-[#26394A] mb-1">เศรษฐศาสตร์ชานมไข่มุก & ตลาดโต้รุ่ง</h3>
+            <p class="text-xs text-slate-500 mb-3">มีตารางต้นทุน, กราฟ Demand-Supply และบทสนทนาอังกฤษ</p>
+          </div>
+          <a href="assets/mockups/scenario-boba-market.pdf" target="_blank" class="btn-action bg-[#E8877A] text-white text-xs justify-center shadow-sm">
+            📥 ดาวน์โหลด PDF (ชานม) ↗
+          </a>
+        </div>
+
+        <div class="card p-5 bg-white border-l-4 border-l-[#7A6FB1] flex flex-col justify-between">
+          <div>
+            <span class="badge-pill bg-[#7A6FB1]/20 text-[#5C528E] mb-2">Scenario PDF 02</span>
+            <h3 class="font-display font-bold text-base text-[#26394A] mb-1">ประวัติศาสตร์นครปฐม & องค์พระปฐมเจดีย์</h3>
+            <p class="text-xs text-slate-500 mb-3">เจาะลึกโบราณคดีทวารวดี, สถาปัตยกรรม และวิถีชีวิตคลองเจดีย์บูชา</p>
+          </div>
+          <a href="assets/mockups/scenario-nakhonpathom-history.pdf" target="_blank" class="btn-action bg-[#7A6FB1] text-white text-xs justify-center shadow-sm">
+            📥 ดาวน์โหลด PDF (นครปฐม) ↗
+          </a>
+        </div>
+
+        <div class="card p-5 bg-white border-l-4 border-l-[#5FA99E] flex flex-col justify-between">
+          <div>
+            <span class="badge-pill bg-[#5FA99E]/20 text-[#46867D] mb-2">Scenario CSV 03</span>
+            <h3 class="font-display font-bold text-base text-[#26394A] mb-1">ตารางยอดขายชานม 3 สาขา (CSV)</h3>
+            <p class="text-xs text-slate-500 mb-3">ข้อมูลสถิติยอดขาย 14 วัน สำหรับฝึกสรุป Insights และทำพอดแคสต์</p>
+          </div>
+          <a href="assets/mockups/boba-sales-data.csv" download class="btn-action bg-[#5FA99E] text-white text-xs justify-center shadow-sm">
+            📊 ดาวน์โหลด CSV 📥
+          </a>
+        </div>
+      </div>
+
+      <!-- Scenarios Cards Container with dynamic rendering -->
+      <div id="mockupsGrid" class="space-y-6">
+        <!-- Injected via training-mockups.js -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white/80 border-t border-slate-200 py-8 text-center text-xs text-slate-500 relative z-10 font-display">
+    <div class="max-w-6xl mx-auto px-4">
+      <p>โครงการอบรมเชิงปฏิบัติการพัฒนาครูและบุคลากรทางการศึกษา · โรงเรียนเทศบาล ๔ (เชาวนปรีชาอุทิศ)</p>
+      <p class="mt-1 text-slate-500 font-medium">วิทยากร: <b>อ.ดร.กิตติพงศ์ ทรัพย์วัฒนาชัย</b> (Kittipong Subwattanachai) · อีเมล: <a href="mailto:kittipong.sub@ku.th" class="text-[#5FA99E] hover:underline font-semibold">kittipong.sub@ku.th</a> และ ผศ.ดร.ธนิษฐา โกวรรณ์</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

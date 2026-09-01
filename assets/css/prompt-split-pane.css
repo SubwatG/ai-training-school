@@ -1,0 +1,115 @@
+/* ==========================================================================
+   Split-Pane / Master-Detail Layout for Prompt Library
+   ========================================================================== */
+
+.prompt-split-container {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+@media (max-width: 1024px) {
+  .prompt-split-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Sticky Sidebar Filter */
+.prompt-sidebar {
+  position: sticky;
+  top: 80px;
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.prompt-sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+.prompt-sidebar::-webkit-scrollbar-thumb {
+  background: var(--line-strong);
+  border-radius: 999px;
+}
+
+/* View Mode Toggles */
+.view-mode-btn {
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'Mali', cursive;
+  border: 1px solid var(--line);
+  background: #FFFFFF;
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.view-mode-btn.active {
+  background: var(--ink);
+  color: #FFFFFF;
+  border-color: var(--ink);
+}
+
+/* Master-Detail / Compact List Row */
+.prompt-row-item {
+  background: #FFFFFF;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 14px 18px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+.prompt-row-item:hover {
+  border-color: var(--accent);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(30, 41, 59, 0.05);
+}
+.prompt-row-item.selected {
+  border-color: var(--accent);
+  background: rgba(232, 135, 122, 0.04);
+  box-shadow: 0 0 0 1.5px var(--accent);
+}
+
+/* Detail Drawer (Modal / Side-Drawer) */
+.prompt-drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+.prompt-drawer-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.prompt-drawer-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  max-width: 680px;
+  background: #FFFFFF;
+  z-index: 1000;
+  box-shadow: -8px 0 32px rgba(0, 0, 0, 0.15);
+  transform: translateX(100%);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.prompt-drawer-backdrop.active .prompt-drawer-panel {
+  transform: translateX(0);
+}
+
+/* Drawer Content Scroll */
+.drawer-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px;
+}
